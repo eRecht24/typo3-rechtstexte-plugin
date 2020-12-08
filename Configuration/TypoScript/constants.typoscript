@@ -1,0 +1,30 @@
+
+plugin.tx_er24rechtstexte_main {
+    view {
+        # cat=plugin.tx_er24rechtstexte_main/file; type=string; label=Path to template root (FE)
+        templateRootPath = EXT:er24_rechtstexte/Resources/Private/Templates/
+        # cat=plugin.tx_er24rechtstexte_main/file; type=string; label=Path to template partials (FE)
+        partialRootPath = EXT:er24_rechtstexte/Resources/Private/Partials/
+        # cat=plugin.tx_er24rechtstexte_main/file; type=string; label=Path to template layouts (FE)
+        layoutRootPath = EXT:er24_rechtstexte/Resources/Private/Layouts/
+    }
+    persistence {
+        # cat=plugin.tx_er24rechtstexte_main//a; type=string; label=Default storage PID
+        storagePid =
+    }
+}
+
+module.tx_er24rechtstexte_main {
+    view {
+        # cat=module.tx_er24rechtstexte_main/file; type=string; label=Path to template root (BE)
+        templateRootPath = EXT:er24_rechtstexte/Resources/Private/Backend/Templates/
+        # cat=module.tx_er24rechtstexte_main/file; type=string; label=Path to template partials (BE)
+        partialRootPath = EXT:er24_rechtstexte/Resources/Private/Backend/Partials/
+        # cat=module.tx_er24rechtstexte_main/file; type=string; label=Path to template layouts (BE)
+        layoutRootPath = EXT:er24_rechtstexte/Resources/Private/Backend/Layouts/
+    }
+    persistence {
+        # cat=module.tx_er24rechtstexte_main//a; type=string; label=Default storage PID
+        storagePid =
+    }
+}

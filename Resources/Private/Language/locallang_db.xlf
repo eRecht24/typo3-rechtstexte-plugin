@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:er24_rechtstexte/Resources/Private/Language/locallang_db" date="2020-12-08T13:30:06Z" product-name="er24_rechtstexte">
+		<header/>
+		<body>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig" resname="tx_er24rechtstexte_domain_model_domainconfig">
+				<source>Domain Config</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.domain" resname="tx_er24rechtstexte_domain_model_domainconfig.domain">
+				<source>Domain</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.api_key" resname="tx_er24rechtstexte_domain_model_domainconfig.api_key">
+				<source>Api Key</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_source" resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_source">
+				<source>Imprint Source</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_de" resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_de">
+				<source>Imprint De</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_de_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_de_tstamp">
+				<source>Imprint De Tstamp</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_en" resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_en">
+				<source>Imprint En</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_en_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_en_tstamp">
+				<source>Imprint En Tstamp</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_source" resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_source">
+				<source>Privacy Source</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_de" resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_de">
+				<source>Privacy De</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp">
+				<source>Privacy De Tstamp</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_en" resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_en">
+				<source>Privacy En</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_en_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_en_tstamp">
+				<source>Privacy En Tstamp</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_source" resname="tx_er24rechtstexte_domain_model_domainconfig.social_source">
+				<source>Social Source</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_de" resname="tx_er24rechtstexte_domain_model_domainconfig.social_de">
+				<source>Social De</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp">
+				<source>Social De Tstamp</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_en" resname="tx_er24rechtstexte_domain_model_domainconfig.social_en">
+				<source>Social En</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_en_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.social_en_tstamp">
+				<source>Social En Tstamp</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.analytics_id" resname="tx_er24rechtstexte_domain_model_domainconfig.analytics_id">
+				<source>Analytics Id</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking" resname="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking">
+				<source>Flag Embed Tracking</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed" resname="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed">
+				<source>Flag User Centrics Embed</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code" resname="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code">
+				<source>Flag Opt Out Code</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.root_pid" resname="tx_er24rechtstexte_domain_model_domainconfig.root_pid">
+				<source>Root Pid</source>
+			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.site_config_name" resname="tx_er24rechtstexte_domain_model_domainconfig.site_config_name">
+				<source>Site Config Name</source>
+			</trans-unit>
+			<trans-unit id="tx_er24_rechtstexte_main.name" resname="tx_er24_rechtstexte_main.name">
+				<source>eRecht24 Rechtstexte</source>
+			</trans-unit>
+			<trans-unit id="tx_er24_rechtstexte_main.description" resname="tx_er24_rechtstexte_main.description">
+				<source>eRecht24 Impressum oder Datenschutzerklärung auf dieser Seite einfügen.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -1,0 +1,23 @@
+{
+    "name": "erecht24/er24-rechtstexte",
+    "type": "typo3-cms-extension",
+    "description": "This extension allows the easy integration of imprint and privacy policy of eRecht24.",
+    "authors": [],
+    "require": {
+        "typo3/cms-core": "^10.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "ERecht24\\Er24Rechtstexte\\": "Classes"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ERecht24\\Er24Rechtstexte\\Tests\\": "Tests"
+        }
+    },
+    "replace": {
+        "erecht24/er24-rechtstexte": "self.version",
+        "typo3-ter/er24-rechtstexte": "self.version"
+    }
+}

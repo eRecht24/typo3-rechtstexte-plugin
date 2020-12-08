@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="EXT:er24_rechtstexte/Resources/Private/Language/locallang_csh" date="2020-12-08T13:30:06Z" product-name="er24_rechtstexte">
+		<header/>
+		<body>
+			<trans-unit id="domain.description" resname="domain.description">
+				<source>domain</source>
+			</trans-unit>
+			<trans-unit id="api_key.description" resname="api_key.description">
+				<source>apiKey</source>
+			</trans-unit>
+			<trans-unit id="imprint_source.description" resname="imprint_source.description">
+				<source>imprintSource</source>
+			</trans-unit>
+			<trans-unit id="imprint_de.description" resname="imprint_de.description">
+				<source>imprintDe</source>
+			</trans-unit>
+			<trans-unit id="imprint_de_tstamp.description" resname="imprint_de_tstamp.description">
+				<source>imprintDeTstamp</source>
+			</trans-unit>
+			<trans-unit id="imprint_en.description" resname="imprint_en.description">
+				<source>imprintEn</source>
+			</trans-unit>
+			<trans-unit id="imprint_en_tstamp.description" resname="imprint_en_tstamp.description">
+				<source>imprintEnTstamp</source>
+			</trans-unit>
+			<trans-unit id="privacy_source.description" resname="privacy_source.description">
+				<source>privacySource</source>
+			</trans-unit>
+			<trans-unit id="privacy_de.description" resname="privacy_de.description">
+				<source>privacyDe</source>
+			</trans-unit>
+			<trans-unit id="privacy_de_tstamp.description" resname="privacy_de_tstamp.description">
+				<source>privacyDeTstamp</source>
+			</trans-unit>
+			<trans-unit id="privacy_en.description" resname="privacy_en.description">
+				<source>privacyEn</source>
+			</trans-unit>
+			<trans-unit id="privacy_en_tstamp.description" resname="privacy_en_tstamp.description">
+				<source>privacyEnTstamp</source>
+			</trans-unit>
+			<trans-unit id="social_source.description" resname="social_source.description">
+				<source>socialSource</source>
+			</trans-unit>
+			<trans-unit id="social_de.description" resname="social_de.description">
+				<source>socialDe</source>
+			</trans-unit>
+			<trans-unit id="social_de_tstamp.description" resname="social_de_tstamp.description">
+				<source>socialDeTstamp</source>
+			</trans-unit>
+			<trans-unit id="social_en.description" resname="social_en.description">
+				<source>socialEn</source>
+			</trans-unit>
+			<trans-unit id="social_en_tstamp.description" resname="social_en_tstamp.description">
+				<source>socialEnTstamp</source>
+			</trans-unit>
+			<trans-unit id="analytics_id.description" resname="analytics_id.description">
+				<source>analyticsId</source>
+			</trans-unit>
+			<trans-unit id="flag_embed_tracking.description" resname="flag_embed_tracking.description">
+				<source>flagEmbedTracking</source>
+			</trans-unit>
+			<trans-unit id="flag_user_centrics_embed.description" resname="flag_user_centrics_embed.description">
+				<source>flagUserCentricsEmbed</source>
+			</trans-unit>
+			<trans-unit id="flag_opt_out_code.description" resname="flag_opt_out_code.description">
+				<source>flagOptOutCode</source>
+			</trans-unit>
+			<trans-unit id="root_pid.description" resname="root_pid.description">
+				<source>rootPid</source>
+			</trans-unit>
+			<trans-unit id="site_config_name.description" resname="site_config_name.description">
+				<source>siteConfigName</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

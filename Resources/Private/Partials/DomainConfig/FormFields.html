@@ -1,0 +1,94 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<label for="domain">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.domain" />
+</label><br />
+	<f:form.textfield property="domain" id="domain" /><br />
+<label for="apiKey">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.api_key" />
+</label><br />
+	<f:form.textfield property="apiKey" id="apiKey" /><br />
+<label for="imprintSource">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_source" />
+</label><br />
+	<f:form.textfield property="imprintSource" id="imprintSource" /><br />
+<label for="imprintDe">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_de" />
+</label><br />
+	<f:form.textarea property="imprintDe" id="imprintDe" cols="40" rows="15" /><br />
+<label for="imprintDeTstamp">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_de_tstamp" />
+</label><br />
+	<f:form.textfield property="imprintDeTstamp" id="imprintDeTstamp" value="{domainConfig.imprintDeTstamp->f:format.date()}" /><br />
+<label for="imprintEn">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_en" />
+</label><br />
+	<f:form.textarea property="imprintEn" id="imprintEn" cols="40" rows="15" /><br />
+<label for="imprintEnTstamp">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_en_tstamp" />
+</label><br />
+	<f:form.textfield property="imprintEnTstamp" id="imprintEnTstamp" value="{domainConfig.imprintEnTstamp->f:format.date()}" /><br />
+<label for="privacySource">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_source" />
+</label><br />
+	<f:form.textfield property="privacySource" id="privacySource" /><br />
+<label for="privacyDe">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_de" />
+</label><br />
+	<f:form.textarea property="privacyDe" id="privacyDe" cols="40" rows="15" /><br />
+<label for="privacyDeTstamp">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp" />
+</label><br />
+	<f:form.textfield property="privacyDeTstamp" id="privacyDeTstamp" value="{domainConfig.privacyDeTstamp->f:format.date()}" /><br />
+<label for="privacyEn">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_en" />
+</label><br />
+	<f:form.textarea property="privacyEn" id="privacyEn" cols="40" rows="15" /><br />
+<label for="privacyEnTstamp">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_en_tstamp" />
+</label><br />
+	<f:form.textfield property="privacyEnTstamp" id="privacyEnTstamp" value="{domainConfig.privacyEnTstamp->f:format.date()}" /><br />
+<label for="socialSource">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_source" />
+</label><br />
+	<f:form.textfield property="socialSource" id="socialSource" /><br />
+<label for="socialDe">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_de" />
+</label><br />
+	<f:form.textarea property="socialDe" id="socialDe" cols="40" rows="15" /><br />
+<label for="socialDeTstamp">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp" />
+</label><br />
+	<f:form.textfield property="socialDeTstamp" id="socialDeTstamp" value="{domainConfig.socialDeTstamp->f:format.date()}" /><br />
+<label for="socialEn">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_en" />
+</label><br />
+	<f:form.textarea property="socialEn" id="socialEn" cols="40" rows="15" /><br />
+<label for="socialEnTstamp">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_en_tstamp" />
+</label><br />
+	<f:form.textfield property="socialEnTstamp" id="socialEnTstamp" value="{domainConfig.socialEnTstamp->f:format.date()}" /><br />
+<label for="analyticsId">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.analytics_id" />
+</label><br />
+	<f:form.textfield property="analyticsId" id="analyticsId" /><br />
+<label for="flagEmbedTracking">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking" />
+</label><br />
+	<f:form.checkbox property="flagEmbedTracking" id="flagEmbedTracking" value="1" /><br />
+<label for="flagUserCentricsEmbed">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed" />
+</label><br />
+	<f:form.checkbox property="flagUserCentricsEmbed" id="flagUserCentricsEmbed" value="1" /><br />
+<label for="flagOptOutCode">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code" />
+</label><br />
+	<f:form.checkbox property="flagOptOutCode" id="flagOptOutCode" value="1" /><br />
+<label for="rootPid">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.root_pid" />
+</label><br />
+	<f:form.textfield property="rootPid" id="rootPid" /><br />
+<label for="siteConfigName">
+	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.site_config_name" />
+</label><br />
+	<f:form.textfield property="siteConfigName" id="siteConfigName" /><br />
+</html>
