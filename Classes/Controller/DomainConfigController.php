@@ -11,7 +11,7 @@ namespace ERecht24\Er24Rechtstexte\Controller;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2020 
+ *  (c) 2020
  *
  ***/
 /**
@@ -22,7 +22,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
     /**
      * domainConfigRepository
-     * 
+     *
      * @var \ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository
      */
     protected $domainConfigRepository = null;
@@ -37,18 +37,25 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
     /**
      * action list
-     * 
+     *
      * @return void
      */
     public function listAction()
     {
-        $domainConfigs = $this->domainConfigRepository->findAll();
-        $this->view->assign('domainConfigs', $domainConfigs);
+
+        /** @var \TYPO3\CMS\Core\Site\SiteFinder $siteFinder */
+        $siteFinder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Site\SiteFinder::class);
+        $allSiteConfigurations = $siteFinder->getAllSites();
+
+        $this->view->assignMultiple([
+            'domainConfigs' => $this->domainConfigRepository->findAll(),
+            'allSiteConfigurations' => $siteFinder->getAllSites()
+        ]);
     }
 
     /**
      * action show
-     * 
+     *
      * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
      * @return void
      */
@@ -59,7 +66,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
     /**
      * action new
-     * 
+     *
      * @return void
      */
     public function newAction()
@@ -68,7 +75,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
     /**
      * action create
-     * 
+     *
      * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $newDomainConfig
      * @return void
      */
@@ -81,7 +88,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
     /**
      * action edit
-     * 
+     *
      * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("domainConfig")
      * @return void
@@ -93,7 +100,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
     /**
      * action update
-     * 
+     *
      * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
      * @return void
      */
@@ -106,7 +113,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
     /**
      * action delete
-     * 
+     *
      * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
      * @return void
      */

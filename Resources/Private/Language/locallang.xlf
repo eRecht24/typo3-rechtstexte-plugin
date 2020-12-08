@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="EXT:er24_rechtstexte/Resources/Private/Language/locallang" date="2020-12-08T13:30:06Z" product-name="er24_rechtstexte">
+	<file source-language="de" datatype="plaintext" original="EXT:er24_rechtstexte/Resources/Private/Language/locallang" date="2020-12-08T13:30:06Z" product-name="er24_rechtstexte">
 		<header/>
 		<body>
+
+			<trans-unit id="backend.title">
+				<source>eRecht24 Rechtstexte Plugin</source>
+			</trans-unit>
+
+			<trans-unit id="backend.overview_title">
+				<source>Konfigurationsübersicht</source>
+			</trans-unit>
+
+			<trans-unit id="backend.no_configs_title">
+				<source>Keine Konfiguration gefunden</source>
+			</trans-unit>
+
+			<trans-unit id="backend.no_configs_description">
+				<source>Es wurden noch keine eRecht24 Konfigurationen eingerichtet.</source>
+			</trans-unit>
+
+			<trans-unit id="backend.create_config">
+				<source>Konfiguration erstellen</source>
+			</trans-unit>
+
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig" resname="tx_er24rechtstexte_domain_model_domainconfig">
 				<source>Domain Config</source>
 			</trans-unit>

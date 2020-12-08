@@ -25,6 +25,6 @@ module.tx_er24rechtstexte_main {
     }
     persistence {
         # cat=module.tx_er24rechtstexte_main//a; type=string; label=Default storage PID
-        storagePid =
+        storagePid = root
     }
 }

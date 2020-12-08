@@ -1,23 +1,52 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 
-This Template is responsible for creating a table of domain objects.
-
-If you modify this template, do not forget to change the overwrite settings
-in /Configuration/ExtensionBuilder/settings.yaml:
-  Resources:
-    Private:
-      Backend:
-        Templates:
-          DomainConfig:
-            List.html: keep
-
-Otherwise your changes will be overwritten the next time you save the extension in the extension builder
-
 <f:section name="content">
-    <h1>Listing for DomainConfig</h1>
+
+    <h1>
+        <core:icon identifier="er24_rechtstexte-plugin-main" />
+        <f:translate key="backend.title" />
+    </h1>
+
+    <h2>
+        <f:translate key="backend.overview_title" />
+    </h2>
+
 
     <f:flashMessages />
+
+    <f:if condition="{domainConfigs}">
+        <f:then>
+            <f:for each="{domainConfigs}" as="config">
+
+            </f:for>
+            <f:link.action action="new" class="btn btn-success"><f:translate key="backend.create_config" /></f:link.action>
+        </f:then>
+        <f:else>
+            <f:be.infobox title="{f:translate(key: 'backend.no_configs_title')}" state="1">
+                <f:translate key="backend.no_configs_description" /><br /><br />
+                <f:link.action action="new" class="btn btn-success"><f:translate key="backend.create_config" /></f:link.action>
+            </f:be.infobox>
+        </f:else>
+    </f:if>
+
+    <f:if condition="{allSiteConfigurations}">
+
+        <f:be.infobox title="Siteconfigurations ohne eRecht24 Anbindung gefunden" state="-1">
+
+            <p>Die folgenden Seitenkonfigurationen wurden in diesem System gefunden, aber noch keiner eRecht24 Konfiguration zugewiesen.</p>
+
+            <ul>
+                <f:for each="{allSiteConfigurations}" as="siteConfig" key="identifier">
+                    <li>{identifier}
+                        <f:debug>{siteConfig}</f:debug>
+                    </li>
+                </f:for>
+            </ul>
+
+        </f:be.infobox>
+
+    </f:if>
 
     <table  class="tx_er24rechtstexte" >
         <tr>

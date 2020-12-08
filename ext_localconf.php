@@ -36,13 +36,14 @@ call_user_func(
                 }
            }'
         );
+
 		$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-		
-			$iconRegistry->registerIcon(
-				'er24_rechtstexte-plugin-main',
-				\TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-				['source' => 'EXT:er24_rechtstexte/Resources/Public/Icons/user_plugin_main.svg']
-			);
-		
+
+        $iconRegistry->registerIcon(
+            'er24_rechtstexte-plugin-main',
+            \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+            ['source' => 'EXT:er24_rechtstexte/Resources/Public/Icons/Extension.png']
+        );
+
     }
 );

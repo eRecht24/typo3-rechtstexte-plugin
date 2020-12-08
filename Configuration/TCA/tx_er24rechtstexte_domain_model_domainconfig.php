@@ -10,6 +10,7 @@ return [
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
         'transOrigDiffSourceField' => 'l10n_diffsource',
+        'rootLevel' => true,
         'delete' => 'deleted',
         'enablecolumns' => [
             'disabled' => 'hidden',
@@ -336,6 +337,6 @@ return [
                 'eval' => 'trim'
             ],
         ],
-    
+
     ],
 ];
