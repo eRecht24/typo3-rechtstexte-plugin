@@ -1,29 +1,61 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:layout name="Default" />
-
-This template displays a NEW form for the current domain object.
-
-If you modify this template, do not forget to change the overwrite settings
-in /Configuration/ExtensionBuilder/settings.yaml:
-  Resources:
-    Private:
-      Backend:
-        Templates:
-          DomainConfig:
-            New.html: keep
-
-Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:layout name="Default"/>
 
 <f:section name="content">
-    <h1>New DomainConfig</h1>
 
-    <f:flashMessages />
+    <div id="t3js-ui-block" class="ui-block">
+        <core:icon identifier="spinner-circle" size="large"/>
+        <h2 id="t3js-ui-block-detail">Loading</h2>
+    </div>
 
-    <f:render partial="FormErrors" />
+    <h1>
+        <core:icon identifier="er24_rechtstexte-plugin-main"/>
+        <f:translate key="backend.title"/>
+    </h1>
 
-    <f:form action="create" name="newDomainConfig" object="{newDomainConfig}">
-    <f:render partial="DomainConfig/FormFields" />
-        <f:form.submit value="Create new" />
-    </f:form>
+    <h2>Neue eRecht24 Konfiguration erstellen</h2>
+
+    <br />
+
+    <f:flashMessages/>
+
+    <f:render partial="FormErrors"/>
+
+    <div class="row">
+        <div class="col col-md-4">
+            <f:form action="create" name="newDomainConfig" id="configCreateForm" object="{newDomainConfig}">
+
+                <div class="form-group">
+                    <label for="domain">Domain</label>
+                    <f:form.textfield property="domain" type="url" id="domain" class="form-control" required="1"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="siteConfig">Site-Configuration</label>
+                    <f:form.select options="{allSiteConfigurations}" prependOptionValue="" prependOptionLabel="Bitte wählen" optionValueField="identifier" optionLabelField="identifier" property="siteConfigName" id="siteConfig" class="form-control"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="language">Site-Configuration Language</label>
+                    <f:form.select options="{allLanguages}" prependOptionValue="" prependOptionLabel="Bitte wählen" optionValueField="languageId" optionLabelField="title" property="siteLanguage" id="language" class="form-control"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="apiKey">API Key</label>
+                    <f:form.textfield property="apiKey" id="apiKey" class="form-control" required="1"/>
+                </div>
+
+                <f:link.action action="list" class="btn btn-default">
+                    Abbrechen
+                </f:link.action>
+
+                <button type="submit" class="btn btn-success pull-right">
+                    Konfiguration erstellen
+                </button>
+
+            </f:form>
+        </div>
+    </div>
 </f:section>
 </html>

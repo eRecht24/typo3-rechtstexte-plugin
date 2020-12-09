@@ -11,7 +11,7 @@ namespace ERecht24\Er24Rechtstexte\Domain\Model;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2020 
+ *  (c) 2020
  *
  ***/
 /**
@@ -22,168 +22,183 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * domain
-     * 
+     *
      * @var string
      */
     protected $domain = '';
 
     /**
      * apiKey
-     * 
+     *
      * @var string
      */
     protected $apiKey = '';
 
     /**
      * imprintSource
-     * 
+     *
      * @var int
      */
     protected $imprintSource = 0;
 
     /**
+     * @var int
+     */
+    protected $siteLanguage = 0;
+
+    /**
+     * @var string
+     */
+    protected $clientId = '';
+
+    /**
+     * @var string
+     */
+    protected $clientSecret = '';
+
+    /**
      * imprintDe
-     * 
+     *
      * @var string
      */
     protected $imprintDe = '';
 
     /**
      * imprintDeTstamp
-     * 
+     *
      * @var \DateTime
      */
     protected $imprintDeTstamp = null;
 
     /**
      * imprintEn
-     * 
+     *
      * @var string
      */
     protected $imprintEn = '';
 
     /**
      * imprintEnTstamp
-     * 
+     *
      * @var \DateTime
      */
     protected $imprintEnTstamp = null;
 
     /**
      * privacySource
-     * 
+     *
      * @var int
      */
     protected $privacySource = 0;
 
     /**
      * privacyDe
-     * 
+     *
      * @var string
      */
     protected $privacyDe = '';
 
     /**
      * privacyDeTstamp
-     * 
+     *
      * @var \DateTime
      */
     protected $privacyDeTstamp = null;
 
     /**
      * privacyEn
-     * 
+     *
      * @var string
      */
     protected $privacyEn = '';
 
     /**
      * privacyEnTstamp
-     * 
+     *
      * @var \DateTime
      */
     protected $privacyEnTstamp = null;
 
     /**
      * socialSource
-     * 
+     *
      * @var int
      */
     protected $socialSource = 0;
 
     /**
      * socialDe
-     * 
+     *
      * @var string
      */
     protected $socialDe = '';
 
     /**
      * socialDeTstamp
-     * 
+     *
      * @var \DateTime
      */
     protected $socialDeTstamp = null;
 
     /**
      * socialEn
-     * 
+     *
      * @var string
      */
     protected $socialEn = '';
 
     /**
      * socialEnTstamp
-     * 
+     *
      * @var \DateTime
      */
     protected $socialEnTstamp = null;
 
     /**
      * analyticsId
-     * 
+     *
      * @var string
      */
     protected $analyticsId = '';
 
     /**
      * flagEmbedTracking
-     * 
+     *
      * @var bool
      */
     protected $flagEmbedTracking = false;
 
     /**
      * flagUserCentricsEmbed
-     * 
+     *
      * @var bool
      */
     protected $flagUserCentricsEmbed = false;
 
     /**
      * flagOptOutCode
-     * 
+     *
      * @var bool
      */
     protected $flagOptOutCode = false;
 
     /**
      * rootPid
-     * 
+     *
      * @var int
      */
     protected $rootPid = 0;
 
     /**
      * siteConfigName
-     * 
+     *
      * @var string
      */
     protected $siteConfigName = '';
 
     /**
      * Returns the domain
-     * 
+     *
      * @return string $domain
      */
     public function getDomain()
@@ -193,7 +208,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the domain
-     * 
+     *
      * @param string $domain
      * @return void
      */
@@ -204,7 +219,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the apiKey
-     * 
+     *
      * @return string $apiKey
      */
     public function getApiKey()
@@ -214,7 +229,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the apiKey
-     * 
+     *
      * @param string $apiKey
      * @return void
      */
@@ -225,7 +240,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the imprintSource
-     * 
+     *
      * @return int $imprintSource
      */
     public function getImprintSource()
@@ -235,7 +250,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the imprintSource
-     * 
+     *
      * @param string $imprintSource
      * @return void
      */
@@ -246,7 +261,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the imprintDe
-     * 
+     *
      * @return string $imprintDe
      */
     public function getImprintDe()
@@ -256,7 +271,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the imprintDe
-     * 
+     *
      * @param string $imprintDe
      * @return void
      */
@@ -267,7 +282,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the imprintDeTstamp
-     * 
+     *
      * @return \DateTime $imprintDeTstamp
      */
     public function getImprintDeTstamp()
@@ -277,7 +292,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the imprintDeTstamp
-     * 
+     *
      * @param \DateTime $imprintDeTstamp
      * @return void
      */
@@ -288,7 +303,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the imprintEn
-     * 
+     *
      * @return string $imprintEn
      */
     public function getImprintEn()
@@ -298,7 +313,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the imprintEn
-     * 
+     *
      * @param string $imprintEn
      * @return void
      */
@@ -309,7 +324,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the imprintEnTstamp
-     * 
+     *
      * @return \DateTime $imprintEnTstamp
      */
     public function getImprintEnTstamp()
@@ -319,7 +334,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the imprintEnTstamp
-     * 
+     *
      * @param \DateTime $imprintEnTstamp
      * @return void
      */
@@ -330,7 +345,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the privacySource
-     * 
+     *
      * @return int $privacySource
      */
     public function getPrivacySource()
@@ -340,7 +355,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the privacySource
-     * 
+     *
      * @param int $privacySource
      * @return void
      */
@@ -351,7 +366,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the privacyDe
-     * 
+     *
      * @return string $privacyDe
      */
     public function getPrivacyDe()
@@ -361,7 +376,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the privacyDe
-     * 
+     *
      * @param string $privacyDe
      * @return void
      */
@@ -372,7 +387,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the privacyDeTstamp
-     * 
+     *
      * @return \DateTime $privacyDeTstamp
      */
     public function getPrivacyDeTstamp()
@@ -382,7 +397,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the privacyDeTstamp
-     * 
+     *
      * @param \DateTime $privacyDeTstamp
      * @return void
      */
@@ -393,7 +408,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the privacyEn
-     * 
+     *
      * @return string $privacyEn
      */
     public function getPrivacyEn()
@@ -403,7 +418,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the privacyEn
-     * 
+     *
      * @param string $privacyEn
      * @return void
      */
@@ -414,7 +429,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the privacyEnTstamp
-     * 
+     *
      * @return \DateTime $privacyEnTstamp
      */
     public function getPrivacyEnTstamp()
@@ -424,7 +439,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the privacyEnTstamp
-     * 
+     *
      * @param \DateTime $privacyEnTstamp
      * @return void
      */
@@ -435,7 +450,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the socialSource
-     * 
+     *
      * @return int $socialSource
      */
     public function getSocialSource()
@@ -445,7 +460,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the socialSource
-     * 
+     *
      * @param int $socialSource
      * @return void
      */
@@ -456,7 +471,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the socialDe
-     * 
+     *
      * @return string $socialDe
      */
     public function getSocialDe()
@@ -466,7 +481,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the socialDe
-     * 
+     *
      * @param string $socialDe
      * @return void
      */
@@ -477,7 +492,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the socialDeTstamp
-     * 
+     *
      * @return \DateTime $socialDeTstamp
      */
     public function getSocialDeTstamp()
@@ -487,7 +502,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the socialDeTstamp
-     * 
+     *
      * @param \DateTime $socialDeTstamp
      * @return void
      */
@@ -498,7 +513,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the socialEn
-     * 
+     *
      * @return string $socialEn
      */
     public function getSocialEn()
@@ -508,7 +523,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the socialEn
-     * 
+     *
      * @param string $socialEn
      * @return void
      */
@@ -519,7 +534,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the socialEnTstamp
-     * 
+     *
      * @return \DateTime $socialEnTstamp
      */
     public function getSocialEnTstamp()
@@ -529,7 +544,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the socialEnTstamp
-     * 
+     *
      * @param \DateTime $socialEnTstamp
      * @return void
      */
@@ -540,7 +555,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the analyticsId
-     * 
+     *
      * @return string $analyticsId
      */
     public function getAnalyticsId()
@@ -550,7 +565,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the analyticsId
-     * 
+     *
      * @param string $analyticsId
      * @return void
      */
@@ -561,7 +576,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the flagEmbedTracking
-     * 
+     *
      * @return bool $flagEmbedTracking
      */
     public function getFlagEmbedTracking()
@@ -571,7 +586,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the flagEmbedTracking
-     * 
+     *
      * @param bool $flagEmbedTracking
      * @return void
      */
@@ -582,7 +597,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the boolean state of flagEmbedTracking
-     * 
+     *
      * @return bool
      */
     public function isFlagEmbedTracking()
@@ -592,7 +607,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the flagUserCentricsEmbed
-     * 
+     *
      * @return bool $flagUserCentricsEmbed
      */
     public function getFlagUserCentricsEmbed()
@@ -602,7 +617,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the flagUserCentricsEmbed
-     * 
+     *
      * @param bool $flagUserCentricsEmbed
      * @return void
      */
@@ -613,7 +628,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the boolean state of flagUserCentricsEmbed
-     * 
+     *
      * @return bool
      */
     public function isFlagUserCentricsEmbed()
@@ -623,7 +638,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the flagOptOutCode
-     * 
+     *
      * @return bool $flagOptOutCode
      */
     public function getFlagOptOutCode()
@@ -633,7 +648,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the flagOptOutCode
-     * 
+     *
      * @param bool $flagOptOutCode
      * @return void
      */
@@ -644,7 +659,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the boolean state of flagOptOutCode
-     * 
+     *
      * @return bool
      */
     public function isFlagOptOutCode()
@@ -654,7 +669,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the rootPid
-     * 
+     *
      * @return int $rootPid
      */
     public function getRootPid()
@@ -664,7 +679,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the rootPid
-     * 
+     *
      * @param int $rootPid
      * @return void
      */
@@ -675,7 +690,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Returns the siteConfigName
-     * 
+     *
      * @return string $siteConfigName
      */
     public function getSiteConfigName()
@@ -685,12 +700,60 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * Sets the siteConfigName
-     * 
+     *
      * @param string $siteConfigName
      * @return void
      */
     public function setSiteConfigName($siteConfigName)
     {
         $this->siteConfigName = $siteConfigName;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSiteLanguage(): int
+    {
+        return $this->siteLanguage;
+    }
+
+    /**
+     * @param int $siteLanguage
+     */
+    public function setSiteLanguage(int $siteLanguage): void
+    {
+        $this->siteLanguage = $siteLanguage;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClientId(): string
+    {
+        return $this->clientId;
+    }
+
+    /**
+     * @param string|null $clientId
+     */
+    public function setClientId(?string $clientId): void
+    {
+        $this->clientId = $clientId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClientSecret(): string
+    {
+        return $this->clientSecret;
+    }
+
+    /**
+     * @param string|null $clientSecret
+     */
+    public function setClientSecret(?string $clientSecret): void
+    {
+        $this->clientSecret = $clientSecret;
     }
 }

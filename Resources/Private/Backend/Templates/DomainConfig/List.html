@@ -1,31 +1,59 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:layout name="Default" />
+<f:layout name="Default"/>
 
 <f:section name="content">
 
     <h1>
-        <core:icon identifier="er24_rechtstexte-plugin-main" />
-        <f:translate key="backend.title" />
+        <core:icon identifier="er24_rechtstexte-plugin-main"/>
+        <f:translate key="backend.title"/>
     </h1>
 
     <h2>
-        <f:translate key="backend.overview_title" />
+        <f:translate key="backend.overview_title"/>
     </h2>
 
 
-    <f:flashMessages />
+    <f:flashMessages/>
 
     <f:if condition="{domainConfigs}">
         <f:then>
-            <f:for each="{domainConfigs}" as="config">
-
-            </f:for>
-            <f:link.action action="new" class="btn btn-success"><f:translate key="backend.create_config" /></f:link.action>
+            <table class="table table-striped table-hover table-condensed">
+                <thead>
+                <tr>
+                    <th>Domain</th>
+                    <th>Site-Configuration [Language]</th>
+                    <th>API Key</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <f:for each="{domainConfigs}" as="config">
+                    <tr>
+                        <td>{config.domain}</td>
+                        <td>{config.siteConfigName} [{config.siteLanguage}]</td>
+                        <td>{config.apiKey}</td>
+                        <td></td>
+                        <td>
+                            <f:link.action action="edit" arguments="{domainConfig: config}" class="btn btn-primary t3js-record-delet">Bearbeiten</f:link.action>
+                            <f:link.action action="delete" arguments="{domainConfig: config}" class="btn btn-danger site-config-delete">Löschen</f:link.action>
+                        </td>
+                    </tr>
+                </f:for>
+                <tbody>
+                </tbody>
+            </table>
+            <f:link.action action="new" class="btn btn-success">
+                <f:translate key="backend.create_config"/>
+            </f:link.action>
         </f:then>
         <f:else>
             <f:be.infobox title="{f:translate(key: 'backend.no_configs_title')}" state="1">
-                <f:translate key="backend.no_configs_description" /><br /><br />
-                <f:link.action action="new" class="btn btn-success"><f:translate key="backend.create_config" /></f:link.action>
+                <f:translate key="backend.no_configs_description"/>
+                <br/><br/>
+                <f:link.action action="new" class="btn btn-success">
+                    <f:translate key="backend.create_config"/>
+                </f:link.action>
             </f:be.infobox>
         </f:else>
     </f:if>
@@ -34,80 +62,65 @@
 
         <f:be.infobox title="Siteconfigurations ohne eRecht24 Anbindung gefunden" state="-1">
 
-            <p>Die folgenden Seitenkonfigurationen wurden in diesem System gefunden, aber noch keiner eRecht24 Konfiguration zugewiesen.</p>
+            <p>Die folgenden Seitenkonfigurationen wurden in diesem System gefunden, aber noch keiner eRecht24
+                Konfiguration zugewiesen.</p>
 
-            <ul>
-                <f:for each="{allSiteConfigurations}" as="siteConfig" key="identifier">
-                    <li>{identifier}
-                        <f:debug>{siteConfig}</f:debug>
-                    </li>
-                </f:for>
-            </ul>
+            <div class="table-fit">
+                <table class="table table-striped table-hover table-condensed">
+                    <thead>
+                    <tr>
+                        <th>Site-Configuration-Name</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <f:for each="{allSiteConfigurations}" as="siteConfig" key="identifier">
+                        <tr>
+                            <td>{identifier}</td>
+                            <td>
+                                <table class="table table-striped table-no-borders">
+                                    <tr>
+                                        <th>
+                                            {f:translate(key:'LLL:EXT:backend/Resources/Private/Language/locallang_siteconfiguration_tca.xlf:site_language.language')}
+                                        </th>
+                                        <th>Domain</th>
+                                        <th></th>
+                                    </tr>
+                                    <f:for each="{siteConfig.allLanguages}" as="siteLanguage">
+                                        <tr>
+                                            <td>
+                                                <f:if condition="{siteLanguage.enabled}">
+                                                    <f:then>
+                                                        <core:icon identifier="{siteLanguage.flagIdentifier}"/>
+                                                        {siteLanguage.title}
+                                                    </f:then>
+                                                    <f:else>
+                                                        <core:icon identifier="{siteLanguage.flagIdentifier}"
+                                                                   overlay="overlay-hidden"/>
+                                                        <span class="text-muted">{siteLanguage.title} (<f:translate
+                                                            key="LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:disabled">disabled</f:translate>)</span>
+                                                    </f:else>
+                                                </f:if>
+                                            </td>
+                                            <td>{siteLanguage.base.host}</td>
+                                            <td>
+                                                <f:link.action action="new" class="btn btn-success btn-sm"
+                                                               arguments="{siteconfigIdentifier: siteConfig.identifier, languageId: siteLanguage.languageId}">
+                                                    <f:translate key="backend.create_config"/>
+                                                </f:link.action>
+                                            </td>
+                                        </tr>
+                                    </f:for>
+                                </table>
+                            </td>
+                            </td>
+                        </tr>
+                    </f:for>
+                </table>
+            </div>
 
         </f:be.infobox>
 
     </f:if>
 
-    <table  class="tx_er24rechtstexte" >
-        <tr>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.domain" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.api_key" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_source" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_de" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_de_tstamp" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_en" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_en_tstamp" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_source" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_de" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_en" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_en_tstamp" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_source" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_de" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_en" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_en_tstamp" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.analytics_id" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.root_pid" /></th>
-            <th><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.site_config_name" /></th>
-            <th> </th>
-            <th> </th>
-        </tr>
-
-        <f:for each="{domainConfigs}" as="domainConfig">
-            <tr>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.domain}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.apiKey}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.imprintSource}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.imprintDe}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.imprintDeTstamp -> f:format.date()}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.imprintEn}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.imprintEnTstamp -> f:format.date()}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.privacySource}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.privacyDe}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.privacyDeTstamp -> f:format.date()}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.privacyEn}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.privacyEnTstamp -> f:format.date()}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.socialSource}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.socialDe}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.socialDeTstamp -> f:format.date()}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.socialEn}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.socialEnTstamp -> f:format.date()}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.analyticsId}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.flagEmbedTracking}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.flagUserCentricsEmbed}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.flagOptOutCode}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.rootPid}</f:link.action></td>
-                <td><f:link.action action="show" arguments="{domainConfig : domainConfig}"> {domainConfig.siteConfigName}</f:link.action></td>
-                <td><f:link.action action="edit" arguments="{domainConfig : domainConfig}">Edit</f:link.action></td>
-                <td><f:link.action action="delete" arguments="{domainConfig : domainConfig}">Delete</f:link.action></td>
-            </tr>
-            </f:for>
-    </table>
-
-    <f:link.action action="new">New DomainConfig</f:link.action>
 </f:section>
 </html>

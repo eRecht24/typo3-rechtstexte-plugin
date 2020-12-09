@@ -28,6 +28,18 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     protected $domainConfigRepository = null;
 
     /**
+     * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
+     */
+    protected $persistenceManager = null;
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager
+     */
+    public function injectPersistenceManager(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager) {
+        $this->persistenceManager = $persistenceManager;
+    }
+
+    /**
      * @param \ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository $domainConfigRepository
      */
     public function injectDomainConfigRepository(\ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository $domainConfigRepository)
@@ -45,7 +57,6 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
         /** @var \TYPO3\CMS\Core\Site\SiteFinder $siteFinder */
         $siteFinder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Site\SiteFinder::class);
-        $allSiteConfigurations = $siteFinder->getAllSites();
 
         $this->view->assignMultiple([
             'domainConfigs' => $this->domainConfigRepository->findAll(),
@@ -65,12 +76,40 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     }
 
     /**
-     * action new
-     *
-     * @return void
+     * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig|null $newDomainConfig
+     * @param string $siteconfigIdentifier
+     * @param int $languageId
      */
-    public function newAction()
+    public function newAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $newDomainConfig = null, string $siteconfigIdentifier = '', int $languageId = 0)
     {
+
+        /** @var \TYPO3\CMS\Core\Site\SiteFinder $siteFinder */
+        $siteFinder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Site\SiteFinder::class);
+
+
+        if($newDomainConfig === null) {
+            $newDomainConfig = new \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig();
+            $newDomainConfig->setSiteConfigName($siteconfigIdentifier);
+            $newDomainConfig->setSiteLanguage($languageId);
+        }
+
+        if($newDomainConfig->getSiteConfigName() !== '') {
+            try {
+                $siteConfig = $siteFinder->getSiteByIdentifier($newDomainConfig->getSiteConfigName());
+                $language = $siteConfig->getLanguageById($newDomainConfig->getSiteLanguage());
+                $allLanguages = $siteConfig->getAllLanguages();
+                $newDomainConfig->setDomain($language->getBase()->getScheme() . '://' . $language->getBase()->getHost() . '/');
+            } catch(\Exception $e) {
+                $siteConfig = $language = $allLanguages = null;
+            }
+        }
+
+        $this->view->assignMultiple([
+            'newDomainConfig' => $newDomainConfig,
+            'siteConfig' => $siteConfig,
+            'allLanguages' => $allLanguages,
+            'allSiteConfigurations' => $siteFinder->getAllSites()
+        ]);
     }
 
     /**
@@ -81,9 +120,24 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function createAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $newDomainConfig)
     {
+
         $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+
         $this->domainConfigRepository->add($newDomainConfig);
-        $this->redirect('list');
+        $this->persistenceManager->persistAll();
+
+        if($newDomainConfig->getSiteConfigName() !== '') {
+            /** @var \TYPO3\CMS\Core\Configuration\SiteConfiguration $siteConfiguration */
+            $siteConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\SiteConfiguration::class);
+            $configurationArray = $siteConfiguration->load($newDomainConfig->getSiteConfigName());
+            if(true === isset($configurationArray['languages'][$newDomainConfig->getSiteLanguage()])) {
+                $configurationArray['languages'][$newDomainConfig->getSiteLanguage()]['eRecht24Config'] = $newDomainConfig->getUid();
+                $siteConfiguration->write($newDomainConfig->getSiteConfigName(), $configurationArray);
+            }
+        }
+
+        $this->redirect('edit', null, null, ['domainConfig' => $newDomainConfig->getUid()]);
+
     }
 
     /**

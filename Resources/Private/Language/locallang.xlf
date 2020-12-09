@@ -21,7 +21,7 @@
 			</trans-unit>
 
 			<trans-unit id="backend.create_config">
-				<source>Konfiguration erstellen</source>
+				<source>eRecht24 Konfiguration erstellen</source>
 			</trans-unit>
 
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig" resname="tx_er24rechtstexte_domain_model_domainconfig">

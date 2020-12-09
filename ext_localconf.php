@@ -45,5 +45,15 @@ call_user_func(
             ['source' => 'EXT:er24_rechtstexte/Resources/Public/Icons/Extension.png']
         );
 
+        if (TYPO3_MODE=="BE" )   {
+
+            // TODO: Language
+//            $label = LocalizationUtility::translate($key, $extensionKey);
+//            $pageRenderer->addInlineLanguageLabel($key, $label);
+
+            $pageRenderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
+            $pageRenderer->loadRequireJsModule('TYPO3/CMS/Er24Rechtstexte/eRecht24Module');
+        }
+
     }
 );

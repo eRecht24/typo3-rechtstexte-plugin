@@ -7,9 +7,6 @@ return [
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
         'versioningWS' => true,
-        'languageField' => 'sys_language_uid',
-        'transOrigPointerField' => 'l10n_parent',
-        'transOrigDiffSourceField' => 'l10n_diffsource',
         'rootLevel' => true,
         'delete' => 'deleted',
         'enablecolumns' => [
@@ -19,48 +16,12 @@ return [
         'iconfile' => 'EXT:er24_rechtstexte/Resources/Public/Icons/tx_er24rechtstexte_domain_model_domainconfig.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, domain, api_key, imprint_source, imprint_de, imprint_de_tstamp, imprint_en, imprint_en_tstamp, privacy_source, privacy_de, privacy_de_tstamp, privacy_en, privacy_en_tstamp, social_source, social_de, social_de_tstamp, social_en, social_en_tstamp, analytics_id, flag_embed_tracking, flag_user_centrics_embed, flag_opt_out_code, root_pid, site_config_name',
+        'showRecordFieldList' => 'hidden, domain, api_key, imprint_source, imprint_de, imprint_de_tstamp, imprint_en, imprint_en_tstamp, privacy_source, privacy_de, privacy_de_tstamp, privacy_en, privacy_en_tstamp, social_source, social_de, social_de_tstamp, social_en, social_en_tstamp, analytics_id, flag_embed_tracking, flag_user_centrics_embed, flag_opt_out_code, root_pid, site_config_name, site_language',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, domain, api_key, imprint_source, imprint_de, imprint_de_tstamp, imprint_en, imprint_en_tstamp, privacy_source, privacy_de, privacy_de_tstamp, privacy_en, privacy_en_tstamp, social_source, social_de, social_de_tstamp, social_en, social_en_tstamp, analytics_id, flag_embed_tracking, flag_user_centrics_embed, flag_opt_out_code, root_pid, site_config_name'],
+        '1' => ['showitem' => 'hidden, domain, api_key, imprint_source, imprint_de, imprint_de_tstamp, imprint_en, imprint_en_tstamp, privacy_source, privacy_de, privacy_de_tstamp, privacy_en, privacy_en_tstamp, social_source, social_de, social_de_tstamp, social_en, social_en_tstamp, analytics_id, flag_embed_tracking, flag_user_centrics_embed, flag_opt_out_code, root_pid, site_config_name, site_language'],
     ],
     'columns' => [
-        'sys_language_uid' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'special' => 'languages',
-                'items' => [
-                    [
-                        'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
-                        -1,
-                        'flags-multiple'
-                    ]
-                ],
-                'default' => 0,
-            ],
-        ],
-        'l10n_parent' => [
-            'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'default' => 0,
-                'items' => [
-                    ['', 0],
-                ],
-                'foreign_table' => 'tx_er24rechtstexte_domain_model_domainconfig',
-                'foreign_table_where' => 'AND {#tx_er24rechtstexte_domain_model_domainconfig}.{#pid}=###CURRENT_PID### AND {#tx_er24rechtstexte_domain_model_domainconfig}.{#sys_language_uid} IN (-1,0)',
-            ],
-        ],
-        'l10n_diffsource' => [
-            'config' => [
-                'type' => 'passthrough',
-            ],
-        ],
         't3ver_label' => [
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.versionLabel',
             'config' => [
@@ -337,6 +298,22 @@ return [
                 'eval' => 'trim'
             ],
         ],
-
+        'site_language' => [
+            'label' => 'Site Config Language',
+            'config' => [
+                'type' => 'input',
+                'size' => 3
+            ]
+        ],
+        'client_id' => [
+            'config' => [
+                'type' => 'passthrough'
+            ]
+        ],
+        'client_secret' => [
+            'config' => [
+                'type' => 'passthrough'
+            ]
+        ],
     ],
 ];
