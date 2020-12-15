@@ -31,52 +31,52 @@
 				<source>Domain</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.api_key" resname="tx_er24rechtstexte_domain_model_domainconfig.api_key">
-				<source>Api Key</source>
+				<source>API-Schlüssel</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_source" resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_source">
-				<source>Imprint Source</source>
+				<source>Datenquelle</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_de" resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_de">
-				<source>Imprint De</source>
+				<source>HTML-Code (DE)</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_de_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_de_tstamp">
-				<source>Imprint De Tstamp</source>
+				<source>Letzte Aktualisierung</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_en" resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_en">
-				<source>Imprint En</source>
+				<source>HTML-Code (EN)</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_en_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_en_tstamp">
-				<source>Imprint En Tstamp</source>
+				<source>Letzte Aktualisierung</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_source" resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_source">
-				<source>Privacy Source</source>
+				<source>Datenquelle</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_de" resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_de">
-				<source>Privacy De</source>
+				<source>HTML-Code (DE)</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp">
-				<source>Privacy De Tstamp</source>
+				<source>Letzte Aktualisierung</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_en" resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_en">
-				<source>Privacy En</source>
+				<source>HTML-Code (EN)</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_en_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_en_tstamp">
-				<source>Privacy En Tstamp</source>
+				<source>Letzte Aktualisierung</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_source" resname="tx_er24rechtstexte_domain_model_domainconfig.social_source">
-				<source>Social Source</source>
+				<source>Datenquelle</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_de" resname="tx_er24rechtstexte_domain_model_domainconfig.social_de">
-				<source>Social De</source>
+				<source>HTML-Code (DE)</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp">
-				<source>Social De Tstamp</source>
+				<source>Letzte Aktualisierung</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_en" resname="tx_er24rechtstexte_domain_model_domainconfig.social_en">
-				<source>Social En</source>
+				<source>HTML-Code (EN)</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_en_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.social_en_tstamp">
-				<source>Social En Tstamp</source>
+				<source>Letzte Aktualisierung</source>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.analytics_id" resname="tx_er24rechtstexte_domain_model_domainconfig.analytics_id">
 				<source>Analytics Id</source>

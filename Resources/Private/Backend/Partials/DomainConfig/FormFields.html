@@ -1,94 +1,391 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<label for="domain">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.domain" />
-</label><br />
-	<f:form.textfield property="domain" id="domain" /><br />
-<label for="apiKey">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.api_key" />
-</label><br />
-	<f:form.textfield property="apiKey" id="apiKey" /><br />
-<label for="imprintSource">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_source" />
-</label><br />
-	<f:form.textfield property="imprintSource" id="imprintSource" /><br />
-<label for="imprintDe">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_de" />
-</label><br />
-	<f:form.textarea property="imprintDe" id="imprintDe" cols="40" rows="15" /><br />
-<label for="imprintDeTstamp">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_de_tstamp" />
-</label><br />
-	<f:form.textfield property="imprintDeTstamp" id="imprintDeTstamp" value="{domainConfig.imprintDeTstamp->f:format.date()}" /><br />
-<label for="imprintEn">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_en" />
-</label><br />
-	<f:form.textarea property="imprintEn" id="imprintEn" cols="40" rows="15" /><br />
-<label for="imprintEnTstamp">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_en_tstamp" />
-</label><br />
-	<f:form.textfield property="imprintEnTstamp" id="imprintEnTstamp" value="{domainConfig.imprintEnTstamp->f:format.date()}" /><br />
-<label for="privacySource">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_source" />
-</label><br />
-	<f:form.textfield property="privacySource" id="privacySource" /><br />
-<label for="privacyDe">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_de" />
-</label><br />
-	<f:form.textarea property="privacyDe" id="privacyDe" cols="40" rows="15" /><br />
-<label for="privacyDeTstamp">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp" />
-</label><br />
-	<f:form.textfield property="privacyDeTstamp" id="privacyDeTstamp" value="{domainConfig.privacyDeTstamp->f:format.date()}" /><br />
-<label for="privacyEn">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_en" />
-</label><br />
-	<f:form.textarea property="privacyEn" id="privacyEn" cols="40" rows="15" /><br />
-<label for="privacyEnTstamp">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_en_tstamp" />
-</label><br />
-	<f:form.textfield property="privacyEnTstamp" id="privacyEnTstamp" value="{domainConfig.privacyEnTstamp->f:format.date()}" /><br />
-<label for="socialSource">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_source" />
-</label><br />
-	<f:form.textfield property="socialSource" id="socialSource" /><br />
-<label for="socialDe">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_de" />
-</label><br />
-	<f:form.textarea property="socialDe" id="socialDe" cols="40" rows="15" /><br />
-<label for="socialDeTstamp">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp" />
-</label><br />
-	<f:form.textfield property="socialDeTstamp" id="socialDeTstamp" value="{domainConfig.socialDeTstamp->f:format.date()}" /><br />
-<label for="socialEn">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_en" />
-</label><br />
-	<f:form.textarea property="socialEn" id="socialEn" cols="40" rows="15" /><br />
-<label for="socialEnTstamp">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_en_tstamp" />
-</label><br />
-	<f:form.textfield property="socialEnTstamp" id="socialEnTstamp" value="{domainConfig.socialEnTstamp->f:format.date()}" /><br />
+
+<div role="tabpanel">
+    <ul class="nav nav-tabs t3js-tabs" role="tablist" id="tabs-tab" data-store-last-tab="1">
+        <li role="presentation" class="t3js-tabmenu-item  active">
+            <a href="#tab-1" title="" aria-controls="tab-1" role="tab" data-toggle="tab">
+                <core:icon identifier="actions-cog-alt"/>
+                Allgemein / API Key
+            </a>
+        </li>
+        <li role="presentation" class="t3js-tabmenu-item ">
+            <a href="#tab-2" title="" aria-controls="tab-2" role="tab" data-toggle="tab">
+                <core:icon identifier="fa-bullhorn"/>
+                Impressum
+            </a>
+        </li>
+        <li role="presentation" class="t3js-tabmenu-item ">
+            <a href="#tab-3" title="" aria-controls="tab-3" role="tab" data-toggle="tab">
+                <core:icon identifier="fa-user"/>
+                Datenschutzerklärung
+            </a>
+        </li>
+        <li role="presentation" class="t3js-tabmenu-item ">
+            <a href="#tab-social" title="" aria-controls="tab-social" role="tab" data-toggle="tab">
+                <core:icon identifier="fa-facebook-square"/>
+                Datenschutz für Social-Media-Profile
+            </a>
+        </li>
+        <li role="presentation" class="t3js-tabmenu-item ">
+            <a href="#tab-google" title="" aria-controls="tab-google" role="tab" data-toggle="tab">
+                <core:icon identifier="fa-google"/>
+                Google Analytics
+            </a>
+        </li>
+        <li role="presentation" class="t3js-tabmenu-item ">
+            <a href="#tab-dok" title="" aria-controls="tab-dok" role="tab" data-toggle="tab">
+                <core:icon identifier="fa-question-circle"/>
+                Dokumentation
+            </a>
+        </li>
+        <li role="presentation" class="t3js-tabmenu-item ">
+            <a href="#tab-status" title="" aria-controls="tab-status" role="tab" data-toggle="tab">
+                <core:icon identifier="fa-check-circle"/>
+                Pluginstatus
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="tab-1">
+            <div class="panel panel-tab">
+                <div class="panel-body">
+
+                    <h3>Allgemein / API Key</h3>
+
+                    <div class="form-group row">
+                        <label for="domain" class="col-sm-2 col-form-label">
+                            <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.domain"/>
+                        </label>
+                        <div class="col-sm-10">
+                            <f:form.textfield type="url" property="domain" id="domain" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label for="apiKey">
+                                <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.api_key"/>
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <f:form.textfield property="apiKey" id="apiKey" class="form-control"/>
+                            <p class="text-muted">Bitte geben Sie den von eRecht24 bereitgestellten API-Schlüssel ein
+                                und
+                                klicken Sie auf Änderungen speichern.</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label>
+                                Synchronisieren
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <button type="button" class="btn btn-primary">Alle Rechtstexte synchronisieren und
+                                speichern
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="tab-2">
+            <div class="panel panel-tab">
+                <div class="panel-body">
+                    <h3>Impressum</h3>
+                    <p>Wählen Sie hier, ob Sie die aktuellste Version Ihres Impressums vom eRecht24 Projekt Manager
+                        abrufen möchten bzw. dieses durch den eRecht24 Projekt Manager eingefügt werden kann oder ob Sie
+                        Ihr Impressum lokal pflegen möchten.</p>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">
+                            <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_source"/>
+                        </label>
+                        <div class="col-sm-10">
+                            <div class="checkbox checkbox-type-toggle">
+                                <f:form.checkbox property="imprintSource" id="imprintSource" value="1"
+                                                 class="checkbox-input"/>
+                                <label class="checkbox-label" for="imprintSource">
+                                    <span class="checkbox-label-text">&nbsp;</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label>
+                                Synchronisieren
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <button type="button" class="btn btn-primary">Daten synchronisieren und speichern
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label for="imprintDe">
+                                <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_de"/>
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <f:form.textarea property="imprintDe" id="imprintDe" cols="40" rows="7"
+                                             class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label for="imprintDeTstamp">
+                                <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_de_tstamp"/>
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <f:form.textfield property="imprintDeTstamp" id="imprintDeTstamp"
+                                              value="{domainConfig.imprintDeTstamp->f:format.date()}" readonly="1"
+                                              class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label for="imprintEn">
+                                <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_en"/>
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <f:form.textarea property="imprintEn" id="imprintEn" cols="40" rows="7"
+                                             class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label for="imprintEnTstamp">
+                                <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_en_tstamp"/>
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <f:form.textfield property="imprintEnTstamp" id="imprintEnTstamp" readonly="1"
+                                              class="form-control"
+                                              value="{domainConfig.imprintEnTstamp->f:format.date()}"/>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="tab-3">
+            <div class="panel panel-tab">
+                <div class="panel-body">
+
+                    <h3>Datenschutzerklärung</h3>
+                    <p>Wählen Sie hier, ob Sie die aktuellste Version Ihrer Datenschutzerklärung vom eRecht24 Projekt
+                        Manager abrufen möchten bzw. diese durch den eRecht24 Projekt Manager eingefügt werden kann oder
+                        ob Sie Ihre Datenschutzerklärung lokal pflegen möchten.</p>
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">
+                            <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_source"/>
+                        </label>
+                        <div class="col-sm-10">
+                            <div class="checkbox checkbox-type-toggle">
+                                <f:form.checkbox property="privacySource" id="privacySource" value="1"
+                                                 class="checkbox-input"/>
+                                <label class="checkbox-label" for="privacySource">
+                                    <span class="checkbox-label-text">&nbsp;</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label>
+                                Synchronisieren
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <button type="button" class="btn btn-primary">Daten synchronisieren und speichern
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label for="privacyDe">
+                                <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_de"/>
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <f:form.textarea property="privacyDe" id="privacyDe" cols="40" rows="7"
+                                             class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label for="privacyDeTstamp">
+                                <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp"/>
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <f:form.textfield class="form-control" property="privacyDeTstamp" id="privacyDeTstamp"
+                                              readonly="1"
+                                              value="{domainConfig.privacyDeTstamp->f:format.date()}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label for="privacyEn">
+                                <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_en"/>
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <f:form.textarea property="privacyEn" id="privacyEn" cols="40" rows="7"
+                                             class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label for="privacyEnTstamp">
+                                <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_en_tstamp"/>
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <f:form.textfield class="form-control" property="privacyEnTstamp" id="privacyEnTstamp"
+                                              readonly="1"
+                                              value="{domainConfig.privacyEnTstamp->f:format.date()}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="tab-social">
+            <div class="panel panel-tab">
+                <div class="panel-body">
+
+                    <h3>Datenschutz für Social-Media-Profile</h3>
+                    <p>Wählen Sie hier, ob Sie die aktuellste Version Ihrer Datenschutzerklärung für
+                        Social-Media-Profile vom eRecht24 Projekt Manager abrufen möchten bzw. diese durch den eRecht24
+                        Projekt Manager eingefügt werden kann oder ob Sie Ihre Datenschutzerklärung für
+                        Social-Media-Profile lokal pflegen möchten.</p>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">
+                            <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_source"/>
+                        </label>
+                        <div class="col-sm-10">
+                            <div class="checkbox checkbox-type-toggle">
+                                <f:form.checkbox property="socialSource" id="socialSource" value="1"
+                                                 class="checkbox-input"/>
+                                <label class="checkbox-label" for="socialSource">
+                                    <span class="checkbox-label-text">&nbsp;</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label>
+                                Synchronisieren
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <button type="button" class="btn btn-primary">Daten synchronisieren und speichern
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label for="socialDe">
+                                <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_de"/>
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <f:form.textarea property="socialDe" id="socialDe" cols="40" rows="7" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label for="socialDeTstamp">
+                                <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp"/>
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <f:form.textfield class="form-control" property="socialDeTstamp" id="socialDeTstamp" readonly="1"
+                                              value="{domainConfig.socialDeTstamp->f:format.date()}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label for="socialEn">
+                                <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_en"/>
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <f:form.textarea property="socialEn" id="socialEn" cols="40" rows="7" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label for="socialEnTstamp">
+                                <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_en_tstamp"/>
+                            </label>
+                        </div>
+                        <div class="col-sm-10">
+                            <f:form.textfield class="form-control" property="socialEnTstamp" id="socialEnTstamp" readonly="1"
+                                              value="{domainConfig.socialEnTstamp->f:format.date()}"/>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <label for="analyticsId">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.analytics_id" />
-</label><br />
-	<f:form.textfield property="analyticsId" id="analyticsId" /><br />
+    <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.analytics_id"/>
+</label><br/>
+<f:form.textfield class="form-control" property="analyticsId" id="analyticsId"/>
+<br/>
 <label for="flagEmbedTracking">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking" />
-</label><br />
-	<f:form.checkbox property="flagEmbedTracking" id="flagEmbedTracking" value="1" /><br />
+    <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking"/>
+</label><br/>
+<f:form.checkbox property="flagEmbedTracking" id="flagEmbedTracking" value="1"/>
+<br/>
 <label for="flagUserCentricsEmbed">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed" />
-</label><br />
-	<f:form.checkbox property="flagUserCentricsEmbed" id="flagUserCentricsEmbed" value="1" /><br />
+    <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed"/>
+</label><br/>
+<f:form.checkbox property="flagUserCentricsEmbed" id="flagUserCentricsEmbed" value="1"/>
+<br/>
 <label for="flagOptOutCode">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code" />
-</label><br />
-	<f:form.checkbox property="flagOptOutCode" id="flagOptOutCode" value="1" /><br />
+    <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code"/>
+</label><br/>
+<f:form.checkbox property="flagOptOutCode" id="flagOptOutCode" value="1"/>
+<br/>
 <label for="rootPid">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.root_pid" />
-</label><br />
-	<f:form.textfield property="rootPid" id="rootPid" /><br />
+    <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.root_pid"/>
+</label><br/>
+<f:form.textfield class="form-control" property="rootPid" id="rootPid"/>
+<br/>
 <label for="siteConfigName">
-	<f:translate key="tx_er24rechtstexte_domain_model_domainconfig.site_config_name" />
-</label><br />
-	<f:form.textfield property="siteConfigName" id="siteConfigName" /><br />
+    <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.site_config_name"/>
+</label><br/>
+<f:form.textfield class="form-control" property="siteConfigName" id="siteConfigName"/>
+<br/>
 </html>

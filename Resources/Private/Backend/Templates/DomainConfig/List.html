@@ -103,10 +103,26 @@
                                             </td>
                                             <td>{siteLanguage.base.host}</td>
                                             <td>
-                                                <f:link.action action="new" class="btn btn-success btn-sm"
-                                                               arguments="{siteconfigIdentifier: siteConfig.identifier, languageId: siteLanguage.languageId}">
-                                                    <f:translate key="backend.create_config"/>
-                                                </f:link.action>
+                                                <f:comment>
+                                                    <!-- TODO: Dieses ForEach ist unsauber und sollte mindestens durch einen ViewHelper ersetzt werden -->
+                                                </f:comment>
+                                                <f:variable name="domainAlreadyConfigured" value="0" />
+                                                <f:for each="{configuredDomains}" as="existingConfigDomain">
+                                                    <f:if condition="{existingConfigDomain}=={siteLanguage.base.host}">
+                                                        <f:variable name="domainAlreadyConfigured" value="1" />
+                                                    </f:if>
+                                                </f:for>
+                                                <f:if condition="{domainAlreadyConfigured}">
+                                                    <f:then>
+                                                        <span class="text-muted">Konfiguration existiert bereits</span>
+                                                    </f:then>
+                                                    <f:else>
+                                                        <f:link.action action="new" class="btn btn-success btn-sm"
+                                                                       arguments="{siteconfigIdentifier: siteConfig.identifier, languageId: siteLanguage.languageId}">
+                                                            <f:translate key="backend.create_config"/>
+                                                        </f:link.action>
+                                                    </f:else>
+                                                </f:if>
                                             </td>
                                         </tr>
                                     </f:for>

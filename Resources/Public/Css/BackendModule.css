@@ -1,0 +1,5 @@
+.erecht-module input[type="text"],
+.erecht-module input[type="url"]{
+    width: 350px;
+    max-width: 100%;
+}

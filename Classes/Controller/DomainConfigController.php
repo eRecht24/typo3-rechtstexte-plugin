@@ -14,6 +14,7 @@ namespace ERecht24\Er24Rechtstexte\Controller;
  *  (c) 2020
  *
  ***/
+
 /**
  * DomainConfigController
  */
@@ -35,7 +36,8 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     /**
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager
      */
-    public function injectPersistenceManager(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager) {
+    public function injectPersistenceManager(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager)
+    {
         $this->persistenceManager = $persistenceManager;
     }
 
@@ -58,9 +60,47 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         /** @var \TYPO3\CMS\Core\Site\SiteFinder $siteFinder */
         $siteFinder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Site\SiteFinder::class);
 
+        $allSiteConfigurations = $siteFinder->getAllSites();
+        $domainConfigs = $this->domainConfigRepository->findAll();
+
+        $domainsLeft = $configuredDomains = [];
+
+        /** @var \TYPO3\CMS\Core\Site\Entity\Site $siteConfig */
+        foreach ($allSiteConfigurations as $index => $siteConfig) {
+            /** @var \TYPO3\CMS\Core\Site\Entity\SiteLanguage $language */
+            foreach ($siteConfig->getAllLanguages() as $language) {
+                $domainsLeft[$language->getBase()->getScheme() . '://' . $language->getBase()->getHost() . '/'] = $index;
+            }
+        }
+
+        /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $config */
+        foreach ($domainConfigs as $config) {
+            $urlParts = parse_url($config->getDomain());
+            if($urlParts !== false) {
+                $configuredDomains[(string) $urlParts['host']] = $urlParts['host'];
+            }
+            if (true === isset($domainsLeft[$config->getDomain()])) {
+                unset($domainsLeft[$config->getDomain()]);
+            }
+        }
+
+        /** @var \TYPO3\CMS\Core\Site\Entity\Site $siteConfig */
+        foreach ($allSiteConfigurations as $index => $siteConfig) {
+            $match = false;
+            foreach ($domainsLeft as $domain => $siteIdentifier) {
+                if($index === $siteIdentifier) {
+                    $match = true;
+                }
+            }
+            if($match === false) {
+                unset($allSiteConfigurations[$index]);
+            }
+        }
+
         $this->view->assignMultiple([
-            'domainConfigs' => $this->domainConfigRepository->findAll(),
-            'allSiteConfigurations' => $siteFinder->getAllSites()
+            'domainConfigs' => $domainConfigs,
+            'allSiteConfigurations' => $allSiteConfigurations,
+            'configuredDomains' => $configuredDomains
         ]);
     }
 
@@ -87,19 +127,19 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $siteFinder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Site\SiteFinder::class);
 
 
-        if($newDomainConfig === null) {
+        if ($newDomainConfig === null) {
             $newDomainConfig = new \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig();
             $newDomainConfig->setSiteConfigName($siteconfigIdentifier);
             $newDomainConfig->setSiteLanguage($languageId);
         }
 
-        if($newDomainConfig->getSiteConfigName() !== '') {
+        if ($newDomainConfig->getSiteConfigName() !== '') {
             try {
                 $siteConfig = $siteFinder->getSiteByIdentifier($newDomainConfig->getSiteConfigName());
                 $language = $siteConfig->getLanguageById($newDomainConfig->getSiteLanguage());
                 $allLanguages = $siteConfig->getAllLanguages();
                 $newDomainConfig->setDomain($language->getBase()->getScheme() . '://' . $language->getBase()->getHost() . '/');
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 $siteConfig = $language = $allLanguages = null;
             }
         }
@@ -126,11 +166,11 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->domainConfigRepository->add($newDomainConfig);
         $this->persistenceManager->persistAll();
 
-        if($newDomainConfig->getSiteConfigName() !== '') {
+        if ($newDomainConfig->getSiteConfigName() !== '') {
             /** @var \TYPO3\CMS\Core\Configuration\SiteConfiguration $siteConfiguration */
             $siteConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\SiteConfiguration::class);
             $configurationArray = $siteConfiguration->load($newDomainConfig->getSiteConfigName());
-            if(true === isset($configurationArray['languages'][$newDomainConfig->getSiteLanguage()])) {
+            if (true === isset($configurationArray['languages'][$newDomainConfig->getSiteLanguage()])) {
                 $configurationArray['languages'][$newDomainConfig->getSiteLanguage()]['eRecht24Config'] = $newDomainConfig->getUid();
                 $siteConfiguration->write($newDomainConfig->getSiteConfigName(), $configurationArray);
             }
