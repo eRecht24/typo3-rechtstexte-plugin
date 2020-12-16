@@ -3,13 +3,13 @@ define(['jquery',
   'TYPO3/CMS/Backend/FormEngineValidation',
   'TYPO3/CMS/Backend/Utility/MessageUtility',
   'TYPO3/CMS/Backend/Severity',
-  'TYPO3/CMS/Backend/Modal'
-], function ($, AjaxRequest, FormEngineValidation, MessageUtility, Severity, Modal) {
-
-  console.log(top.TYPO3);
+  'TYPO3/CMS/Backend/Modal',
+  'TYPO3/CMS/Backend/Notification'
+], function ($, AjaxRequest, FormEngineValidation, MessageUtility, Severity, Modal, Notification) {
 
   var eRecht24Module = {
-    languagePossibleUrls: []
+    languagePossibleUrls: [],
+    domainConfigId: null
   };
 
   eRecht24Module.showLoader = function () {
@@ -33,6 +33,39 @@ define(['jquery',
         eRecht24Module.languagePossibleUrls = resolved;
       }
     )
+  }
+
+  eRecht24Module.handleError = function(errors) {
+    for(var error of errors) {
+      Notification.error(
+        'Fehler', error, 10
+      );
+    }
+  }
+
+  eRecht24Module.initSyncAllDocuments = function() {
+    $('#syncAllDocuments').click(function() {
+
+      eRecht24Module.showLoader()
+
+      new AjaxRequest(TYPO3.settings.ajaxUrls.er24_syncAllDocuments)
+        .withQueryArguments(
+          {
+            domainConfigId: eRecht24Module.domainConfigId,
+            apiKey: $('#apiKey').val()
+          }
+        )
+        .get().then(async function (response) {
+          resolved = await response.resolve();
+
+          if(resolved.errors) {
+            eRecht24Module.handleError(resolved.errors);
+          }
+
+          eRecht24Module.hideLoader();
+        }
+      )
+    })
   }
 
   if ($('#configCreateForm').length > 0) {
@@ -72,6 +105,11 @@ define(['jquery',
         }
       }
     });
+  }
+
+  if($('#domainConfigEditForm').length > 0) {
+    eRecht24Module.domainConfigId = parseInt($('#domainConfigId').val());
+    eRecht24Module.initSyncAllDocuments();
   }
 
   // $('.site-config-delete').click(function (e) {

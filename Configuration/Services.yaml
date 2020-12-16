@@ -1,0 +1,10 @@
+# Configuration/Services.yaml
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+  ERecht24\Er24Rechtstexte\:
+    resource: '../Classes/*'
+  ERecht24\Er24Rechtstexte\Controller\AjaxController:
+    public: true

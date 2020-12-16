@@ -15,7 +15,7 @@
 
     <f:render partial="FormErrors"/>
 
-    <f:form action="update" name="domainConfig" object="{domainConfig}">
+    <f:form action="update" name="domainConfig" object="{domainConfig}" id="domainConfigEditForm">
         <f:render partial="DomainConfig/FormFields" arguments="{domainConfig:domainConfig}"/>
         <f:form.submit value="Save"/>
     </f:form>
