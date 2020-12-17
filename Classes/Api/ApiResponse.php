@@ -19,7 +19,8 @@ class ApiResponse
         int $code,
         bool $success,
         $data = []
-    ) {
+    )
+    {
         // $data can be null if response does not contain any json
         if (is_null($data)) {
             $data = [];
@@ -35,7 +36,8 @@ class ApiResponse
      */
     public function getData(
         ?string $key = null
-    ) {
+    )
+    {
         if (!$key)
             return $this->data;
 
@@ -57,7 +59,8 @@ class ApiResponse
      */
     public function addData(
         array $data
-    ) {
+    )
+    {
         foreach ($data as $key => $value) {
             $this->data[$key] = $value;
         }

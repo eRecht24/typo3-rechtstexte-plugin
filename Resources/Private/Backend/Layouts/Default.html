@@ -5,7 +5,14 @@
     <div class="module erecht-module">
         <div id="module-docbody">
             <div id="typo3-inner-docbody">
+
                 <f:flashMessages />
+
+                <div id="t3js-ui-block" class="ui-block">
+                    <core:icon identifier="spinner-circle" size="large"/>
+                    <h2 id="t3js-ui-block-detail">Loading</h2>
+                </div>
+
                 <f:render section="content" />
             </div>
         </div>

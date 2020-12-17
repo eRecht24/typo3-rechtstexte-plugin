@@ -88,6 +88,16 @@ return [
                 'eval' => 'trim'
             ]
         ],
+        'imprint_de_local' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.imprint_de (local)',
+            'config' => [
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 15,
+                'eval' => 'trim'
+            ]
+        ],
         'imprint_de_tstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.imprint_de_tstamp',
@@ -102,6 +112,16 @@ return [
         'imprint_en' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.imprint_en',
+            'config' => [
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 15,
+                'eval' => 'trim'
+            ]
+        ],
+        'imprint_en_local' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.imprint_en (local)',
             'config' => [
                 'type' => 'text',
                 'cols' => 40,

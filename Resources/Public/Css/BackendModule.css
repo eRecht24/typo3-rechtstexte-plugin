@@ -3,3 +3,8 @@
     width: 350px;
     max-width: 100%;
 }
+
+.erecht-module .checkbox-type-toggle .label-left {
+    display: inline-block;
+    margin-right: 12px;
+}

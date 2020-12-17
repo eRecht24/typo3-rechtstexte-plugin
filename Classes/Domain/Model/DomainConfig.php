@@ -64,11 +64,20 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $imprintDe = '';
 
     /**
-     * imprintDeTstamp
-     *
-     * @var \DateTime
+     * @var string
      */
-    protected $imprintDeTstamp = null;
+    protected $imprintDeLocal = '';
+
+    /**
+     * @var string
+     */
+    protected $imprintEnLocal = '';
+
+    /**
+     * imprintDeTstamp
+     * @var integer
+     */
+    protected $imprintDeTstamp = 0;
 
     /**
      * imprintEn
@@ -79,10 +88,9 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * imprintEnTstamp
-     *
-     * @var \DateTime
+     * @var integer
      */
-    protected $imprintEnTstamp = null;
+    protected $imprintEnTstamp = 0;
 
     /**
      * privacySource
@@ -101,9 +109,9 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * privacyDeTstamp
      *
-     * @var \DateTime
+     * @var int
      */
-    protected $privacyDeTstamp = null;
+    protected $privacyDeTstamp = 0;
 
     /**
      * privacyEn
@@ -115,9 +123,9 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * privacyEnTstamp
      *
-     * @var \DateTime
+     * @var int
      */
-    protected $privacyEnTstamp = null;
+    protected $privacyEnTstamp = 0;
 
     /**
      * socialSource
@@ -136,9 +144,9 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * socialDeTstamp
      *
-     * @var \DateTime
+     * @var int
      */
-    protected $socialDeTstamp = null;
+    protected $socialDeTstamp = 0;
 
     /**
      * socialEn
@@ -150,9 +158,9 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * socialEnTstamp
      *
-     * @var \DateTime
+     * @var int
      */
-    protected $socialEnTstamp = null;
+    protected $socialEnTstamp = 0;
 
     /**
      * analyticsId
@@ -283,7 +291,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the imprintDeTstamp
      *
-     * @return \DateTime $imprintDeTstamp
+     * @return integer $imprintDeTstamp
      */
     public function getImprintDeTstamp()
     {
@@ -293,10 +301,10 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the imprintDeTstamp
      *
-     * @param \DateTime $imprintDeTstamp
+     * @param integer $imprintDeTstamp
      * @return void
      */
-    public function setImprintDeTstamp(\DateTime $imprintDeTstamp)
+    public function setImprintDeTstamp(int $imprintDeTstamp)
     {
         $this->imprintDeTstamp = $imprintDeTstamp;
     }
@@ -325,7 +333,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the imprintEnTstamp
      *
-     * @return \DateTime $imprintEnTstamp
+     * @return integer $imprintEnTstamp
      */
     public function getImprintEnTstamp()
     {
@@ -335,10 +343,10 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the imprintEnTstamp
      *
-     * @param \DateTime $imprintEnTstamp
+     * @param integer $imprintEnTstamp
      * @return void
      */
-    public function setImprintEnTstamp(\DateTime $imprintEnTstamp)
+    public function setImprintEnTstamp(int $imprintEnTstamp)
     {
         $this->imprintEnTstamp = $imprintEnTstamp;
     }
@@ -388,7 +396,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the privacyDeTstamp
      *
-     * @return \DateTime $privacyDeTstamp
+     * @return int $privacyDeTstamp
      */
     public function getPrivacyDeTstamp()
     {
@@ -398,10 +406,10 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the privacyDeTstamp
      *
-     * @param \DateTime $privacyDeTstamp
+     * @param int $privacyDeTstamp
      * @return void
      */
-    public function setPrivacyDeTstamp(\DateTime $privacyDeTstamp)
+    public function setPrivacyDeTstamp(int $privacyDeTstamp)
     {
         $this->privacyDeTstamp = $privacyDeTstamp;
     }
@@ -430,7 +438,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the privacyEnTstamp
      *
-     * @return \DateTime $privacyEnTstamp
+     * @return int $privacyEnTstamp
      */
     public function getPrivacyEnTstamp()
     {
@@ -440,10 +448,10 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the privacyEnTstamp
      *
-     * @param \DateTime $privacyEnTstamp
+     * @param int $privacyEnTstamp
      * @return void
      */
-    public function setPrivacyEnTstamp(\DateTime $privacyEnTstamp)
+    public function setPrivacyEnTstamp(int $privacyEnTstamp)
     {
         $this->privacyEnTstamp = $privacyEnTstamp;
     }
@@ -493,7 +501,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the socialDeTstamp
      *
-     * @return \DateTime $socialDeTstamp
+     * @return int $socialDeTstamp
      */
     public function getSocialDeTstamp()
     {
@@ -503,10 +511,10 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the socialDeTstamp
      *
-     * @param \DateTime $socialDeTstamp
+     * @param int $socialDeTstamp
      * @return void
      */
-    public function setSocialDeTstamp(\DateTime $socialDeTstamp)
+    public function setSocialDeTstamp(int $socialDeTstamp)
     {
         $this->socialDeTstamp = $socialDeTstamp;
     }
@@ -535,7 +543,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the socialEnTstamp
      *
-     * @return \DateTime $socialEnTstamp
+     * @return int $socialEnTstamp
      */
     public function getSocialEnTstamp()
     {
@@ -545,10 +553,10 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the socialEnTstamp
      *
-     * @param \DateTime $socialEnTstamp
+     * @param int $socialEnTstamp
      * @return void
      */
-    public function setSocialEnTstamp(\DateTime $socialEnTstamp)
+    public function setSocialEnTstamp(int $socialEnTstamp)
     {
         $this->socialEnTstamp = $socialEnTstamp;
     }
@@ -755,5 +763,37 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setClientSecret(?string $clientSecret): void
     {
         $this->clientSecret = $clientSecret;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImprintDeLocal(): string
+    {
+        return $this->imprintDeLocal;
+    }
+
+    /**
+     * @param string $imprintDeLocal
+     */
+    public function setImprintDeLocal(string $imprintDeLocal): void
+    {
+        $this->imprintDeLocal = $imprintDeLocal;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImprintEnLocal(): string
+    {
+        return $this->imprintEnLocal;
+    }
+
+    /**
+     * @param string $imprintEnLocal
+     */
+    public function setImprintEnLocal(string $imprintEnLocal): void
+    {
+        $this->imprintEnLocal = $imprintEnLocal;
     }
 }

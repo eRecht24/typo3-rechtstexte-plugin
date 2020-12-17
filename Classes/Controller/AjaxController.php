@@ -26,6 +26,59 @@ class AjaxController
         $this->domainConfigRepository = $domainConfigRepository;
     }
 
+    /**
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     */
+    public function syncImprintAction(ServerRequestInterface $request) : \Psr\Http\Message\ResponseInterface {
+
+        $domainConfigId = (int) $request->getQueryParams()['domainConfigId'];
+
+        /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig */
+        $domainConfig = $this->domainConfigRepository->findByUid($domainConfigId);
+
+        $errors = $successes = $response = [];
+        $documentType = 'imprint';
+
+        if($domainConfig->getApiKey() === '') {
+            $errors[] = 'Kein API Key hinterlegt';
+        } else {
+            $documentClient = new \ERecht24\Er24Rechtstexte\Api\LegalDocument($domainConfig->getApiKey(), $documentType, $domainConfig->getDomain());
+            $document = $documentClient->importDocument();
+
+            if($document->isSuccess() === false) {
+                $errors[] = HelperUtility::getBestFittingApiErrorMessage($document);
+                if($document->getCode() === 400) {
+                    $domainConfig = HelperUtility::removeDocument($domainConfig, $documentType);
+                }
+            } else {
+                $domainConfig = HelperUtility::assignDocumentToDomainConfig($document, $domainConfig, $documentType);
+                $successes[] = $documentType . '_imported';
+                $response['imprintDe'] = $document->getData('html_de');
+                $response['imprintEn'] = $document->getData('html_en');
+                $response['modified'] = $document->getData('modified');
+            }
+        }
+
+        $this->domainConfigRepository->update($domainConfig);
+        $this->persistenceManager->persistAll();
+
+        return new \TYPO3\CMS\Core\Http\JsonResponse([
+            'errors' => $errors,
+            'successes' => $successes,
+            'response' => $response
+        ]);
+
+    }
+
+    /**
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     */
     public function syncAllDocumentsAction(ServerRequestInterface $request) : \Psr\Http\Message\ResponseInterface {
 
         $domainConfigId = (int) $request->getQueryParams()['domainConfigId'];
@@ -39,7 +92,7 @@ class AjaxController
         $this->domainConfigRepository->update($domainConfg);
         $this->persistenceManager->persistAll();
 
-        $errors = [];
+        $errors = $successes = [];
 
         if($domainConfg->getApiKey() === '') {
 
@@ -73,16 +126,33 @@ class AjaxController
             } else {
                 $domainConfg->setClientId($clientResult->getData('client_id'));
                 $domainConfg->setClientSecret($clientResult->getData('secret'));
+                $this->domainConfigRepository->update($domainConfg);
+                $this->persistenceManager->persistAll();
             }
-
         }
 
-        if(count($errors) > 0) {
-            return self::handleError($errors);
+        foreach (\ERecht24\Er24Rechtstexte\Api\LegalDocument::ALLOWED_DOCUMENT_TYPES as $documentType) {
+            $documentClient = new \ERecht24\Er24Rechtstexte\Api\LegalDocument($domainConfg->getApiKey(), $documentType, $domainConfg->getDomain());
+            $document = $documentClient->importDocument();
+
+            if($document->isSuccess() === false) {
+                $errors[] = HelperUtility::getBestFittingApiErrorMessage($document);
+                if($document->getCode() === 400) {
+                    $domainConfg = HelperUtility::removeDocument($domainConfg, $documentType);
+                }
+            } else {
+                $domainConfg = HelperUtility::assignDocumentToDomainConfig($document, $domainConfg, $documentType);
+                $successes[] = $documentType . '_imported';
+            }
         }
 
-        return new \TYPO3\CMS\Core\Http\Response('');
+        $this->domainConfigRepository->update($domainConfg);
+        $this->persistenceManager->persistAll();
 
+        return new \TYPO3\CMS\Core\Http\JsonResponse([
+            'errors' => $errors,
+            'successes' => $successes
+        ]);
     }
 
     protected function handleError($errors) {
