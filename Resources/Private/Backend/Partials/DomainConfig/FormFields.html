@@ -16,8 +16,8 @@
                 Impressum
             </a>
         </li>
-        <li role="presentation" class="t3js-tabmenu-item ">
-            <a href="#tab-3" title="" aria-controls="tab-3" role="tab" data-toggle="tab">
+        <li role="presentation" class="t3js-tabmenu-item">
+            <a href="#tab-privacy" title="" aria-controls="tab-3" role="tab" data-toggle="tab">
                 <core:icon identifier="fa-user"/>
                 Datenschutzerklärung
             </a>
@@ -126,7 +126,9 @@
                         </div>
                         <div class="col-sm-10">
                             <button type="button" class="btn btn-primary remote-content" id="syncImprint">Daten synchronisieren und speichern</button>
-                            <button type="button" class="btn btn-primary local-content" id="imprintRestoreRemote">Lokale Daten mit den zuletzt synchronisierten Texten überschreiben</button>
+                            <button type="button" class="btn btn-primary local-content" id="imprintRestoreRemote"
+                                {f:if(condition: '{domainConfig.imprintDe} || {domainConfig.imprintEn}', else: 'disabled')}
+                            >Lokale Daten mit den zuletzt synchronisierten Texten überschreiben</button>
                         </div>
                     </div>
 
@@ -156,7 +158,7 @@
                         </div>
                         <div class="col-sm-10">
                             <f:form.textfield property="imprintDeTstamp" id="imprintDeTstamp"
-                                              value="{domainConfig.imprintDeTstamp->f:format.date(format: 'Y-m-d\TH:i:sP')}"
+                                              value="{domainConfig.imprintDeTstamp->f:format.date(format: 'Y-m-d H:i:s')}"
                                               disabled="1"
                                               class="form-control"/>
                         </div>
@@ -186,14 +188,14 @@
                         <div class="col-sm-10">
                             <f:form.textfield property="imprintEnTstamp" id="imprintEnTstamp" disabled="1"
                                               class="form-control"
-                                              value="{domainConfig.imprintEnTstamp->f:format.date(format: 'Y-m-d\TH:i:sP')}"/>
+                                              value="{domainConfig.imprintEnTstamp->f:format.date(format: 'Y-m-d H:i:s')}"/>
                         </div>
                     </div>
 
                 </div>
             </div>
         </div>
-        <div role="tabpanel" class="tab-pane" id="tab-3">
+        <div role="tabpanel" class="tab-pane tab-privacy" id="tab-privacy" data-source="{domainConfig.privacySource}">
             <div class="panel panel-tab">
                 <div class="panel-body">
 
@@ -209,11 +211,13 @@
                         </label>
                         <div class="col-sm-10">
                             <div class="checkbox checkbox-type-toggle">
+                                <span class="label-left">Lokale Version</span>
                                 <f:form.checkbox property="privacySource" id="privacySource" value="1"
                                                  class="checkbox-input"/>
                                 <label class="checkbox-label" for="privacySource">
                                     <span class="checkbox-label-text">&nbsp;</span>
                                 </label>
+                                <span class="label-right">eRecht24 Projekt Manager</span>
                             </div>
                         </div>
                     </div>
@@ -225,22 +229,30 @@
                             </label>
                         </div>
                         <div class="col-sm-10">
-                            <button type="button" class="btn btn-primary">Daten synchronisieren und speichern
-                            </button>
+                            <button type="button" class="btn btn-primary remote-content" id="syncPrivacy">Daten synchronisieren und speichern</button>
+                            <button type="button" class="btn btn-primary local-content" id="privacyRestoreRemote"
+                                    {f:if(condition: '{domainConfig.privacyDe} || {domainConfig.privacyEn}', else: 'disabled')}
+                            >Lokale Daten mit den zuletzt synchronisierten Texten überschreiben</button>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-2 col-form-label">
-                            <label for="privacyDe">
+                            <label for="privacyDe" class="remote-content">
                                 <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_de"/>
+                            </label>
+                            <label for="privacyDeLocal" class="local-content">
+                                HTML-Code (DE) - Lokal
                             </label>
                         </div>
                         <div class="col-sm-10">
                             <f:form.textarea property="privacyDe" id="privacyDe" cols="40" rows="7"
-                                             class="form-control"/>
+                                             class="form-control remote-content"/>
+                            <f:form.textarea property="privacyDeLocal" id="privacyDeLocal" cols="40" rows="7"
+                                             class="form-control local-content"/>
                         </div>
                     </div>
+
 
                     <div class="form-group row">
                         <div class="col-sm-2 col-form-label">
@@ -251,19 +263,24 @@
                         <div class="col-sm-10">
                             <f:form.textfield class="form-control" property="privacyDeTstamp" id="privacyDeTstamp"
                                               disabled="1"
-                                              value="{domainConfig.privacyDeTstamp->f:format.date(format: 'Y-m-d\TH:i:sP')}"/>
+                                              value="{domainConfig.privacyDeTstamp->f:format.date(format: 'Y-m-d H:i:s')}"/>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-2 col-form-label">
-                            <label for="privacyEn">
+                            <label for="privacyEn" class="remote-content">
                                 <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_en"/>
+                            </label>
+                            <label for="privacyEnLocal" class="local-content">
+                                HTML-Code (EN) - Lokal
                             </label>
                         </div>
                         <div class="col-sm-10">
                             <f:form.textarea property="privacyEn" id="privacyEn" cols="40" rows="7"
-                                             class="form-control"/>
+                                             class="form-control remote-content"/>
+                            <f:form.textarea property="privacyEnLocal" id="privacyEnLocal" cols="40" rows="7"
+                                             class="form-control local-content"/>
                         </div>
                     </div>
 
@@ -276,13 +293,13 @@
                         <div class="col-sm-10">
                             <f:form.textfield class="form-control" property="privacyEnTstamp" id="privacyEnTstamp"
                                               disabled="1"
-                                              value="{domainConfig.privacyEnTstamp->f:format.date(format: 'Y-m-d\TH:i:sP')}"/>
+                                              value="{domainConfig.privacyEnTstamp->f:format.date(format: 'Y-m-d H:i:s')}"/>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div role="tabpanel" class="tab-pane" id="tab-social">
+        <div role="tabpanel" class="tab-pane tab-social" id="tab-social" data-source="{domainConfig.socialSource}">
             <div class="panel panel-tab">
                 <div class="panel-body">
 
@@ -298,11 +315,12 @@
                         </label>
                         <div class="col-sm-10">
                             <div class="checkbox checkbox-type-toggle">
-                                <f:form.checkbox property="socialSource" id="socialSource" value="1"
-                                                 class="checkbox-input"/>
+                                <span class="label-left">Lokale Version</span>
+                                <f:form.checkbox property="socialSource" id="socialSource" value="1" class="checkbox-input"/>
                                 <label class="checkbox-label" for="socialSource">
                                     <span class="checkbox-label-text">&nbsp;</span>
                                 </label>
+                                <span class="label-right">eRecht24 Projekt Manager</span>
                             </div>
                         </div>
                     </div>
@@ -314,20 +332,26 @@
                             </label>
                         </div>
                         <div class="col-sm-10">
-                            <button type="button" class="btn btn-primary">Daten synchronisieren und speichern
-                            </button>
+                            <button type="button" class="btn btn-primary remote-content" id="syncSocial">Daten synchronisieren und speichern</button>
+                            <button type="button" class="btn btn-primary local-content" id="socialRestoreRemote"
+                                {f:if(condition: '{domainConfig.socialDe} || {domainConfig.socialEn}', else: 'disabled')}
+                            >Lokale Daten mit den zuletzt synchronisierten Texten überschreiben</button>
                         </div>
                     </div>
 
 
                     <div class="form-group row">
                         <div class="col-sm-2 col-form-label">
-                            <label for="socialDe">
+                            <label for="socialDe" class="remote-content">
                                 <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_de"/>
+                            </label>
+                            <label for="socialDeLocal" class="local-content">
+                                HTML-Code (DE) - Lokal
                             </label>
                         </div>
                         <div class="col-sm-10">
-                            <f:form.textarea property="socialDe" id="socialDe" cols="40" rows="7" class="form-control"/>
+                            <f:form.textarea property="socialDe" id="socialDe" cols="40" rows="7" class="form-control remote-content"/>
+                            <f:form.textarea property="socialDeLocal" id="socialDeLocal" cols="40" rows="7" class="form-control local-content"/>
                         </div>
                     </div>
 
@@ -339,19 +363,22 @@
                         </div>
                         <div class="col-sm-10">
                             <f:form.textfield class="form-control" property="socialDeTstamp" id="socialDeTstamp"
-                                              disabled="1"
-                                              value="{domainConfig.socialDeTstamp->f:format.date(format: 'Y-m-d\TH:i:sP')}"/>
+                                              disabled="1" value="{domainConfig.socialDeTstamp->f:format.date(format: 'Y-m-d H:i:s')}"/>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-2 col-form-label">
-                            <label for="socialEn">
+                            <label for="socialEn" class="remote-content">
                                 <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_en"/>
+                            </label>
+                            <label for="socialEnLocal" class="local-content">
+                                HTML-Code (EN) - Lokal
                             </label>
                         </div>
                         <div class="col-sm-10">
-                            <f:form.textarea property="socialEn" id="socialEn" cols="40" rows="7" class="form-control"/>
+                            <f:form.textarea property="socialEn" id="socialEn" cols="40" rows="7" class="form-control remote-content"/>
+                            <f:form.textarea property="socialEnLocal" id="socialEnLocal" cols="40" rows="7" class="form-control local-content"/>
                         </div>
                     </div>
 
@@ -364,46 +391,46 @@
                         <div class="col-sm-10">
                             <f:form.textfield class="form-control" property="socialEnTstamp" id="socialEnTstamp"
                                               disabled="1"
-                                              value="{domainConfig.socialEnTstamp->f:format.date(format: 'Y-m-d\TH:i:sP')}"/>
+                                              value="{domainConfig.socialEnTstamp->f:format.date(format: 'Y-m-d H:i:s')}"/>
                         </div>
                     </div>
 
                 </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="tab-google">
-                <div class="panel panel-tab">
-                    <div class="panel-body">
-                        <label for="analyticsId">
-                            <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.analytics_id"/>
-                        </label><br/>
-                        <f:form.textfield class="form-control" property="analyticsId" id="analyticsId"/>
-                        <br/>
-                        <label for="flagEmbedTracking">
-                            <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking"/>
-                        </label><br/>
-                        <f:form.checkbox property="flagEmbedTracking" id="flagEmbedTracking" value="1"/>
-                        <br/>
-                        <label for="flagUserCentricsEmbed">
-                            <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed"/>
-                        </label><br/>
-                        <f:form.checkbox property="flagUserCentricsEmbed" id="flagUserCentricsEmbed" value="1"/>
-                        <br/>
-                        <label for="flagOptOutCode">
-                            <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code"/>
-                        </label><br/>
-                        <f:form.checkbox property="flagOptOutCode" id="flagOptOutCode" value="1"/>
-                        <br/>
-                        <label for="rootPid">
-                            <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.root_pid"/>
-                        </label><br/>
-                        <f:form.textfield class="form-control" property="rootPid" id="rootPid"/>
-                        <br/>
-                        <label for="siteConfigName">
-                            <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.site_config_name"/>
-                        </label><br/>
-                        <f:form.textfield class="form-control" property="siteConfigName" id="siteConfigName"/>
-                        <br/>
-                    </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="tab-google">
+            <div class="panel panel-tab">
+                <div class="panel-body">
+                    <label for="analyticsId">
+                        <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.analytics_id"/>
+                    </label><br/>
+                    <f:form.textfield class="form-control" property="analyticsId" id="analyticsId"/>
+                    <br/>
+                    <label for="flagEmbedTracking">
+                        <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking"/>
+                    </label><br/>
+                    <f:form.checkbox property="flagEmbedTracking" id="flagEmbedTracking" value="1"/>
+                    <br/>
+                    <label for="flagUserCentricsEmbed">
+                        <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed"/>
+                    </label><br/>
+                    <f:form.checkbox property="flagUserCentricsEmbed" id="flagUserCentricsEmbed" value="1"/>
+                    <br/>
+                    <label for="flagOptOutCode">
+                        <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code"/>
+                    </label><br/>
+                    <f:form.checkbox property="flagOptOutCode" id="flagOptOutCode" value="1"/>
+                    <br/>
+                    <label for="rootPid">
+                        <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.root_pid"/>
+                    </label><br/>
+                    <f:form.textfield class="form-control" property="rootPid" id="rootPid"/>
+                    <br/>
+                    <label for="siteConfigName">
+                        <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.site_config_name"/>
+                    </label><br/>
+                    <f:form.textfield class="form-control" property="siteConfigName" id="siteConfigName"/>
+                    <br/>
                 </div>
             </div>
         </div>

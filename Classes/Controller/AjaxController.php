@@ -32,7 +32,7 @@ class AjaxController
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      */
-    public function syncImprintAction(ServerRequestInterface $request) : \Psr\Http\Message\ResponseInterface {
+    public function syncDocumentAction(ServerRequestInterface $request) : \Psr\Http\Message\ResponseInterface {
 
         $domainConfigId = (int) $request->getQueryParams()['domainConfigId'];
 
@@ -40,11 +40,13 @@ class AjaxController
         $domainConfig = $this->domainConfigRepository->findByUid($domainConfigId);
 
         $errors = $successes = $response = [];
-        $documentType = 'imprint';
+        $documentType = $request->getQueryParams()['documentType'];
 
         if($domainConfig->getApiKey() === '') {
             $errors[] = 'Kein API Key hinterlegt';
-        } else {
+        } else if(false === in_array($documentType, \ERecht24\Er24Rechtstexte\Api\LegalDocument::ALLOWED_DOCUMENT_TYPES)) {
+            $errors[] = 'Ungültiges Dokument '. $documentType .' angefordert';
+        }else {
             $documentClient = new \ERecht24\Er24Rechtstexte\Api\LegalDocument($domainConfig->getApiKey(), $documentType, $domainConfig->getDomain());
             $document = $documentClient->importDocument();
 
@@ -56,8 +58,8 @@ class AjaxController
             } else {
                 $domainConfig = HelperUtility::assignDocumentToDomainConfig($document, $domainConfig, $documentType);
                 $successes[] = $documentType . '_imported';
-                $response['imprintDe'] = $document->getData('html_de');
-                $response['imprintEn'] = $document->getData('html_en');
+                $response['html_de'] = $document->getData('html_de');
+                $response['html_en'] = $document->getData('html_en');
                 $response['modified'] = $document->getData('modified');
             }
         }
@@ -72,6 +74,64 @@ class AjaxController
         ]);
 
     }
+
+    /**
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     */
+    public function saveDomainConfigAction(ServerRequestInterface $request) : \Psr\Http\Message\ResponseInterface {
+
+        $errors = $successes = [];
+
+        $domainConfigId = (int) $request->getQueryParams()['domainConfigId'];
+
+        /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfg */
+        $domainConfig = $this->domainConfigRepository->findByUid($domainConfigId);
+
+        $reflectionService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Reflection\ReflectionService::class);
+
+        if(true === is_array($request->getQueryParams()['properties'])) {
+            foreach ($request->getQueryParams()['properties'] as $propertyName => $propertyValue) {
+                $setterName = 'set'.ucfirst($propertyName);
+                if(true === method_exists($domainConfig,$setterName)) {
+                    $methodReflection = $reflectionService->getClassSchema(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig::class)->getMethod($setterName);
+                    $propertyType = null;
+                    foreach ($methodReflection->getParameters() as $parameter) {
+                        $propertyType = $parameter->getType();
+                        break;
+                    }
+                    if($propertyType !== null) {
+                        if(true === settype($propertyValue, $propertyType)) {
+                            $domainConfig->$setterName($propertyValue);
+                        } else {
+                            // TODO: Handle setter not found
+                        }
+                    } else {
+                        // TODO: Handle setter not found
+                    }
+                } else {
+                    // TODO: Handle setter not found
+                }
+            }
+        }
+
+        if(count($errors) === 0) {
+            $successes[] = 'Automatisch gespeichert.';
+        }
+
+        $this->domainConfigRepository->update($domainConfig);
+        $this->persistenceManager->persistAll();
+
+        //return new \TYPO3\CMS\Core\Http\HtmlResponse('');
+
+        return new \TYPO3\CMS\Core\Http\JsonResponse([
+            'errors' => $errors,
+            'successes' => $successes
+        ]);
+    }
+
 
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request

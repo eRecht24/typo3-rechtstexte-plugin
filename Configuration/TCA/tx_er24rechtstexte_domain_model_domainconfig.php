@@ -164,6 +164,16 @@ return [
                 'eval' => 'trim'
             ]
         ],
+        'privacy_de_local' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.privacy_de (lokal)',
+            'config' => [
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 15,
+                'eval' => 'trim'
+            ]
+        ],
         'privacy_de_tstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp',
@@ -178,6 +188,16 @@ return [
         'privacy_en' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.privacy_en',
+            'config' => [
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 15,
+                'eval' => 'trim'
+            ]
+        ],
+        'privacy_en_local' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.privacy_en (lokal)',
             'config' => [
                 'type' => 'text',
                 'cols' => 40,
@@ -220,6 +240,16 @@ return [
                 'eval' => 'trim'
             ]
         ],
+        'social_de_local' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.social_de_local (lokal)',
+            'config' => [
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 15,
+                'eval' => 'trim'
+            ]
+        ],
         'social_de_tstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp',
@@ -234,6 +264,16 @@ return [
         'social_en' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.social_en',
+            'config' => [
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 15,
+                'eval' => 'trim'
+            ]
+        ],
+        'social_en_local' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.social_en (lokal)',
             'config' => [
                 'type' => 'text',
                 'cols' => 40,

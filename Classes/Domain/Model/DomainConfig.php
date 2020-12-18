@@ -39,7 +39,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var int
      */
-    protected $imprintSource = 0;
+    protected $imprintSource = 1;
 
     /**
      * @var int
@@ -97,7 +97,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var int
      */
-    protected $privacySource = 0;
+    protected $privacySource = 1;
 
     /**
      * privacyDe
@@ -105,6 +105,13 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $privacyDe = '';
+
+    /**
+     * privacyDe
+     *
+     * @var string
+     */
+    protected $privacyDeLocal = '';
 
     /**
      * privacyDeTstamp
@@ -121,6 +128,13 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $privacyEn = '';
 
     /**
+     * privacyEn
+     *
+     * @var string
+     */
+    protected $privacyEnLocal = '';
+
+    /**
      * privacyEnTstamp
      *
      * @var int
@@ -132,7 +146,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var int
      */
-    protected $socialSource = 0;
+    protected $socialSource = 1;
 
     /**
      * socialDe
@@ -140,6 +154,13 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $socialDe = '';
+
+    /**
+     * socialDe
+     *
+     * @var string
+     */
+    protected $socialDeLocal = '';
 
     /**
      * socialDeTstamp
@@ -154,6 +175,13 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $socialEn = '';
+
+    /**
+     * socialEn
+     *
+     * @var string
+     */
+    protected $socialEnLocal = '';
 
     /**
      * socialEnTstamp
@@ -795,5 +823,69 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setImprintEnLocal(string $imprintEnLocal): void
     {
         $this->imprintEnLocal = $imprintEnLocal;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSocialDeLocal(): string
+    {
+        return $this->socialDeLocal;
+    }
+
+    /**
+     * @param string $socialDeLocal
+     */
+    public function setSocialDeLocal(string $socialDeLocal): void
+    {
+        $this->socialDeLocal = $socialDeLocal;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSocialEnLocal(): string
+    {
+        return $this->socialEnLocal;
+    }
+
+    /**
+     * @param string $socialEnLocal
+     */
+    public function setSocialEnLocal(string $socialEnLocal): void
+    {
+        $this->socialEnLocal = $socialEnLocal;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrivacyEnLocal(): string
+    {
+        return $this->privacyEnLocal;
+    }
+
+    /**
+     * @param string $privacyEnLocal
+     */
+    public function setPrivacyEnLocal(string $privacyEnLocal): void
+    {
+        $this->privacyEnLocal = $privacyEnLocal;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrivacyDeLocal(): string
+    {
+        return $this->privacyDeLocal;
+    }
+
+    /**
+     * @param string $privacyDeLocal
+     */
+    public function setPrivacyDeLocal(string $privacyDeLocal): void
+    {
+        $this->privacyDeLocal = $privacyDeLocal;
     }
 }
