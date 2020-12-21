@@ -143,10 +143,9 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * socialSource
-     *
-     * @var int
+     * @var boolean
      */
-    protected $socialSource = 1;
+    protected $socialSource = true;
 
     /**
      * socialDe
@@ -287,7 +286,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the imprintSource
      *
-     * @param string $imprintSource
+     * @param int $imprintSource
      * @return void
      */
     public function setImprintSource($imprintSource)
@@ -487,7 +486,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the socialSource
      *
-     * @return int $socialSource
+     * @return boolean $socialSource
      */
     public function getSocialSource()
     {
@@ -497,10 +496,10 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the socialSource
      *
-     * @param int $socialSource
+     * @param boolean $socialSource
      * @return void
      */
-    public function setSocialSource($socialSource)
+    public function setSocialSource(bool $socialSource)
     {
         $this->socialSource = $socialSource;
     }

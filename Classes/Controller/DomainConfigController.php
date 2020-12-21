@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace ERecht24\Er24Rechtstexte\Controller;
 
 
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /***
  *
  * This file is part of the "eRecht24 Rechtstexte Extension" Extension for TYPO3 CMS.
@@ -41,7 +44,8 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     /**
      * @param \ERecht24\Er24Rechtstexte\Utility\ApiUtility $apiUtility
      */
-    public function injectApiUtility(\ERecht24\Er24Rechtstexte\Utility\ApiUtility $apiUtility) {
+    public function injectApiUtility(\ERecht24\Er24Rechtstexte\Utility\ApiUtility $apiUtility)
+    {
         $this->apiUtility = $apiUtility;
     }
 
@@ -88,8 +92,8 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $config */
         foreach ($domainConfigs as $config) {
             $urlParts = parse_url($config->getDomain());
-            if($urlParts !== false) {
-                $configuredDomains[(string) $urlParts['host']] = $urlParts['host'];
+            if ($urlParts !== false) {
+                $configuredDomains[(string)$urlParts['host']] = $urlParts['host'];
             }
             if (true === isset($domainsLeft[$config->getDomain()])) {
                 unset($domainsLeft[$config->getDomain()]);
@@ -100,11 +104,11 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         foreach ($allSiteConfigurations as $index => $siteConfig) {
             $match = false;
             foreach ($domainsLeft as $domain => $siteIdentifier) {
-                if($index === $siteIdentifier) {
+                if ($index === $siteIdentifier) {
                     $match = true;
                 }
             }
-            if($match === false) {
+            if ($match === false) {
                 unset($allSiteConfigurations[$index]);
             }
         }
@@ -118,13 +122,50 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
     /**
      * action show
-     *
-     * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
      * @return void
      */
-    public function showAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig)
+    public function showAction()
     {
-        $this->view->assign('domainConfig', $domainConfig);
+        /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig */
+        $domainConfig = $this->domainConfigRepository->findByUid($this->settings['configId']);
+        if ($domainConfig === null) {
+            // TODO
+            $this->addFlashMessage('eRecht24 Konfiguration konnte nicht gefunden werden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        }
+
+        $language = ucfirst($GLOBALS['TSFE']->getLanguage()->getTwoLetterIsoCode());
+
+        if ($language !== 'De') {
+            $language = 'En';
+        }
+
+        switch ($this->settings['documentType']) {
+            case 'imprint':
+                $source = $domainConfig->getImprintSource() === 0 ? 'Local' : '';
+                break;
+            case 'privacy':
+                $source = $domainConfig->getPrivacySource() === 0 ? 'Local' : '';
+                break;
+            case 'social':
+                $source = $domainConfig->getSocialSource() === 0 ? 'Local' : '';
+        }
+
+        $getterFunctionName = 'get' . ucfirst($this->settings['documentType']) . $language . $source;
+
+        if (method_exists($domainConfig, $getterFunctionName)) {
+            $outputText = $domainConfig->$getterFunctionName();
+
+            if(true === (bool) $this->settings['removeHeadline'] && strpos($outputText,'</h1>') !== false) {
+                $outputText = substr($outputText,strpos($outputText,'</h1>')+5);
+            }
+
+            $this->view->assignMultiple([
+                'outputText' => $outputText
+            ]);
+        } else {
+            $this->addFlashMessage('Dokument konnte nicht ermittelt werden', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        }
+
     }
 
     /**
@@ -232,13 +273,14 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->redirect('edit', null, null, ['domainConfig' => $domainConfig->getUid()]);
     }
 
-    protected function handleApiHandlerResults($apiHandlerResult) {
-        if(count($apiHandlerResult[0]) > 0) {
+    protected function handleApiHandlerResults($apiHandlerResult)
+    {
+        if (count($apiHandlerResult[0]) > 0) {
             foreach ($apiHandlerResult[0] as $error) {
                 $this->addFlashMessage('eRecht24 Extension für TYPO3: ' . $error, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
             }
         }
-        if(count($apiHandlerResult[1]) > 0) {
+        if (count($apiHandlerResult[1]) > 0) {
             foreach ($apiHandlerResult[1] as $success) {
                 $this->addFlashMessage('eRecht24 Extension für TYPO3: ' . $success, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
             }

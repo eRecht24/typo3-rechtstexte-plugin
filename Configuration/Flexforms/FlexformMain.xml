@@ -1,0 +1,68 @@
+<T3DataStructure>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>Function</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+                    <settings.configId>
+                        <TCEforms>
+                            <label>Welche eRecht24 Konfiguration soll verwendet werden?</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <items>
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">Bitte wählen</numIndex>
+                                        <numIndex index="1"></numIndex>
+                                    </numIndex>
+                                </items>
+                                <eval>required</eval>
+                                <foreign_table>tx_er24rechtstexte_domain_model_domainconfig</foreign_table>
+                                <itemsProcFunc>ERecht24\Er24Rechtstexte\UserFunc\FlexFormFunctions->filterDomainConfigs</itemsProcFunc>
+                            </config>
+                        </TCEforms>
+                    </settings.configId>
+                    <settings.documentType>
+                        <TCEforms>
+                            <label>Welcher Dokumentyp soll angezeigt werden?</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <items>
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">Bitte wählen</numIndex>
+                                        <numIndex index="1"></numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">Impressum</numIndex>
+                                        <numIndex index="1">imprint</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">Datenschutzerklärung</numIndex>
+                                        <numIndex index="1">privacy</numIndex>
+                                    </numIndex>
+                                    <numIndex index="3" type="array">
+                                        <numIndex index="0">Datenschutz für Social-Media-Profile</numIndex>
+                                        <numIndex index="1">social</numIndex>
+                                    </numIndex>
+                                </items>
+                                <eval>required</eval>
+                            </config>
+                        </TCEforms>
+                    </settings.documentType>
+                    <settings.removeHeadline>
+                        <TCEforms>
+                            <label>H1 Überschrift aus Text entfernen?</label>
+                            <config>
+                                <type>check</type>
+                            </config>
+                        </TCEforms>
+                    </settings.removeHeadline>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

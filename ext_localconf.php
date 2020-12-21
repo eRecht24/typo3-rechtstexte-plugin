@@ -9,11 +9,11 @@ call_user_func(
             'Er24Rechtstexte',
             'Main',
             [
-                \ERecht24\Er24Rechtstexte\Controller\DomainConfigController::class => 'list, show, new, create, edit, update, delete'
+                \ERecht24\Er24Rechtstexte\Controller\DomainConfigController::class => 'show'
             ],
             // non-cacheable actions
             [
-                \ERecht24\Er24Rechtstexte\Controller\DomainConfigController::class => 'create, update, delete'
+                \ERecht24\Er24Rechtstexte\Controller\DomainConfigController::class => ''
             ]
         );
 

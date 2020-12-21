@@ -147,8 +147,12 @@ define(['jquery',
 
         if ($(this).is(':checked')) {
           eRecht24Module.currentSources[partType] = 1;
+          // Toggle TYPO3 hidden field for checkboxes
+          $('input[name="'+$(this).attr("name")+'"]').not($(this)).val(1);
         } else {
           eRecht24Module.currentSources[partType] = 0;
+          // Toggle TYPO3 hidden field for checkboxes
+          $('input[name="'+$(this).attr("name")+'"]').not($(this)).val(0);
         }
 
         var arguments = {

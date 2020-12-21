@@ -8,7 +8,7 @@ call_user_func(
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
             'Er24Rechtstexte',
             'Main',
-            'eRecht24 Rechtstexte'
+            'eRecht24 Impressum oder Datenschutzerklärung auf dieser Seite einfügen.' // TODO
         );
 
         if (TYPO3_MODE === 'BE') {
