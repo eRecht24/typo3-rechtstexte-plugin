@@ -73,7 +73,7 @@ define(['jquery',
           .get().then(async function (response) {
             resolved = await response.resolve();
             eRecht24Module.handleResultMessages(resolved);
-            location.reload();
+            //location.reload();
             eRecht24Module.hideLoader();
           }
         )
@@ -194,93 +194,93 @@ define(['jquery',
       }
     }
 
-    eRecht24Module.initImprintForm = function () {
-
-      eRecht24Module.currentImprintSource = $('.tab-imprint').data('source');
-      processCurrentDataSource();
-
-      $('#syncImprint').click(function () {
-        eRecht24Module.showLoader();
-        new AjaxRequest(TYPO3.settings.ajaxUrls.er24_syncImprint)
-          .withQueryArguments(
-            {
-              domainConfigId: eRecht24Module.domainConfigId,
-            }
-          )
-          .get().then(async function (response) {
-
-            resolved = await response.resolve();
-
-            eRecht24Module.handleResultMessages(resolved);
-
-            if (resolved.response) {
-              var response = resolved.response;
-              if (response.imprintDe && response.imprintEn && response.modified) {
-                $('#imprintDe').val(response.imprintDe);
-                $('#imprintEn').val(response.imprintEn);
-                $('#imprintDeTstamp').val(response.modified);
-                $('#imprintEnTstamp').val(response.modified);
-              }
-            }
-
-            eRecht24Module.hideLoader();
-          }
-        )
-      })
-
-      $('#imprintSource').change(function () {
-
-        eRecht24Module.showLoader();
-
-        if ($(this).is(':checked')) {
-          eRecht24Module.currentImprintSource = 1;
-        } else {
-          eRecht24Module.currentImprintSource = 0;
-        }
-
-        new AjaxRequest(TYPO3.settings.ajaxUrls.er24_saveDomainConfig)
-
-          .withQueryArguments(
-            {
-              domainConfigId: eRecht24Module.domainConfigId,
-              properties: {
-                imprintSource: eRecht24Module.currentImprintSource
-              }
-            }
-          )
-          .get().then(async function (response) {
-
-            resolved = await response.resolve();
-
-            eRecht24Module.handleResultMessages(resolved);
-
-            processCurrentDataSource();
-
-            eRecht24Module.hideLoader();
-          }, function (e) {
-            // @todo Error Handling
-            eRecht24Module.hideLoader();
-          }
-        )
-      });
-
-
-      $('#imprintRestoreRemote').click(function () {
-        $('#imprintDeLocal').val($('#imprintDe').val());
-        $('#imprintEnLocal').val($('#imprintEn').val());
-      });
-
-      function processCurrentDataSource() {
-        if (eRecht24Module.currentImprintSource == 0) {
-          $('.tab-imprint').find('.remote-content').hide();
-          $('.tab-imprint').find('.local-content').show();
-        } else {
-          $('.tab-imprint').find('.remote-content').show();
-          $('.tab-imprint').find('.local-content').hide();
-        }
-      }
-
-    }
+    // eRecht24Module.initImprintForm = function () {
+    //
+    //   eRecht24Module.currentImprintSource = $('.tab-imprint').data('source');
+    //   processCurrentDataSource();
+    //
+    //   $('#syncImprint').click(function () {
+    //     eRecht24Module.showLoader();
+    //     new AjaxRequest(TYPO3.settings.ajaxUrls.er24_syncImprint)
+    //       .withQueryArguments(
+    //         {
+    //           domainConfigId: eRecht24Module.domainConfigId,
+    //         }
+    //       )
+    //       .get().then(async function (response) {
+    //
+    //         resolved = await response.resolve();
+    //
+    //         eRecht24Module.handleResultMessages(resolved);
+    //
+    //         if (resolved.response) {
+    //           var response = resolved.response;
+    //           if (response.imprintDe && response.imprintEn && response.modified) {
+    //             $('#imprintDe').val(response.imprintDe);
+    //             $('#imprintEn').val(response.imprintEn);
+    //             $('#imprintDeTstamp').val(response.modified);
+    //             $('#imprintEnTstamp').val(response.modified);
+    //           }
+    //         }
+    //
+    //         eRecht24Module.hideLoader();
+    //       }
+    //     )
+    //   })
+    //
+    //   $('#imprintSource').change(function () {
+    //
+    //     eRecht24Module.showLoader();
+    //
+    //     if ($(this).is(':checked')) {
+    //       eRecht24Module.currentImprintSource = 1;
+    //     } else {
+    //       eRecht24Module.currentImprintSource = 0;
+    //     }
+    //
+    //     new AjaxRequest(TYPO3.settings.ajaxUrls.er24_saveDomainConfig)
+    //
+    //       .withQueryArguments(
+    //         {
+    //           domainConfigId: eRecht24Module.domainConfigId,
+    //           properties: {
+    //             imprintSource: eRecht24Module.currentImprintSource
+    //           }
+    //         }
+    //       )
+    //       .get().then(async function (response) {
+    //
+    //         resolved = await response.resolve();
+    //
+    //         eRecht24Module.handleResultMessages(resolved);
+    //
+    //         processCurrentDataSource();
+    //
+    //         eRecht24Module.hideLoader();
+    //       }, function (e) {
+    //         // @todo Error Handling
+    //         eRecht24Module.hideLoader();
+    //       }
+    //     )
+    //   });
+    //
+    //
+    //   $('#imprintRestoreRemote').click(function () {
+    //     $('#imprintDeLocal').val($('#imprintDe').val());
+    //     $('#imprintEnLocal').val($('#imprintEn').val());
+    //   });
+    //
+    //   function processCurrentDataSource() {
+    //     if (eRecht24Module.currentImprintSource == 0) {
+    //       $('.tab-imprint').find('.remote-content').hide();
+    //       $('.tab-imprint').find('.local-content').show();
+    //     } else {
+    //       $('.tab-imprint').find('.remote-content').show();
+    //       $('.tab-imprint').find('.local-content').hide();
+    //     }
+    //   }
+    //
+    // }
 
     if ($('#configCreateForm').length > 0) {
 
@@ -339,7 +339,10 @@ define(['jquery',
           text: 'Löschen',
           active: true,
           trigger: function () {
-            window.location = target;
+            Modal.dismiss();
+            window.setTimeout(function() {
+              window.location = target;
+            }, 500);
           }
         }, {
           text: 'Abbrechen',

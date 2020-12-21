@@ -13,6 +13,18 @@ class AjaxController
      */
     protected $persistenceManager = null;
 
+    /**
+     * @var \ERecht24\Er24Rechtstexte\Utility\ApiUtility
+     */
+    protected $apiUtility = null;
+
+    /**
+     * @param \ERecht24\Er24Rechtstexte\Utility\ApiUtility $apiUtility
+     */
+    public function injectApiUtility(\ERecht24\Er24Rechtstexte\Utility\ApiUtility $apiUtility) {
+        $this->apiUtility = $apiUtility;
+    }
+
     public function injectPersistenceManager(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager) {
         $this->persistenceManager = $persistenceManager;
     }
@@ -147,67 +159,34 @@ class AjaxController
         /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfg */
         $domainConfg = $this->domainConfigRepository->findByUid($domainConfigId);
 
-        $oldApiKey = $domainConfg->getApiKey();
         $domainConfg->setApiKey($newApiKey);
+        $apiHandlerResult = $this->apiUtility->handleDomainConfigUpdate($domainConfg, $newApiKey);
+
+        $errors = $apiHandlerResult[0];
+        $successes = $apiHandlerResult[1];
+
         $this->domainConfigRepository->update($domainConfg);
         $this->persistenceManager->persistAll();
 
-        $errors = $successes = [];
+        if($domainConfg->getClientId() !== '') {
+            foreach (\ERecht24\Er24Rechtstexte\Api\LegalDocument::ALLOWED_DOCUMENT_TYPES as $documentType) {
+                $documentClient = new \ERecht24\Er24Rechtstexte\Api\LegalDocument($domainConfg->getApiKey(), $documentType, $domainConfg->getDomain());
+                $document = $documentClient->importDocument();
 
-        if($domainConfg->getApiKey() === '') {
-
-            $errors[] = 'Kein API Key hinterlegt';
-
-            if($domainConfg->getClientId() !== '' && $oldApiKey !== '') {
-
-                $client = new \ERecht24\Er24Rechtstexte\Api\Client($oldApiKey, $domainConfg->getDomain());
-                $clientResult = $client->deleteClient($domainConfg->getClientId());
-
-                if($clientResult->isSuccess() === false) {
-                    $errors[] = HelperUtility::getBestFittingApiErrorMessage($clientResult);
+                if($document->isSuccess() === false) {
+                    $errors[] = HelperUtility::getBestFittingApiErrorMessage($document);
+                    if($document->getCode() === 400) {
+                        $domainConfg = HelperUtility::removeDocument($domainConfg, $documentType);
+                    }
                 } else {
-                    $domainConfg->setClientId('');
-                    $domainConfg->setClientSecret('');
-                    $this->domainConfigRepository->update($domainConfg);
-                    $this->persistenceManager->persistAll();
+                    $domainConfg = HelperUtility::assignDocumentToDomainConfig($document, $domainConfg, $documentType);
+                    $successes[] = $documentType . '_imported';
                 }
             }
 
-            return self::handleError($errors);
-
+            $this->domainConfigRepository->update($domainConfg);
+            $this->persistenceManager->persistAll();
         }
-
-        if($domainConfg->getClientId() === '') {
-            $client = new \ERecht24\Er24Rechtstexte\Api\Client($domainConfg->getApiKey(), $domainConfg->getDomain());
-            $clientResult = $client->addClient();
-
-            if($clientResult->isSuccess() === false) {
-                $errors[] = HelperUtility::getBestFittingApiErrorMessage($clientResult);
-            } else {
-                $domainConfg->setClientId($clientResult->getData('client_id'));
-                $domainConfg->setClientSecret($clientResult->getData('secret'));
-                $this->domainConfigRepository->update($domainConfg);
-                $this->persistenceManager->persistAll();
-            }
-        }
-
-        foreach (\ERecht24\Er24Rechtstexte\Api\LegalDocument::ALLOWED_DOCUMENT_TYPES as $documentType) {
-            $documentClient = new \ERecht24\Er24Rechtstexte\Api\LegalDocument($domainConfg->getApiKey(), $documentType, $domainConfg->getDomain());
-            $document = $documentClient->importDocument();
-
-            if($document->isSuccess() === false) {
-                $errors[] = HelperUtility::getBestFittingApiErrorMessage($document);
-                if($document->getCode() === 400) {
-                    $domainConfg = HelperUtility::removeDocument($domainConfg, $documentType);
-                }
-            } else {
-                $domainConfg = HelperUtility::assignDocumentToDomainConfig($document, $domainConfg, $documentType);
-                $successes[] = $documentType . '_imported';
-            }
-        }
-
-        $this->domainConfigRepository->update($domainConfg);
-        $this->persistenceManager->persistAll();
 
         return new \TYPO3\CMS\Core\Http\JsonResponse([
             'errors' => $errors,

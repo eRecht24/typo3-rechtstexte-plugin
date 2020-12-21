@@ -34,6 +34,18 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     protected $persistenceManager = null;
 
     /**
+     * @var \ERecht24\Er24Rechtstexte\Utility\ApiUtility
+     */
+    protected $apiUtility = null;
+
+    /**
+     * @param \ERecht24\Er24Rechtstexte\Utility\ApiUtility $apiUtility
+     */
+    public function injectApiUtility(\ERecht24\Er24Rechtstexte\Utility\ApiUtility $apiUtility) {
+        $this->apiUtility = $apiUtility;
+    }
+
+    /**
      * @param \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager
      */
     public function injectPersistenceManager(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager)
@@ -161,7 +173,16 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     public function createAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $newDomainConfig)
     {
 
-        $this->addFlashMessage('The object was created. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        $this->addFlashMessage('eRecht24 Extension für TYPO3: Die Konfiguration wurde erfolgreich erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+
+        $now = time();
+
+        $newDomainConfig->setSocialEnTstamp($now);
+        $newDomainConfig->setSocialDeTstamp($now);
+        $newDomainConfig->setImprintEnTstamp($now);;
+        $newDomainConfig->setImprintDeTstamp($now);
+        $newDomainConfig->setPrivacyEnTstamp($now);
+        $newDomainConfig->setPrivacyDeTstamp($now);
 
         $this->domainConfigRepository->add($newDomainConfig);
         $this->persistenceManager->persistAll();
@@ -200,9 +221,28 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function updateAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig)
     {
-        $this->addFlashMessage('The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        //$this->addFlashMessage('The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+
+        $apiHandlerResult = $this->apiUtility->handleDomainConfigUpdate($domainConfig);
+        self::handleApiHandlerResults($apiHandlerResult);
+
         $this->domainConfigRepository->update($domainConfig);
-        $this->redirect('list');
+        $this->persistenceManager->persistAll();
+
+        $this->redirect('edit', null, null, ['domainConfig' => $domainConfig->getUid()]);
+    }
+
+    protected function handleApiHandlerResults($apiHandlerResult) {
+        if(count($apiHandlerResult[0]) > 0) {
+            foreach ($apiHandlerResult[0] as $error) {
+                $this->addFlashMessage('eRecht24 Extension für TYPO3: ' . $error, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+            }
+        }
+        if(count($apiHandlerResult[1]) > 0) {
+            foreach ($apiHandlerResult[1] as $success) {
+                $this->addFlashMessage('eRecht24 Extension für TYPO3: ' . $success, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            }
+        }
     }
 
     /**

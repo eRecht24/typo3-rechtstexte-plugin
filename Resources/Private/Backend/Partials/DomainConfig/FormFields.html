@@ -83,8 +83,7 @@
                             </label>
                         </div>
                         <div class="col-sm-10">
-                            {f:if(condition: domainConfig.client_id, else: 'disabled')}
-                            <button type="button" class="btn btn-primary" id="syncAllDocuments">Alle Rechtstexte
+                            <button type="button" class="btn btn-primary" id="syncAllDocuments" {f:if(condition: domainConfig.clientId, else: 'disabled')}>Alle Rechtstexte
                                 synchronisieren und
                                 speichern
                             </button>
@@ -125,7 +124,7 @@
                             </label>
                         </div>
                         <div class="col-sm-10">
-                            <button type="button" class="btn btn-primary remote-content" id="syncImprint">Daten synchronisieren und speichern</button>
+                            <button type="button" class="btn btn-primary remote-content" id="syncImprint" {f:if(condition: domainConfig.clientId, else: 'disabled')}>Daten synchronisieren und speichern</button>
                             <button type="button" class="btn btn-primary local-content" id="imprintRestoreRemote"
                                 {f:if(condition: '{domainConfig.imprintDe} || {domainConfig.imprintEn}', else: 'disabled')}
                             >Lokale Daten mit den zuletzt synchronisierten Texten überschreiben</button>
@@ -229,7 +228,7 @@
                             </label>
                         </div>
                         <div class="col-sm-10">
-                            <button type="button" class="btn btn-primary remote-content" id="syncPrivacy">Daten synchronisieren und speichern</button>
+                            <button type="button" class="btn btn-primary remote-content" id="syncPrivacy" {f:if(condition: domainConfig.clientId, else: 'disabled')}>Daten synchronisieren und speichern</button>
                             <button type="button" class="btn btn-primary local-content" id="privacyRestoreRemote"
                                     {f:if(condition: '{domainConfig.privacyDe} || {domainConfig.privacyEn}', else: 'disabled')}
                             >Lokale Daten mit den zuletzt synchronisierten Texten überschreiben</button>
@@ -332,7 +331,7 @@
                             </label>
                         </div>
                         <div class="col-sm-10">
-                            <button type="button" class="btn btn-primary remote-content" id="syncSocial">Daten synchronisieren und speichern</button>
+                            <button type="button" class="btn btn-primary remote-content" id="syncSocial" {f:if(condition: domainConfig.clientId, else: 'disabled')}>Daten synchronisieren und speichern</button>
                             <button type="button" class="btn btn-primary local-content" id="socialRestoreRemote"
                                 {f:if(condition: '{domainConfig.socialDe} || {domainConfig.socialEn}', else: 'disabled')}
                             >Lokale Daten mit den zuletzt synchronisierten Texten überschreiben</button>
@@ -420,16 +419,6 @@
                         <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code"/>
                     </label><br/>
                     <f:form.checkbox property="flagOptOutCode" id="flagOptOutCode" value="1"/>
-                    <br/>
-                    <label for="rootPid">
-                        <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.root_pid"/>
-                    </label><br/>
-                    <f:form.textfield class="form-control" property="rootPid" id="rootPid"/>
-                    <br/>
-                    <label for="siteConfigName">
-                        <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.site_config_name"/>
-                    </label><br/>
-                    <f:form.textfield class="form-control" property="siteConfigName" id="siteConfigName"/>
                     <br/>
                 </div>
             </div>

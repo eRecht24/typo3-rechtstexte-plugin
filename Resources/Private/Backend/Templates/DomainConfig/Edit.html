@@ -17,7 +17,8 @@
 
     <f:form action="update" name="domainConfig" object="{domainConfig}" id="domainConfigEditForm">
         <f:render partial="DomainConfig/FormFields" arguments="{domainConfig:domainConfig}"/>
-        <f:form.submit value="Save"/>
+        <f:link.action action="list" class="btn btn-default" style="margin-right: 30px;">zurück zur Übersicht</f:link.action>
+        <button type="submit" class="btn btn-primary">Speichern</button>
     </f:form>
 </f:section>
 </html>
