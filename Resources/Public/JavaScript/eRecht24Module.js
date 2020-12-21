@@ -73,7 +73,7 @@ define(['jquery',
           .get().then(async function (response) {
             resolved = await response.resolve();
             eRecht24Module.handleResultMessages(resolved);
-            //location.reload();
+            location.reload();
             eRecht24Module.hideLoader();
           }
         )

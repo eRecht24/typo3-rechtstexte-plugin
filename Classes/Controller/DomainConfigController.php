@@ -265,6 +265,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         //$this->addFlashMessage('The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
 
         $apiHandlerResult = $this->apiUtility->handleDomainConfigUpdate($domainConfig);
+
         self::handleApiHandlerResults($apiHandlerResult);
 
         $this->domainConfigRepository->update($domainConfig);
@@ -295,7 +296,10 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function deleteAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig)
     {
-        $this->addFlashMessage('The object was deleted. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        $apiHandlerResult = $this->apiUtility->deleteDomainConfigClient($domainConfig, $domainConfig->getApiKey());
+        self::handleApiHandlerResults($apiHandlerResult);
+
+        $this->addFlashMessage('eRecht24 Extension für TYPO3: Die Konfiguration wurde erfolgreich gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->domainConfigRepository->remove($domainConfig);
         $this->redirect('list');
     }

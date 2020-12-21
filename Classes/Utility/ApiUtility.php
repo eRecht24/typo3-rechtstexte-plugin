@@ -7,6 +7,29 @@ class ApiUtility
 
     /**
      * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
+     * @param string $apiKey
+     */
+    public function deleteDomainConfigClient(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig, string $apiKey) {
+
+        $errors = $successes = [];
+
+        $client = new \ERecht24\Er24Rechtstexte\Api\Client($apiKey, $domainConfig->getDomain());
+        $clientResult = $client->deleteClient($domainConfig->getClientId());
+
+        if($clientResult->isSuccess() === false) {
+            $errors[] = HelperUtility::getBestFittingApiErrorMessage($clientResult);
+        } else {
+            $successes[] = 'API Client wurde entfernt';
+            $domainConfig->setClientId('');
+            $domainConfig->setClientSecret('');
+        }
+
+        return [$errors, $successes];
+
+    }
+
+    /**
+     * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
      * @param string $newApiKey
      * @return array
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception\TooDirtyException
@@ -17,26 +40,21 @@ class ApiUtility
 
         if($domainConfig->getApiKey() === '') {
             $errors[] = 'Kein API Key hinterlegt';
-            return [$errors, $successes];
         }
 
         if($newApiKey !== $domainConfig->getApiKey() || $domainConfig->_isDirty('apiKey')) {
+
             // Api Key has been modified
             $oldApiKey = $domainConfig->_getCleanProperty('apiKey');
 
             if($domainConfig->getClientId() !== '' && $oldApiKey !== '') {
 
-                $client = new \ERecht24\Er24Rechtstexte\Api\Client($oldApiKey, $domainConfig->getDomain());
-                $clientResult = $client->deleteClient($domainConfig->getClientId());
+                $handlerResponse = self::deleteDomainConfigClient($domainConfig, $oldApiKey);
 
-                if($clientResult->isSuccess() === false) {
-                    $errors[] = HelperUtility::getBestFittingApiErrorMessage($clientResult);
-                } else {
-                    $domainConfig->setClientId('');
-                    $domainConfig->setClientSecret('');
-                }
+                $errors = array_merge($handlerResponse[0], $errors);
+                $successes = array_merge($handlerResponse[1], $successes);
 
-                return [$errors, $successes];
+                //return [$errors, $successes];
 
             }
         }
