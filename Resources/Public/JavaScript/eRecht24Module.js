@@ -343,6 +343,48 @@ define(['jquery',
       eRecht24Module.initDocumentPartForm('privacy');
       eRecht24Module.initDocumentPartForm('social');
       eRecht24Module.hideLoader();
+
+      if($('.t3js-tabmenu-item.has-validation-error').length > 0) {
+        var errors = ['Bei der Prüfung der API Verbindung wurden Fehler festgestellt. Bitte überprüfen Sie den Pluginstatus'];
+        eRecht24Module.handleError(errors);
+      }
+
+      $('#selfRepair').click(function() {
+        eRecht24Module.showLoader();
+        new AjaxRequest(TYPO3.settings.ajaxUrls.er24_refreshConfig)
+          .withQueryArguments(
+            {
+              domainConfigId: eRecht24Module.domainConfigId,
+            }
+          )
+          .get().then(async function (response) {
+            resolved = await response.resolve();
+
+            eRecht24Module.handleResultMessages(resolved);
+
+            if(resolved.errors.length === 0) {
+              $(this).parents('.t3js-tabmenu-item').removeClass('has-validation-error');
+            } else {
+              $(this).parents('.t3js-tabmenu-item').addClass('has-validation-error');
+            }
+
+            for (var fixed of resolved.fixed) {
+              if(fixed === 'apiConnection') {
+                $('#connectionStateRow').removeClass('has-error-1');
+              }
+              if(fixed === 'clientConfiguration') {
+                $('#configStateRow').removeClass('has-error-1');
+              }
+              if(fixed === 'push') {
+                $('#pushStateRow').removeClass('has-error-1');
+              }
+            }
+
+            eRecht24Module.hideLoader();
+          }
+        )
+      });
+
     }
 
     $('.site-config-delete').click(function (e) {

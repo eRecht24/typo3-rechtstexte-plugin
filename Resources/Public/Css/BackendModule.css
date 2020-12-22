@@ -5,6 +5,40 @@
     max-width: 100%;
 }
 
+.erecht-module #stateTable #error-row {
+    display: none;
+}
+
+.erecht-module #stateTable.has-errors-1 #error-row {
+    display: table-row;
+}
+
+.erecht-module #stateTable .state-row .errortext {
+    display: none;
+}
+
+.erecht-module #stateTable .state-row .fine-text {
+    display: block;
+}
+
+.erecht-module #stateTable .state-row.has-error-1 .fine-text {
+    display: none;
+}
+
+.erecht-module #stateTable .state-row.has-error-1 .errortext {
+    display: block;
+}
+
+.erecht-module .state-table td {
+    padding: 10px;
+}
+
+.erecht-module .state-table td:first-child {
+    padding-left: 0;
+    font-weight: bold;
+    width: 200px;
+}
+
 .erecht-module #configCreateForm input,
 .erecht-module #configCreateForm select {
     width: 100%;

@@ -79,12 +79,7 @@ class BaseApi
      * @param $response
      * @return ApiResponse
      */
-    public function handleResponse($response) : ApiResponse
-    {
-
-//        if(!$response || $response instanceof WP_Error) {
-//            return $this->handleNoResponse($response);
-//        }
+    public function handleResponse($response) : ApiResponse {
 
         $responseCode = $response['response']['code'] ?? 500;
         switch($responseCode) {
@@ -109,10 +104,7 @@ class BaseApi
      * @param array $response
      * @return ApiResponse
      */
-    protected function handleSuccess(
-        array $response
-    ): ApiResponse
-    {
+    protected function handleSuccess(array $response): ApiResponse {
         return new ApiResponse(
             200,
             true,
@@ -126,11 +118,7 @@ class BaseApi
      * @param int $code
      * @return ApiResponse
      */
-    protected function handleError(
-        array $response,
-        int $code
-    ) : ApiResponse
-    {
+    protected function handleError(array $response, int $code) : ApiResponse {
         return new ApiResponse(
             $code,
             false,

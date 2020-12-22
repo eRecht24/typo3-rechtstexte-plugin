@@ -22,18 +22,14 @@ class Client extends BaseApi
      */
     public function listClients() : ApiResponse
     {
-        return $this->handleResponse(
-            wp_remote_request(
+        // Api Request
+        $response = $this->handleResponse(
+            $this->performRequest(
                 $this->getApiUrl('v1/clients'),
-                [
-                    'method' => 'GET',
-                    'headers' => [
-                        'Content-Type' => 'application/json; charset=utf-8',
-                        'eRecht24' => (string) $this->getApiKey()
-                    ]
-                ]
+                'GET'
             )
         );
+        return $response;
     }
 
     /**
@@ -79,11 +75,7 @@ class Client extends BaseApi
      * @param int $clientId
      * @return ApiResponse
      */
-    public function deleteClient(
-        int $clientId
-    ) : ApiResponse
-    {
-
+    public function deleteClient(int $clientId) : ApiResponse {
 
         // Api Request
         $response = $this->handleResponse(
@@ -92,38 +84,7 @@ class Client extends BaseApi
                 'DELETE'
             )
         );
-
         return $response;
-
-//        $response = $this->handleResponse(
-//            wp_remote_request(
-//                $this->getApiUrl('v1/clients/' . $clientId),
-//                [
-//                    'method' => 'DELETE',
-//                    'headers' => [
-//                        'Content-Type' => 'application/json; charset=utf-8',
-//                        'eRecht24' => (string) $this->getApiKey()
-//                    ]
-//                ]
-//            )
-//        );
-//
-//        // register default hooks
-//        $this->registerDeleteClientHooks();
-//
-//        // Apply filter hooks
-//        $response = apply_filters(
-//            self::CLIENT_DELETED_FILTER,
-//            $response
-//        );
-//
-//        // Apply action hooks
-//        do_action(
-//            self::CLIENT_DELETED_ACTION,
-//            $response
-//        );
-//
-//        return $response;
     }
 
     /**
@@ -131,22 +92,17 @@ class Client extends BaseApi
      * @param int $clientId
      * @return ApiResponse
      */
-    public function testPushPing(
-        int $clientId
-    ) : ApiResponse
+    public function testPushPing(int $clientId) : ApiResponse
     {
-        return $this->handleResponse(
-            wp_remote_request(
+
+        // Api Request
+        $response = $this->handleResponse(
+            $this->performRequest(
                 $this->getApiUrl('v1/clients/' . $clientId . '/testPush'),
-                [
-                    'method' => 'POST',
-                    'headers' => [
-                        'Content-Type' => 'application/json; charset=utf-8',
-                        'eRecht24' => (string) $this->getApiKey(),
-                    ]
-                ]
+                'POST'
             )
         );
+        return $response;
     }
 
     /**

@@ -46,6 +46,12 @@ call_user_func(
         );
 
         $iconRegistry->registerIcon(
+            'fa-cog',
+            \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
+            ['name' => 'cog']
+        );
+
+        $iconRegistry->registerIcon(
             'fa-bullhorn',
             \TYPO3\CMS\Core\Imaging\IconProvider\FontawesomeIconProvider::class,
             ['name' => 'bullhorn']

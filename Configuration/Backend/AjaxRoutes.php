@@ -17,4 +17,8 @@ return [
         'path' => '/erecht24/saveDomainConfig',
         'target' => \ERecht24\Er24Rechtstexte\Controller\AjaxController::class . '::saveDomainConfigAction',
     ],
+    'er24_refreshConfig' => [
+        'path' => '/erecht24/refreshConfig',
+        'target' => \ERecht24\Er24Rechtstexte\Controller\AjaxController::class . '::refreshConnectionAction',
+    ],
 ];

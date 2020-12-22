@@ -187,7 +187,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 $siteConfig = $siteFinder->getSiteByIdentifier($newDomainConfig->getSiteConfigName());
                 $newDomainConfig->setDomain((string)$siteConfig->getBase());
             } catch (\Exception $e) {
-                $siteConfig = $language = $allLanguages = null;
+                $siteConfig = $language = null;
             }
         }
 
@@ -253,7 +253,43 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function editAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig)
     {
-        $this->view->assign('domainConfig', $domainConfig);
+
+        $errors = $pushError = $configError = $erechtServerError = $curlError = false;
+        $configErrorMessages = [];
+
+        if($domainConfig->getClientId() !== '') {
+            $client = new \ERecht24\Er24Rechtstexte\Api\Client($domainConfig->getApiKey(), $domainConfig->getDomain());
+            $apiResponse = $client->testPushPing((int) $domainConfig->getClientId());
+            if($apiResponse->isSuccess() === false) {
+                $pushError = true;
+                $errors = true;
+            }
+        } else {
+            $errors = $configError = $pushError = true;
+            $configErrorMessages[] = 'noclient_exists';
+        }
+
+        if($domainConfig->getApiKey() === '') {
+            $configErrorMessages[] = 'noapikey_exists';
+        } else {
+            $client = new \ERecht24\Er24Rechtstexte\Api\Client($domainConfig->getApiKey(), $domainConfig->getDomain());
+            $apiResponse = $client->listClients();
+            if($apiResponse->isSuccess() === false) {
+                $erechtServerError = true;
+            }
+        }
+
+        $curlError = function_exists('curl_version') ? false: true;
+
+        $this->view->assignMultiple([
+            'domainConfig' => $domainConfig,
+            'errors' => $errors,
+            'pushError' => $pushError,
+            'erechtServerError' => $erechtServerError,
+            'configError' => $configError,
+            'configErrorMessages' => $configErrorMessages,
+            'curlError' => $curlError
+        ]);
     }
 
     /**
@@ -264,6 +300,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function updateAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig)
     {
+
         $apiHandlerResult = $this->apiUtility->handleDomainConfigUpdate($domainConfig, $domainConfig->getApiKey());
         self::handleApiHandlerResults($apiHandlerResult);
 
@@ -305,10 +342,8 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             /** @var \TYPO3\CMS\Core\Configuration\SiteConfiguration $siteConfiguration */
             $siteConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\SiteConfiguration::class);
             $configurationArray = $siteConfiguration->load($domainConfig->getSiteConfigName());
-            if (true === isset($configurationArray['languages'][$domainConfig->getSiteLanguage()])) {
-                unset($configurationArray['languages'][$domainConfig->getSiteLanguage()]['eRecht24Config']);
-                $siteConfiguration->write($domainConfig->getSiteConfigName(), $configurationArray);
-            }
+            unset($configurationArray['eRecht24Config']);
+            $siteConfiguration->write($domainConfig->getSiteConfigName(), $configurationArray);
         }
 
         $this->addFlashMessage('eRecht24 Extension für TYPO3: Die Konfiguration wurde erfolgreich gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);

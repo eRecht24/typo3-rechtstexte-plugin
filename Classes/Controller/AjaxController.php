@@ -99,7 +99,7 @@ class AjaxController
 
         $domainConfigId = (int) $request->getQueryParams()['domainConfigId'];
 
-        /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfg */
+        /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig */
         $domainConfig = $this->domainConfigRepository->findByUid($domainConfigId);
 
         $reflectionService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Reflection\ReflectionService::class);
@@ -187,6 +187,65 @@ class AjaxController
 
     protected function handleError($errors) {
         return new \TYPO3\CMS\Core\Http\JsonResponse(['errors' => $errors]);
+    }
+
+    /**
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function refreshConnectionAction(ServerRequestInterface $request): \Psr\Http\Message\ResponseInterface {
+
+        $errors = $successes = $fixed = [];
+        $domainConfigId = (int) $request->getQueryParams()['domainConfigId'];
+
+        /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig */
+        $domainConfig = $this->domainConfigRepository->findByUid($domainConfigId);
+
+        $client = new \ERecht24\Er24Rechtstexte\Api\Client($domainConfig->getApiKey(), $domainConfig->getDomain());
+
+        $response = $client->listClients();
+        if($response->isSuccess() === false) {
+            $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
+            return new \TYPO3\CMS\Core\Http\JsonResponse([
+                'errors' => $errors,
+            ]);
+        } else {
+            $fixed[] = 'apiConnection';
+        }
+
+        if($domainConfig->getClientId() !== '') {
+            $response = $client->deleteClient($domainConfig->getClientId());
+            if($response->isSuccess() === false) {
+                $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
+            } else {
+                $response = $client->addClient();
+                if($response->isSuccess() === false) {
+                    $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
+                } else {
+                    $fixed[] = 'clientConfiguration';
+                    $successes[] = 'Gültiger API Schlüssel. Verbindung zur eRecht24 API wurde aufgebaut.';
+                    $domainConfig->setClientId($response->getData('client_id'));
+                    $domainConfig->setClientSecret($response->getData('secret'));
+
+                    $this->domainConfigRepository->update($domainConfig);
+                    $this->persistenceManager->persistAll();
+
+                    $response = $client->testPushPing($domainConfig->getClientId());
+                    if($response->isSuccess() === true) {
+                        $fixed[] = 'push';
+                    } else {
+                        $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
+                    }
+                }
+            }
+        }
+
+        return new \TYPO3\CMS\Core\Http\JsonResponse([
+            'errors' => $errors,
+            'successes' => $successes,
+            'fixed' => $fixed
+        ]);
+
     }
 
     /**

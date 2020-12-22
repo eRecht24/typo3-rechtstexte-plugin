@@ -6,7 +6,7 @@
     <ul class="nav nav-tabs t3js-tabs" role="tablist" id="tabs-tab" data-store-last-tab="1">
         <li role="presentation" class="t3js-tabmenu-item  active">
             <a href="#tab-1" title="" aria-controls="tab-1" role="tab" data-toggle="tab">
-                <core:icon identifier="actions-cog-alt"/>
+                <core:icon identifier="fa-cog"/>
                 Allgemein / API Key
             </a>
         </li>
@@ -40,7 +40,7 @@
                 Dokumentation
             </a>
         </li>
-        <li role="presentation" class="t3js-tabmenu-item ">
+        <li role="presentation" class="t3js-tabmenu-item {f:if(condition: errors, then: 'has-validation-error')}">
             <a href="#tab-status" title="" aria-controls="tab-status" role="tab" data-toggle="tab">
                 <core:icon identifier="fa-check-circle"/>
                 Pluginstatus
@@ -420,6 +420,102 @@
                     </label><br/>
                     <f:form.checkbox property="flagOptOutCode" id="flagOptOutCode" value="1"/>
                     <br/>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="tab-status">
+            <div class="panel panel-tab">
+                <div class="panel-body">
+
+                    <h3>Statusübersicht</h3>
+
+                    <p>Hier können Sie prüfen, ob Ihr Server die Systemvoraussetzungen für dieses Plugin erfüllt und ob die eRecht24-Server erreichbar sind.</p>
+
+                    <table border="0" id="stateTable" class="state-table has-errors-{errors}">
+                        <tbody>
+                            <tr id="curlStateRow" class="state-row has-error-{curlError}">
+                                <td>PHP cURL</td>
+                                <td>
+                                    <div class="errortext">
+                                        <span style="color: red;"><core:icon identifier="actions-close" /></span>
+                                        PHP cURL steht auf diesem Server nicht zur Verfügung. Ohne cURL kann keine Verbindung zur API aufgebaut werden.
+                                    </div>
+                                    <div class="fine-text">
+                                        <span style="color: green;"><core:icon identifier="actions-check" /></span>
+                                        cURL ist im System installiert.
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr id="connectionStateRow" class="state-row has-error-{erechtServerError}">
+                                <td>eRecht24 Server ist erreichbar</td>
+                                <td>
+                                    <div class="errortext">
+                                        <span style="color: red;"><core:icon identifier="actions-close" /></span>
+                                        Verbindungsaufbau mit eRecht24 Server nicht möglich.
+                                    </div>
+                                    <div class="fine-text">
+                                        <span style="color: green;"><core:icon identifier="actions-check" /></span>
+                                        Verbindung zum eRecht24-Server konnte erfolgreich hergestellt werden
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr id="configStateRow" class="state-row has-error-has-error-{configError}">
+                                <td>Die eRecht24 Konfiguration ist korrekt konfiguriert</td>
+                                <td>
+                                    <div class="errortext">
+                                        <span style="color: red;"><core:icon identifier="actions-close" /></span>
+                                        Ihre Konfiguration ist fehlerhaft:
+                                        <f:if condition="{configErrorMessages}">
+                                            <ul>
+                                                <f:for each="{configErrorMessages}" as="configErrorMessage">
+                                                    <li>{configErrorMessage}</li>
+                                                </f:for>
+                                            </ul>
+                                        </f:if>
+                                    </div>
+                                    <div class="fine-text">
+                                        <span style="color: green;"><core:icon identifier="actions-check" /></span>
+                                        Die API-Schnittstelle ist korrekt konfiguriert.<br />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr id="pushStateRow" class="state-row has-error-{pushError}">
+                                <td>eRecht24 Server antwortet</td>
+                                <td>
+                                    <div class="errortext">
+                                        <span style="color: red;"><core:icon identifier="actions-close" /></span>
+                                        Der eRecht24 Server ist nicht in der Lage, neue Daten in Ihre TYPO3-Seite zu pushen.
+                                    </div>
+                                    <div class="fine-text">
+                                        <span style="color: green;"><core:icon identifier="actions-check" /></span>
+                                        Der eRecht24 Server ist in der Lage, neue Daten in Ihre TYPO3-Seite zu pushen.
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr id="error-row">
+                                <td></td>
+                                <td>
+                                    <button type="button" id="selfRepair" class="btn btn-primary" {f:if(condition: curlError, then: 'disabled')}>Verbindung auffrischen</button>
+                                    <f:if condition="{curlError}">
+                                        <p class="text-warning">Eine API Verbindung kann ohne cURL nicht hergestellt werden.</p>
+                                    </f:if>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <br /><br />
+
+                    <p>
+                        Falls Sie Unterstützung benötigen, senden Sie uns bitte eine E-Mail. Fügen Sie die notwendigen Debuginformationen hinzu, indem Sie diesen Schritten folgen:
+                    </p>
+                    <ol>
+                        <li>Schreiben Sie eine E-Mail an <a href="mailto:support@e-recht24.de">support@e-recht24.de</a>.</li>
+                        <li>Beschreiben Sie das Problem so detailliert wie möglich.</li>
+                        <li>Klicken Sie auf den Button mit der Aufschrift "Debuginformationen in die Zwischenablage kopieren".</li>
+                        <li>Fügen Sie die Informationen in die E-Mail ein, indem Sie "Strg" + "V" drücken oder indem Sie einen Rechtsklick machen und auf "Einfügen" klicken.</li>
+                    </ol>
+
                 </div>
             </div>
         </div>
