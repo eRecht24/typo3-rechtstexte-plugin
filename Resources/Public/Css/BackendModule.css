@@ -1,8 +1,15 @@
 .erecht-module input[type="text"],
-.erecht-module input[type="url"]{
+.erecht-module input[type="url"],
+.erecht-module select {
     width: 350px;
     max-width: 100%;
 }
+
+.erecht-module #configCreateForm input,
+.erecht-module #configCreateForm select {
+    width: 100%;
+}
+
 
 .erecht-module .checkbox-type-toggle .label-left {
     display: inline-block;

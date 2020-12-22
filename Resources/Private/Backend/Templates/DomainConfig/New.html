@@ -28,13 +28,22 @@
 
                 <div class="form-group">
                     <label for="siteConfig">Site-Configuration</label>
-                    <f:form.select options="{allSiteConfigurations}" prependOptionValue="" prependOptionLabel="Bitte wählen" optionValueField="identifier" optionLabelField="identifier" property="siteConfigName" id="siteConfig" class="form-control"/>
+                    <f:form.select property="siteConfigName" id="siteConfig" class="form-control">
+                        <f:form.select.option value="">Bitte wählen</f:form.select.option>
+                        <f:for each="{allSiteConfigurations}" as="siteConfig">
+                            <f:form.select.option value="{siteConfig.identifier}" data="{domain: siteConfig.base}">{siteConfig.identifier}</f:form.select.option>
+                        </f:for>
+                    </f:form.select>
                 </div>
 
+                <f:comment>
+                <!--
                 <div class="form-group">
                     <label for="language">Site-Configuration Language</label>
                     <f:form.select options="{allLanguages}" prependOptionValue="" prependOptionLabel="Bitte wählen" optionValueField="languageId" optionLabelField="title" property="siteLanguage" id="language" class="form-control"/>
                 </div>
+                -->
+                </f:comment>
 
                 <div class="form-group">
                     <label for="apiKey">API Key</label>

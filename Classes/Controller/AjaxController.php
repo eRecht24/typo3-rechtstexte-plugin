@@ -170,18 +170,9 @@ class AjaxController
 
         if($domainConfg->getClientId() !== '') {
             foreach (\ERecht24\Er24Rechtstexte\Api\LegalDocument::ALLOWED_DOCUMENT_TYPES as $documentType) {
-                $documentClient = new \ERecht24\Er24Rechtstexte\Api\LegalDocument($domainConfg->getApiKey(), $documentType, $domainConfg->getDomain());
-                $document = $documentClient->importDocument();
-
-                if($document->isSuccess() === false) {
-                    $errors[] = HelperUtility::getBestFittingApiErrorMessage($document);
-                    if($document->getCode() === 400) {
-                        $domainConfg = HelperUtility::removeDocument($domainConfg, $documentType);
-                    }
-                } else {
-                    $domainConfg = HelperUtility::assignDocumentToDomainConfig($document, $domainConfg, $documentType);
-                    $successes[] = $documentType . '_imported';
-                }
+                $apiHandlerResult = $this->apiUtility->importDocument($domainConfg, $documentType);
+                $errors = array_merge($apiHandlerResult[0], $errors);
+                $successes = array_merge($apiHandlerResult[1], $successes);
             }
 
             $this->domainConfigRepository->update($domainConfg);
@@ -198,6 +189,11 @@ class AjaxController
         return new \TYPO3\CMS\Core\Http\JsonResponse(['errors' => $errors]);
     }
 
+    /**
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @return \Psr\Http\Message\ResponseInterface
+     * @deprecated
+     */
     public function changeSiteConfigAction(ServerRequestInterface $request): \Psr\Http\Message\ResponseInterface {
 
         $newSiteConfig = [];

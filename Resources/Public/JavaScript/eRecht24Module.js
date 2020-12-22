@@ -29,6 +29,7 @@ define(['jquery',
 
     eRecht24Module.hideLoader();
 
+    // @deprecated
     eRecht24Module.getLanguagePossibleUrls = function () {
       new AjaxRequest(TYPO3.settings.ajaxUrls.er24_changeSiteConfig)
         .withQueryArguments(
@@ -288,41 +289,50 @@ define(['jquery',
 
     if ($('#configCreateForm').length > 0) {
 
-      eRecht24Module.getLanguagePossibleUrls();
+      //eRecht24Module.getLanguagePossibleUrls();
       eRecht24Module.hideLoader();
 
       $('#siteConfig').change(function () {
         eRecht24Module.showLoader();
 
-        $('#language option').not(':first').remove();
-        $('#domain').val('');
+        //$('#language option').not(':first').remove();
 
-        new AjaxRequest(TYPO3.settings.ajaxUrls.er24_changeSiteConfig)
-          .withQueryArguments(
-            {
-              siteconfig: $('#siteConfig').val(),
-              siteLanguage: $('#language').val()
-            }
-          )
-          .get().then(async function (response) {
-            resolved = await response.resolve();
-            eRecht24Module.languagePossibleUrls = resolved;
-            for (language of eRecht24Module.languagePossibleUrls) {
-              $('#language').append('<option value="' + language.languageId + '">' + language.name + '</option>')
-            }
-            eRecht24Module.hideLoader();
-          }
-        )
-      });
+        var $selectedOption = $(this).find('option:selected');
 
-      $('#language').change(function () {
-        for (language of eRecht24Module.languagePossibleUrls) {
-          if (parseInt(language.languageId) === parseInt($(this).val())) {
-            $('#domain').val(language.domain);
-            break;
-          }
+        if($selectedOption.data('domain')) {
+          $('#domain').val($selectedOption.data('domain'));
+        } else {
+          $('#domain').val('');
         }
+
+        eRecht24Module.hideLoader();
+
+        // new AjaxRequest(TYPO3.settings.ajaxUrls.er24_changeSiteConfig)
+        //   .withQueryArguments(
+        //     {
+        //       siteconfig: $('#siteConfig').val(),
+        //       siteLanguage: $('#language').val()
+        //     }
+        //   )
+        //   .get().then(async function (response) {
+        //     resolved = await response.resolve();
+        //     eRecht24Module.languagePossibleUrls = resolved;
+        //     for (language of eRecht24Module.languagePossibleUrls) {
+        //       $('#language').append('<option value="' + language.languageId + '">' + language.name + '</option>')
+        //     }
+        //     eRecht24Module.hideLoader();
+        //   }
+        // )
       });
+
+      // $('#language').change(function () {
+      //   for (language of eRecht24Module.languagePossibleUrls) {
+      //     if (parseInt(language.languageId) === parseInt($(this).val())) {
+      //       $('#domain').val(language.domain);
+      //       break;
+      //     }
+      //   }
+      // });
     }
 
     if ($('#domainConfigEditForm').length > 0) {

@@ -30,6 +30,31 @@ class ApiUtility
 
     /**
      * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
+     * @param string $documentType
+     * @throws \Exception
+     */
+    public function importDocument(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig, string $documentType) {
+
+        $errors = $successes = [];
+
+        $documentClient = new \ERecht24\Er24Rechtstexte\Api\LegalDocument($domainConfig->getApiKey(), $documentType, $domainConfig->getDomain());
+        $document = $documentClient->importDocument();
+
+        if($document->isSuccess() === false) {
+            $errors[] = HelperUtility::getBestFittingApiErrorMessage($document);
+            if($document->getCode() === 400) {
+                HelperUtility::removeDocument($domainConfig, $documentType);
+            }
+        } else {
+            HelperUtility::assignDocumentToDomainConfig($document, $domainConfig, $documentType);
+            $successes[] = $documentType . '_imported';
+        }
+
+        return [$errors, $successes];
+    }
+
+    /**
+     * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
      * @param string $newApiKey
      * @return array
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception\TooDirtyException
@@ -54,8 +79,6 @@ class ApiUtility
                 $errors = array_merge($handlerResponse[0], $errors);
                 $successes = array_merge($handlerResponse[1], $successes);
 
-                //return [$errors, $successes];
-
             }
         }
 
@@ -77,6 +100,10 @@ class ApiUtility
                 $domainConfig->setClientId($clientResult->getData('client_id'));
                 $domainConfig->setClientSecret($clientResult->getData('secret'));
             }
+        }
+
+        if($domainConfig->getClientId() === '') {
+            $errors[] = 'Es konnte kein Client für die Konfiguration erstellt werden.';
         }
 
         return [$errors, $successes];

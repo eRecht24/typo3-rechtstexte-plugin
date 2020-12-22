@@ -83,18 +83,16 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
         /** @var \TYPO3\CMS\Core\Site\Entity\Site $siteConfig */
         foreach ($allSiteConfigurations as $index => $siteConfig) {
-            /** @var \TYPO3\CMS\Core\Site\Entity\SiteLanguage $language */
-            foreach ($siteConfig->getAllLanguages() as $language) {
-                $domainsLeft[$language->getBase()->getScheme() . '://' . $language->getBase()->getHost() . '/'] = $index;
-            }
+            $domainsLeft[(string)$siteConfig->getBase()] = $index;
         }
 
         /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $config */
         foreach ($domainConfigs as $config) {
-            $urlParts = parse_url($config->getDomain());
-            if ($urlParts !== false) {
-                $configuredDomains[(string)$urlParts['host']] = $urlParts['host'];
-            }
+            $configuredDomains[$config->getDomain()] = $config->getDomain();
+//            $urlParts = parse_url($config->getDomain());
+//            if ($urlParts !== false) {
+//
+//            }
             if (true === isset($domainsLeft[$config->getDomain()])) {
                 unset($domainsLeft[$config->getDomain()]);
             }
@@ -171,9 +169,8 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     /**
      * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig|null $newDomainConfig
      * @param string $siteconfigIdentifier
-     * @param int $languageId
      */
-    public function newAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $newDomainConfig = null, string $siteconfigIdentifier = '', int $languageId = 0)
+    public function newAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $newDomainConfig = null, string $siteconfigIdentifier = '')
     {
 
         /** @var \TYPO3\CMS\Core\Site\SiteFinder $siteFinder */
@@ -183,25 +180,32 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         if ($newDomainConfig === null) {
             $newDomainConfig = new \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig();
             $newDomainConfig->setSiteConfigName($siteconfigIdentifier);
-            $newDomainConfig->setSiteLanguage($languageId);
         }
 
         if ($newDomainConfig->getSiteConfigName() !== '') {
             try {
                 $siteConfig = $siteFinder->getSiteByIdentifier($newDomainConfig->getSiteConfigName());
-                $language = $siteConfig->getLanguageById($newDomainConfig->getSiteLanguage());
-                $allLanguages = $siteConfig->getAllLanguages();
-                $newDomainConfig->setDomain($language->getBase()->getScheme() . '://' . $language->getBase()->getHost() . '/');
+                $newDomainConfig->setDomain((string)$siteConfig->getBase());
             } catch (\Exception $e) {
                 $siteConfig = $language = $allLanguages = null;
+            }
+        }
+
+        $allSites = $siteFinder->getAllSites();
+        $allDomainConfigs = $this->domainConfigRepository->findAll();
+
+        // Remove already used Siteconfigs
+        /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig */
+        foreach ($allDomainConfigs as $domainConfig) {
+            if(true === array_key_exists($domainConfig->getSiteConfigName(), $allSites)) {
+                unset($allSites[$domainConfig->getSiteConfigName()]);
             }
         }
 
         $this->view->assignMultiple([
             'newDomainConfig' => $newDomainConfig,
             'siteConfig' => $siteConfig,
-            'allLanguages' => $allLanguages,
-            'allSiteConfigurations' => $siteFinder->getAllSites()
+            'allSiteConfigurations' => $allSites
         ]);
     }
 
@@ -232,10 +236,8 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             /** @var \TYPO3\CMS\Core\Configuration\SiteConfiguration $siteConfiguration */
             $siteConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\SiteConfiguration::class);
             $configurationArray = $siteConfiguration->load($newDomainConfig->getSiteConfigName());
-            if (true === isset($configurationArray['languages'][$newDomainConfig->getSiteLanguage()])) {
-                $configurationArray['languages'][$newDomainConfig->getSiteLanguage()]['eRecht24Config'] = $newDomainConfig->getUid();
-                $siteConfiguration->write($newDomainConfig->getSiteConfigName(), $configurationArray);
-            }
+            $configurationArray['eRecht24Config'] = $newDomainConfig->getUid();
+            $siteConfiguration->write($newDomainConfig->getSiteConfigName(), $configurationArray);
         }
 
         $this->redirect('edit', null, null, ['domainConfig' => $newDomainConfig->getUid()]);
@@ -262,10 +264,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function updateAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig)
     {
-        //$this->addFlashMessage('The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
-
-        $apiHandlerResult = $this->apiUtility->handleDomainConfigUpdate($domainConfig);
-
+        $apiHandlerResult = $this->apiUtility->handleDomainConfigUpdate($domainConfig, $domainConfig->getApiKey());
         self::handleApiHandlerResults($apiHandlerResult);
 
         $this->domainConfigRepository->update($domainConfig);
@@ -290,14 +289,27 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
     /**
      * action delete
-     *
      * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
      * @return void
      */
     public function deleteAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig)
     {
-        $apiHandlerResult = $this->apiUtility->deleteDomainConfigClient($domainConfig, $domainConfig->getApiKey());
-        self::handleApiHandlerResults($apiHandlerResult);
+
+        if($domainConfig->getClientId() !== '' && $domainConfig->getApiKey() !== '') {
+            $apiHandlerResult = $this->apiUtility->deleteDomainConfigClient($domainConfig, $domainConfig->getApiKey());
+            self::handleApiHandlerResults($apiHandlerResult);
+        }
+
+        // Remove from SiteConfig
+        if ($domainConfig->getSiteConfigName() !== '') {
+            /** @var \TYPO3\CMS\Core\Configuration\SiteConfiguration $siteConfiguration */
+            $siteConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\SiteConfiguration::class);
+            $configurationArray = $siteConfiguration->load($domainConfig->getSiteConfigName());
+            if (true === isset($configurationArray['languages'][$domainConfig->getSiteLanguage()])) {
+                unset($configurationArray['languages'][$domainConfig->getSiteLanguage()]['eRecht24Config']);
+                $siteConfiguration->write($domainConfig->getSiteConfigName(), $configurationArray);
+            }
+        }
 
         $this->addFlashMessage('eRecht24 Extension für TYPO3: Die Konfiguration wurde erfolgreich gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->domainConfigRepository->remove($domainConfig);

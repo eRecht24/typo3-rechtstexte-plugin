@@ -70,65 +70,76 @@
                     <thead>
                     <tr>
                         <th>Site-Configuration-Name</th>
+                        <th>Domain</th>
                         <th></th>
                     </tr>
                     </thead>
                     <f:for each="{allSiteConfigurations}" as="siteConfig" key="identifier">
                         <tr>
                             <td>{identifier}</td>
+                            <td>{siteConfig.base}</td>
                             <td>
-                                <table class="table table-striped table-no-borders">
-                                    <tr>
-                                        <th>
-                                            {f:translate(key:'LLL:EXT:backend/Resources/Private/Language/locallang_siteconfiguration_tca.xlf:site_language.language')}
-                                        </th>
-                                        <th>Domain</th>
-                                        <th></th>
-                                    </tr>
-                                    <f:for each="{siteConfig.allLanguages}" as="siteLanguage">
+                                <f:link.action action="new" class="btn btn-success btn-sm"
+                                               arguments="{siteconfigIdentifier: siteConfig.identifier}">
+                                    <f:translate key="backend.create_config"/>
+                                </f:link.action>
+                            </td>
+                            <f:comment>
+                                <!--
+
+                                TODO: Sprachen ueberfluessig?
+
+                                <td>
+                                    <table class="table table-striped table-no-borders">
                                         <tr>
-                                            <td>
-                                                <f:if condition="{siteLanguage.enabled}">
-                                                    <f:then>
-                                                        <core:icon identifier="{siteLanguage.flagIdentifier}"/>
-                                                        {siteLanguage.title}
-                                                    </f:then>
-                                                    <f:else>
-                                                        <core:icon identifier="{siteLanguage.flagIdentifier}"
-                                                                   overlay="overlay-hidden"/>
-                                                        <span class="text-muted">{siteLanguage.title} (<f:translate
-                                                            key="LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:disabled">disabled</f:translate>)</span>
-                                                    </f:else>
-                                                </f:if>
-                                            </td>
-                                            <td>{siteLanguage.base.host}</td>
-                                            <td>
-                                                <f:comment>
-                                                    <!-- TODO: Dieses ForEach ist unsauber und sollte mindestens durch einen ViewHelper ersetzt werden -->
-                                                </f:comment>
-                                                <f:variable name="domainAlreadyConfigured" value="0" />
-                                                <f:for each="{configuredDomains}" as="existingConfigDomain">
-                                                    <f:if condition="{existingConfigDomain}=={siteLanguage.base.host}">
-                                                        <f:variable name="domainAlreadyConfigured" value="1" />
-                                                    </f:if>
-                                                </f:for>
-                                                <f:if condition="{domainAlreadyConfigured}">
-                                                    <f:then>
-                                                        <span class="text-muted">Konfiguration existiert bereits</span>
-                                                    </f:then>
-                                                    <f:else>
-                                                        <f:link.action action="new" class="btn btn-success btn-sm"
-                                                                       arguments="{siteconfigIdentifier: siteConfig.identifier, languageId: siteLanguage.languageId}">
-                                                            <f:translate key="backend.create_config"/>
-                                                        </f:link.action>
-                                                    </f:else>
-                                                </f:if>
-                                            </td>
+                                            <th>
+                                                {f:translate(key:'LLL:EXT:backend/Resources/Private/Language/locallang_siteconfiguration_tca.xlf:site_language.language')}
+                                            </th>
+                                            <th>Domain</th>
+                                            <th></th>
                                         </tr>
-                                    </f:for>
-                                </table>
-                            </td>
-                            </td>
+                                        <f:for each="{siteConfig.allLanguages}" as="siteLanguage">
+                                            <tr>
+                                                <td>
+                                                    <f:if condition="{siteLanguage.enabled}">
+                                                        <f:then>
+                                                            <core:icon identifier="{siteLanguage.flagIdentifier}"/>
+                                                            {siteLanguage.title}
+                                                        </f:then>
+                                                        <f:else>
+                                                            <core:icon identifier="{siteLanguage.flagIdentifier}"
+                                                                       overlay="overlay-hidden"/>
+                                                            <span class="text-muted">{siteLanguage.title} (<f:translate
+                                                                key="LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:disabled">disabled</f:translate>)</span>
+                                                        </f:else>
+                                                    </f:if>
+                                                </td>
+                                                <td>{siteLanguage.base.host}</td>
+                                                <td>
+                                                    <f:variable name="domainAlreadyConfigured" value="0" />
+                                                    <f:for each="{configuredDomains}" as="existingConfigDomain">
+                                                        <f:if condition="{existingConfigDomain}=={siteLanguage.base.host}">
+                                                            <f:variable name="domainAlreadyConfigured" value="1" />
+                                                        </f:if>
+                                                    </f:for>
+                                                    <f:if condition="{domainAlreadyConfigured}">
+                                                        <f:then>
+                                                            <span class="text-muted">Konfiguration existiert bereits</span>
+                                                        </f:then>
+                                                        <f:else>
+                                                            <f:link.action action="new" class="btn btn-success btn-sm"
+                                                                           arguments="{siteconfigIdentifier: siteConfig.identifier, languageId: siteLanguage.languageId}">
+                                                                <f:translate key="backend.create_config"/>
+                                                            </f:link.action>
+                                                        </f:else>
+                                                    </f:if>
+                                                </td>
+                                            </tr>
+                                        </f:for>
+                                    </table>
+                                </td>
+                                -->
+                            </f:comment>
                         </tr>
                     </f:for>
                 </table>

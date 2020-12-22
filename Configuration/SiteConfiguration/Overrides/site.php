@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS['SiteConfiguration']['site_language']['columns']['eRecht24Config'] = [
+$GLOBALS['SiteConfiguration']['site']['columns']['eRecht24Config'] = [
     'label' => 'eRecht24 Konfiguration',
     'config' => [
         'type' => 'select',
@@ -14,4 +14,4 @@ $GLOBALS['SiteConfiguration']['site_language']['columns']['eRecht24Config'] = [
 ];
 
 // And add it to showitem
-$GLOBALS['SiteConfiguration']['site_language']['types']['1']['showitem'] .= ',eRecht24Config';
+$GLOBALS['SiteConfiguration']['site']['types']['0']['showitem'] .= ',--div--;eRecht24, eRecht24Config';

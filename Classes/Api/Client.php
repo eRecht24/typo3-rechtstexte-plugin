@@ -169,42 +169,4 @@ class Client extends BaseApi
 
         return json_encode($request_body, JSON_UNESCAPED_UNICODE);
     }
-
-    /**
-     * Register default hooks after client was created
-     */
-    private function registerAddClientHooks() : void
-    {
-        // Register default filter Hook
-        add_filter(
-            self::CLIENT_CREATED_FILTER,
-            [new ClientCreatedFilter(), 'execute'],
-            1
-        );
-
-        // Register default action Hook
-        add_action(
-            self::CLIENT_CREATED_ACTION,
-            [new ClientCreatedAction(), 'execute']
-        );
-    }
-
-    /**
-     * Register default hooks after Client was deleted
-     */
-    private function registerDeleteClientHooks() : void
-    {
-        // Register default filter Hook
-        add_filter(
-            self::CLIENT_DELETED_FILTER,
-            [new RequestSanitizer(), 'execute'],
-            1
-        );
-
-        // Register default action Hook
-        add_action(
-            self::CLIENT_DELETED_ACTION,
-            [new DatabaseStorer(), 'execute']
-        );
-    }
 }

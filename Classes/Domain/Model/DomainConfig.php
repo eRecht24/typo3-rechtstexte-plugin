@@ -94,7 +94,6 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * privacySource
-     *
      * @var int
      */
     protected $privacySource = 1;
@@ -115,7 +114,6 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * privacyDeTstamp
-     *
      * @var int
      */
     protected $privacyDeTstamp = 0;
@@ -143,9 +141,9 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * socialSource
-     * @var boolean
+     * @var int
      */
-    protected $socialSource = true;
+    protected $socialSource = 1;
 
     /**
      * socialDe
@@ -486,7 +484,7 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the socialSource
      *
-     * @return boolean $socialSource
+     * @return int $socialSource
      */
     public function getSocialSource()
     {
@@ -496,10 +494,10 @@ class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the socialSource
      *
-     * @param boolean $socialSource
+     * @param int $socialSource
      * @return void
      */
-    public function setSocialSource(bool $socialSource)
+    public function setSocialSource($socialSource)
     {
         $this->socialSource = $socialSource;
     }
