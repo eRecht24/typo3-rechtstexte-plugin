@@ -385,6 +385,17 @@ define(['jquery',
         )
       });
 
+      $('#copyDebugInformations').click(function() {
+        var $debugInformations = $('#debugInformations');
+        $debugInformations.fadeIn();
+        $debugInformations.removeAttr('disabled')
+        $debugInformations.select();
+        document.execCommand("copy");
+        $debugInformations.attr('disabled', 'disabled')
+        var success = ['Debuginformationen wurden in Ihre Zwischenablage übertragen.'];
+        eRecht24Module.handleSuccess(success);
+      });
+
     }
 
     $('.site-config-delete').click(function (e) {

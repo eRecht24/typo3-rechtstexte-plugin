@@ -9,6 +9,11 @@
     display: none;
 }
 
+.erecht-module #debugInformations {
+    display: none;
+    margin-bottom: 20px;
+}
+
 .erecht-module #stateTable.has-errors-1 #error-row {
     display: table-row;
 }

@@ -1,21 +1,9 @@
 <?php
 declare(strict_types=1);
-
 namespace ERecht24\Er24Rechtstexte\Api;
-
-//use eRecht24\LegalTexts\App\Hooks\Actions\ClientCreated as ClientCreatedAction;
-//use eRecht24\LegalTexts\App\Hooks\Actions\ClientDeleted as DatabaseStorer;
-//use eRecht24\LegalTexts\App\Hooks\Filter\ClientCreated as ClientCreatedFilter;
-//use eRecht24\LegalTexts\App\Hooks\Filter\ClientDeleted as RequestSanitizer;
 
 class Client extends BaseApi
 {
-    const CLIENT_CREATED_ACTION = 'erecht24_action_client_created';
-    const CLIENT_CREATED_FILTER = 'erecht24_filter_client_created';
-
-    const CLIENT_DELETED_ACTION = 'erecht24_action_client_deleted';
-    const CLIENT_DELETED_FILTER = 'erecht24_filter_client_deleted';
-
     /**
      * Function provides a list of all clients
      * @return ApiResponse

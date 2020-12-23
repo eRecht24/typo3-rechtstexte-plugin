@@ -5,6 +5,7 @@ namespace ERecht24\Er24Rechtstexte\Controller;
 
 
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /***
@@ -264,6 +265,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 $pushError = true;
                 $errors = true;
             }
+
         } else {
             $errors = $configError = $pushError = true;
             $configErrorMessages[] = 'noclient_exists';
@@ -281,6 +283,38 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
         $curlError = function_exists('curl_version') ? false: true;
 
+        $debugInformations = 'PHP Version: ' . phpversion() . PHP_EOL;
+        $debugInformations .= 'TYPO3 Composer Mode: ' .\TYPO3\CMS\Core\Core\Environment::isComposerMode() . PHP_EOL;
+        $debugInformations .= 'cURL Error: ' . (int) $curlError . PHP_EOL;
+        $debugInformations .= 'Push Error: ' . (int) $pushError . PHP_EOL;
+        $debugInformations .= 'API Connection Error: ' . (int) $erechtServerError . PHP_EOL;
+        $debugInformations .= 'Configuration Errors: ' . (int) $configError . PHP_EOL;
+
+        if(count($configErrorMessages) > 0) {
+            $debugInformations .= 'Configuration Error Details: '.  PHP_EOL;
+            foreach ($configErrorMessages as $error) {
+                $debugInformations .= $error . PHP_EOL;
+            }
+        }
+
+        $debugInformations .= PHP_EOL;
+
+        $debugInformations .= 'API Key: ' . $domainConfig->getApiKey() . PHP_EOL;
+        $debugInformations .= 'Client ID: ' . $domainConfig->getClientId() . PHP_EOL;
+        $debugInformations .= 'Client Secret: ' . $domainConfig->getClientSecret() . PHP_EOL;
+        $debugInformations .= 'API Host: ' . \ERecht24\Er24Rechtstexte\Utility\HelperUtility::API_HOST_URL . PHP_EOL;
+        $debugInformations .= 'API Push URI: ' . $domainConfig->getDomain() . 'erecht24/v1/push' . PHP_EOL;
+        $debugInformations .= PHP_EOL;
+        $debugInformations .= 'Extension Informations:' . PHP_EOL;
+
+
+        /** @var PackageManager $packageManager */
+        $packageManager = GeneralUtility::makeInstance(PackageManager::class);
+
+        foreach ($packageManager->getActivePackages() as $extension) {
+            $debugInformations .= $extension->getPackageKey() . ' (' . $extension->getPackageMetaData()->getVersion() . ')' . PHP_EOL;
+        }
+
         $this->view->assignMultiple([
             'domainConfig' => $domainConfig,
             'errors' => $errors,
@@ -288,7 +322,8 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             'erechtServerError' => $erechtServerError,
             'configError' => $configError,
             'configErrorMessages' => $configErrorMessages,
-            'curlError' => $curlError
+            'curlError' => $curlError,
+            'debugInformations' => $debugInformations
         ]);
     }
 

@@ -15,7 +15,7 @@ class FlexFormFunctions
             $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
             $siteConfig = $siteFinder->getSiteByPageId($config['flexParentDatabaseRow']['pid']);
             $domainConfig = $objectManager->get(\ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository::class)
-                ->findOneByDomain($siteConfig->getBase()->getScheme() . '://' . $siteConfig->getBase()->getHost() . '/');
+                ->findOneByDomain((string)$siteConfig->getBase());
             if($domainConfig instanceof \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig) {
                 $config['items'] = [];
                 $config['items'][] = [
