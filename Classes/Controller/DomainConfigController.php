@@ -6,6 +6,7 @@ namespace ERecht24\Er24Rechtstexte\Controller;
 
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Package\PackageManager;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /***
@@ -315,6 +316,18 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             $debugInformations .= $extension->getPackageKey() . ' (' . $extension->getPackageMetaData()->getVersion() . ')' . PHP_EOL;
         }
 
+        // The Docs //
+        require_once(ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Resources/Private/Vendor/Erusev/Parsedown/Parsedown.php');
+
+        $parseDown = new \Parsedown();
+
+        if($GLOBALS['BE_USER']->uc['lang'] === 'de') {
+            $documentation = (string) $parseDown->text(file_get_contents(ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Documentation/Documentation_de.md'));
+        } else {
+            $documentation = (string) $parseDown->text(file_get_contents(ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Documentation/Documentation_en.md'));
+        }
+
+
         $this->view->assignMultiple([
             'domainConfig' => $domainConfig,
             'errors' => $errors,
@@ -323,7 +336,8 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             'configError' => $configError,
             'configErrorMessages' => $configErrorMessages,
             'curlError' => $curlError,
-            'debugInformations' => $debugInformations
+            'debugInformations' => $debugInformations,
+            'documentation' => $documentation
         ]);
     }
 

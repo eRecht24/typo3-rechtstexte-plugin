@@ -40,8 +40,6 @@ class HelperUtility
             $error_message = 'An Error occurred, Please try again later. If the error persists contact the admin.';
         }
 
-        //self::erecht24_log_error($error_message);
-
         return $error_message;
     }
 
@@ -54,9 +52,7 @@ class HelperUtility
      */
     public static function assignDocumentToDomainConfig(\ERecht24\Er24Rechtstexte\Api\ApiResponse $apiResponse,
                                                  \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig,
-                                                 string $documentType
-    )
-    {
+                                                 string $documentType) {
         $contentEn = $apiResponse->getData('html_en');
         $contentDe = $apiResponse->getData('html_de');
         $modified =  strtotime($apiResponse->getData('modified'));
