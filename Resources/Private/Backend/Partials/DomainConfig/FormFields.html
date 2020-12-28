@@ -400,26 +400,68 @@
         <div role="tabpanel" class="tab-pane" id="tab-google">
             <div class="panel panel-tab">
                 <div class="panel-body">
-                    <label for="analyticsId">
-                        <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.analytics_id"/>
-                    </label><br/>
-                    <f:form.textfield class="form-control" property="analyticsId" id="analyticsId"/>
-                    <br/>
-                    <label for="flagEmbedTracking">
-                        <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking"/>
-                    </label><br/>
-                    <f:form.checkbox property="flagEmbedTracking" id="flagEmbedTracking" value="1"/>
-                    <br/>
-                    <label for="flagUserCentricsEmbed">
-                        <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed"/>
-                    </label><br/>
-                    <f:form.checkbox property="flagUserCentricsEmbed" id="flagUserCentricsEmbed" value="1"/>
-                    <br/>
-                    <label for="flagOptOutCode">
-                        <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code"/>
-                    </label><br/>
-                    <f:form.checkbox property="flagOptOutCode" id="flagOptOutCode" value="1"/>
-                    <br/>
+
+                    <h3>Google Analytics</h3>
+
+                    <p>Sie können den vollständigen Google Analytics Tracking-Code inkl. Codesnippet für das Setzen des Opt-Out-Cookies auch über dieses Plugin generieren lassen.</p>
+
+                    <div class="form-group row">
+                        <label for="domain" class="col-sm-2 col-form-label">
+                            <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.analytics_id"/>
+                        </label>
+                        <div class="col-sm-10">
+                            <f:form.textfield class="form-control" property="analyticsId" id="analyticsId" placeholder="UA-12345687-1"/>
+                            <p class="text-muted">
+                                Geben Sie hier Ihre Google Analytics Tracking ID im Format UA-12345687-1 ein
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="flagEmbedTracking" class="col-sm-2 col-form-label">
+                            <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking"/>
+                        </label>
+                        <div class="col-sm-10">
+                            <div class="checkbox checkbox-type-toggle">
+                                <f:form.checkbox property="flagEmbedTracking" id="flagEmbedTracking" value="1" class="checkbox-input"/>
+                                <label class="checkbox-label" for="flagEmbedTracking">
+                                    <span class="checkbox-label-text">&nbsp;</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="flagUserCentricsEmbed" class="col-sm-2 col-form-label">
+                            <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed"/>
+                        </label>
+                        <div class="col-sm-10">
+                            <div class="checkbox checkbox-type-toggle">
+                                <f:form.checkbox property="flagUserCentricsEmbed" id="flagUserCentricsEmbed" value="1" class="checkbox-input"/>
+                                <label class="checkbox-label" for="flagUserCentricsEmbed">
+                                    <span class="checkbox-label-text">&nbsp;</span>
+                                </label>
+                            </div>
+                            <p>
+                                Sofern die Usercentrics Consent Management Platform in Ihrer Website nutzen, können Sie diese Option aktivieren.
+                                Somit wird Ihr Google Analytics Quellcode zunächst in deaktiviertem Zustand ausgeliefert und erst nach der
+                                Erteilung der Cookie-Einwilligung durch den Nutzer über das Cookie-Banner aktiviert.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group row" id="optOutCodeRow">
+                        <label for="flagOptOutCode" class="col-sm-2 col-form-label">
+                            <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code"/>
+                        </label>
+                        <div class="col-sm-10">
+                            <div class="checkbox checkbox-type-toggle">
+                                <f:form.checkbox property="flagOptOutCode" id="flagOptOutCode" value="1" class="checkbox-input"/>
+                                <label class="checkbox-label" for="flagOptOutCode">
+                                    <span class="checkbox-label-text">&nbsp;</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

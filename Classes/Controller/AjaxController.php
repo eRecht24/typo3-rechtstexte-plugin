@@ -124,7 +124,7 @@ class AjaxController
                         // TODO: Handle setter not found
                     }
                 } else {
-                    // TODO: Handle setter not found
+                    $errors[] = 'Unkown property ' . $propertyName;
                 }
             }
         }

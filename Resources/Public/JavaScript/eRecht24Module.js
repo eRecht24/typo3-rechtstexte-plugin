@@ -12,6 +12,7 @@ define(['jquery',
       languagePossibleUrls: [],
       domainConfigId: null,
       currentImprintSource: 0,
+      trackingEnabled: false,
       currentSources: {
         imprint: 0,
         privacy: 0,
@@ -99,16 +100,15 @@ define(['jquery',
 
       var documentType = partType;
 
-      if(partType === 'privacy') {
+      if (partType === 'privacy') {
         documentType = 'privacyPolicy'
-      } else if(partType === 'social') {
+      } else if (partType === 'social') {
         documentType = 'privacyPolicySocialMedia';
       }
 
       var upperCaseType = eRecht24Module.capitalize(partType);
 
       eRecht24Module.currentSources[partType] = $('.tab-' + partType).data('source');
-      console.log($('.tab-' + partType).data('source'));
 
       processCurrentDataSource();
 
@@ -149,11 +149,11 @@ define(['jquery',
         if ($(this).is(':checked')) {
           eRecht24Module.currentSources[partType] = 1;
           // Toggle TYPO3 hidden field for checkboxes
-          $('input[name="'+$(this).attr("name")+'"]').not($(this)).val(1);
+          $('input[name="' + $(this).attr("name") + '"]').not($(this)).val(1);
         } else {
           eRecht24Module.currentSources[partType] = 0;
           // Toggle TYPO3 hidden field for checkboxes
-          $('input[name="'+$(this).attr("name")+'"]').not($(this)).val(0);
+          $('input[name="' + $(this).attr("name") + '"]').not($(this)).val(0);
         }
 
         var arguments = {
@@ -187,8 +187,6 @@ define(['jquery',
       });
 
       function processCurrentDataSource() {
-        console.log(partType);
-        console.log(eRecht24Module.currentSources);
         if (eRecht24Module.currentSources[partType] == 0) {
           $('.tab-' + partType).find('.remote-content').hide();
           $('.tab-' + partType).find('.local-content').show();
@@ -198,6 +196,60 @@ define(['jquery',
         }
       }
     }
+
+    eRecht24Module.processTrackingConfiguration = function () {
+      if(eRecht24Module.trackingEnabled === true) {
+        $('#optOutCodeRow').fadeIn();
+      } else {
+        $('#optOutCodeRow').fadeOut();
+      }
+    };
+
+    eRecht24Module.initAnalyticsTab = function () {
+
+      eRecht24Module.processTrackingConfiguration();
+
+      $('#tab-google .checkbox-input').change(function () {
+
+        eRecht24Module.showLoader();
+
+        var enabled = false;
+
+        if ($(this).is(':checked')) {
+          // Toggle TYPO3 hidden field for checkboxes
+          $('input[name="' + $(this).attr("name") + '"]').not($(this)).val(1);
+          enabled = true;
+        } else {
+          // Toggle TYPO3 hidden field for checkboxes
+          $('input[name="' + $(this).attr("name") + '"]').not($(this)).val(0);
+        }
+
+        if ($(this).attr('id') === 'flagEmbedTracking') {
+          eRecht24Module.trackingEnabled = enabled;
+        }
+
+        eRecht24Module.processTrackingConfiguration();
+
+        var arguments = {
+          domainConfigId: eRecht24Module.domainConfigId,
+          properties: {}
+        };
+
+        arguments.properties[$(this).attr('id')] = parseInt(enabled);
+
+        new AjaxRequest(TYPO3.settings.ajaxUrls.er24_saveDomainConfig)
+          .withQueryArguments(arguments)
+          .get().then(async function (response) {
+            resolved = await response.resolve();
+            eRecht24Module.handleResultMessages(resolved);
+            eRecht24Module.hideLoader();
+          }, function (e) {
+            // @todo Error Handling
+            eRecht24Module.hideLoader();
+          }
+        )
+      });
+    };
 
     // eRecht24Module.initImprintForm = function () {
     //
@@ -299,7 +351,7 @@ define(['jquery',
 
         var $selectedOption = $(this).find('option:selected');
 
-        if($selectedOption.data('domain')) {
+        if ($selectedOption.data('domain')) {
           $('#domain').val($selectedOption.data('domain'));
         } else {
           $('#domain').val('');
@@ -338,18 +390,20 @@ define(['jquery',
     if ($('#domainConfigEditForm').length > 0) {
       eRecht24Module.showLoader();
       eRecht24Module.domainConfigId = parseInt($('#domainConfigId').val());
+      eRecht24Module.trackingEnabled = $('#flagEmbedTracking').is(':checked');
       eRecht24Module.initSyncAllDocuments();
       eRecht24Module.initDocumentPartForm('imprint');
       eRecht24Module.initDocumentPartForm('privacy');
       eRecht24Module.initDocumentPartForm('social');
+      eRecht24Module.initAnalyticsTab();
       eRecht24Module.hideLoader();
 
-      if($('.t3js-tabmenu-item.has-validation-error').length > 0) {
+      if ($('.t3js-tabmenu-item.has-validation-error').length > 0) {
         var errors = ['Bei der Prüfung der API Verbindung wurden Fehler festgestellt. Bitte überprüfen Sie den Pluginstatus'];
         eRecht24Module.handleError(errors);
       }
 
-      $('#selfRepair').click(function() {
+      $('#selfRepair').click(function () {
         eRecht24Module.showLoader();
         new AjaxRequest(TYPO3.settings.ajaxUrls.er24_refreshConfig)
           .withQueryArguments(
@@ -362,20 +416,20 @@ define(['jquery',
 
             eRecht24Module.handleResultMessages(resolved);
 
-            if(resolved.errors.length === 0) {
+            if (resolved.errors.length === 0) {
               $(this).parents('.t3js-tabmenu-item').removeClass('has-validation-error');
             } else {
               $(this).parents('.t3js-tabmenu-item').addClass('has-validation-error');
             }
 
             for (var fixed of resolved.fixed) {
-              if(fixed === 'apiConnection') {
+              if (fixed === 'apiConnection') {
                 $('#connectionStateRow').removeClass('has-error-1');
               }
-              if(fixed === 'clientConfiguration') {
+              if (fixed === 'clientConfiguration') {
                 $('#configStateRow').removeClass('has-error-1');
               }
-              if(fixed === 'push') {
+              if (fixed === 'push') {
                 $('#pushStateRow').removeClass('has-error-1');
               }
             }
@@ -385,7 +439,7 @@ define(['jquery',
         )
       });
 
-      $('#copyDebugInformations').click(function() {
+      $('#copyDebugInformations').click(function () {
         var $debugInformations = $('#debugInformations');
         $debugInformations.fadeIn();
         $debugInformations.removeAttr('disabled')
@@ -407,7 +461,7 @@ define(['jquery',
           active: true,
           trigger: function () {
             Modal.dismiss();
-            window.setTimeout(function() {
+            window.setTimeout(function () {
               window.location = target;
             }, 500);
           }
@@ -419,7 +473,5 @@ define(['jquery',
         }
       ]);
     });
-
-
   }
 );

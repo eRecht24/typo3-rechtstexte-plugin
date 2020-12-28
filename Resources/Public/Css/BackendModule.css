@@ -9,6 +9,10 @@
     display: none;
 }
 
+.erecht-module .checkbox-type-toggle {
+    margin: 0;
+}
+
 .erecht-module #debugInformations {
     display: none;
     margin-bottom: 20px;
