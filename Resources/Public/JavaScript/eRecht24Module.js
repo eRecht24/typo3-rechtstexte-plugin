@@ -232,10 +232,14 @@ define(['jquery',
 
         var arguments = {
           domainConfigId: eRecht24Module.domainConfigId,
-          properties: {}
+          properties: {},
+          flushAnalyticsCache: 1
         };
 
-        arguments.properties[$(this).attr('id')] = parseInt(enabled);
+        arguments.properties[$(this).attr('id')] = enabled ? 1 : 0;
+
+
+        console.log(arguments);
 
         new AjaxRequest(TYPO3.settings.ajaxUrls.er24_saveDomainConfig)
           .withQueryArguments(arguments)

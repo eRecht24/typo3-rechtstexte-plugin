@@ -1,4 +1,3 @@
-
 plugin.tx_er24rechtstexte_main {
     view {
         templateRootPaths.0 = EXT:er24_rechtstexte/Resources/Private/Templates/
@@ -9,8 +8,7 @@ plugin.tx_er24rechtstexte_main {
         layoutRootPaths.1 = {$plugin.tx_er24rechtstexte_main.view.layoutRootPath}
     }
     persistence {
-        storagePid = {$plugin.tx_er24rechtstexte_main.persistence.storagePid}
-        #recursive = 1
+        storagePid = root
     }
     features {
         #skipDefaultArguments = 1
@@ -24,44 +22,16 @@ plugin.tx_er24rechtstexte_main {
     }
 }
 
-# these classes are only used in auto-generated templates
-plugin.tx_er24rechtstexte._CSS_DEFAULT_STYLE (
-    textarea.f3-form-error {
-        background-color:#FF9F9F;
-        border: 1px #FF0000 solid;
-    }
-
-    input.f3-form-error {
-        background-color:#FF9F9F;
-        border: 1px #FF0000 solid;
-    }
-
-    .tx-er24-rechtstexte table {
-        border-collapse:separate;
-        border-spacing:10px;
-    }
-
-    .tx-er24-rechtstexte table th {
-        font-weight:bold;
-    }
-
-    .tx-er24-rechtstexte table td {
-        vertical-align:top;
-    }
-
-    .typo3-messages .message-error {
-        color:red;
-    }
-
-    .typo3-messages .message-ok {
-        color:green;
-    }
-)
+page {
+  # Google Analytics Handling by eRecht24 Extension
+  headerData.1609163118 = USER
+  headerData.1609163118.userFunc = ERecht24\Er24Rechtstexte\UserFunc\AnalyticsHeaderData->process
+}
 
 # Module configuration
 module.tx_er24rechtstexte_tools_er24rechtstextemain {
     persistence {
-        storagePid = {$module.tx_er24rechtstexte_main.persistence.storagePid}
+        storagePid = root
     }
     view {
         templateRootPaths.0 = EXT:er24_rechtstexte/Resources/Private/Backend/Templates/

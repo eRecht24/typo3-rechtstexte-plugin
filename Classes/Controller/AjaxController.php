@@ -133,10 +133,17 @@ class AjaxController
             $successes[] = 'Automatisch gespeichert.';
         }
 
+
+        if(true === isset($request->getQueryParams()['flushAnalyticsCache']) && (int) $request->getQueryParams()['flushAnalyticsCache'] === 1) {
+            /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
+            $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+            /** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
+            $cacheManager = $objectManager->get(\TYPO3\CMS\Core\Cache\CacheManager::class);
+            $cacheManager->flushCachesByTag('er24_analytics_' . $domainConfig->getUid());
+        }
+
         $this->domainConfigRepository->update($domainConfig);
         $this->persistenceManager->persistAll();
-
-        //return new \TYPO3\CMS\Core\Http\HtmlResponse('');
 
         return new \TYPO3\CMS\Core\Http\JsonResponse([
             'errors' => $errors,
