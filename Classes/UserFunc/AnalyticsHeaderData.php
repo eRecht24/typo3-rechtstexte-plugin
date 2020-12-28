@@ -1,7 +1,6 @@
 <?php
 namespace ERecht24\Er24Rechtstexte\UserFunc;
 
-
 class AnalyticsHeaderData
 {
     public function process($content, $conf) {

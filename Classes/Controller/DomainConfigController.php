@@ -300,9 +300,9 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
         $debugInformations .= PHP_EOL;
 
-        $debugInformations .= 'API Key: ' . $domainConfig->getApiKey() . PHP_EOL;
+        $debugInformations .= 'API Key: ' . substr($domainConfig->getApiKey(), 0, 30) . '...' . PHP_EOL;
         $debugInformations .= 'Client ID: ' . $domainConfig->getClientId() . PHP_EOL;
-        $debugInformations .= 'Client Secret: ' . $domainConfig->getClientSecret() . PHP_EOL;
+        $debugInformations .= 'Client Secret: ' . substr($domainConfig->getClientSecret(), 0, 30) . '...' . PHP_EOL;
         $debugInformations .= 'API Host: ' . \ERecht24\Er24Rechtstexte\Utility\HelperUtility::API_HOST_URL . PHP_EOL;
         $debugInformations .= 'API Push URI: ' . $domainConfig->getDomain() . 'erecht24/v1/push' . PHP_EOL;
         $debugInformations .= PHP_EOL;
