@@ -32,7 +32,7 @@ class AnalyticsHeaderData
 /**
 * Google OutOut Script
 */
-var gaProperty = ' . $domainConfig->getAnalyticsId() . ';
+var gaProperty = "' . $domainConfig->getAnalyticsId() . '";
 var disableStr = \'ga-disable-\' + gaProperty;
 if (document.cookie.indexOf(disableStr + \'=true\') > -1) {
     window[disableStr] = true;
@@ -51,7 +51,7 @@ function gaOptout() {
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag(\'js\', new Date());
-    gtag(\'config\', '.$domainConfig->getAnalyticsId().', { \'anonymize_ip\': true });
+    gtag(\'config\', "'.$domainConfig->getAnalyticsId().'", { \'anonymize_ip\': true });
 </script>';
                     } else {
                         $embedCode .=
@@ -60,7 +60,7 @@ function gaOptout() {
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag(\'js\', new Date());
-    gtag(\'config\', '.$domainConfig->getAnalyticsId().', { \'anonymize_ip\': true });
+    gtag(\'config\', "'.$domainConfig->getAnalyticsId().'", { \'anonymize_ip\': true });
 </script>';
                     }
 
