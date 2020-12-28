@@ -284,7 +284,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $curlError = function_exists('curl_version') ? false: true;
 
         $debugInformations = 'PHP Version: ' . phpversion() . PHP_EOL;
-        $debugInformations .= 'TYPO3 Composer Mode: ' .\TYPO3\CMS\Core\Core\Environment::isComposerMode() . PHP_EOL;
+        $debugInformations .= 'TYPO3 Composer Mode: ' . (int) \TYPO3\CMS\Core\Core\Environment::isComposerMode() . PHP_EOL;
         $debugInformations .= 'cURL Error: ' . (int) $curlError . PHP_EOL;
         $debugInformations .= 'Push Error: ' . (int) $pushError . PHP_EOL;
         $debugInformations .= 'API Connection Error: ' . (int) $erechtServerError . PHP_EOL;

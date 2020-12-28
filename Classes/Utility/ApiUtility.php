@@ -63,6 +63,10 @@ class ApiUtility
 
         $errors = $successes = [];
 
+        if($newApiKey !== $domainConfig->getApiKey()) {
+            $domainConfig->setApiKey($newApiKey);
+        }
+
         if($domainConfig->getApiKey() === '') {
             $errors[] = 'Kein API Key hinterlegt';
         }
@@ -72,13 +76,16 @@ class ApiUtility
             // Api Key has been modified
             $oldApiKey = $domainConfig->_getCleanProperty('apiKey');
 
-            if($domainConfig->getClientId() !== '' && $oldApiKey !== '') {
+            $client = new \ERecht24\Er24Rechtstexte\Api\Client($domainConfig->getApiKey(), $domainConfig->getDomain());
+            $apiResponse = $client->listClients();
 
+            if($apiResponse->isSuccess() === false && $domainConfig->getApiKey() !== '') {
+                $errors[] = 'Ungültiger API Key. Der neue API Key wurde nicht gespeichert!';
+                $domainConfig->setApiKey($oldApiKey);
+            } else if($domainConfig->getClientId() !== '' && $oldApiKey !== '') {
                 $handlerResponse = self::deleteDomainConfigClient($domainConfig, $oldApiKey);
-
                 $errors = array_merge($handlerResponse[0], $errors);
                 $successes = array_merge($handlerResponse[1], $successes);
-
             }
         }
 
