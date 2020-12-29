@@ -258,6 +258,8 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $errors = $pushError = $configError = $erechtServerError = $curlError = false;
         $configErrorMessages = [];
 
+        $updateUtility = new \ERecht24\Er24Rechtstexte\Utility\UpdateUtility();
+
         if($domainConfig->getClientId() !== '') {
             $client = new \ERecht24\Er24Rechtstexte\Api\Client($domainConfig->getApiKey(), $domainConfig->getDomain());
             $apiResponse = $client->testPushPing((int) $domainConfig->getClientId());
@@ -390,6 +392,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
         // Remove from SiteConfig
         if ($domainConfig->getSiteConfigName() !== '') {
+            // TODO: Take care of renamed site configs
             /** @var \TYPO3\CMS\Core\Configuration\SiteConfiguration $siteConfiguration */
             $siteConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\SiteConfiguration::class);
             $configurationArray = $siteConfiguration->load($domainConfig->getSiteConfigName());

@@ -7,6 +7,7 @@ return [
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
         'versioningWS' => true,
+        'adminOnly' => true,
         'rootLevel' => true,
         'delete' => 'deleted',
         'enablecolumns' => [
