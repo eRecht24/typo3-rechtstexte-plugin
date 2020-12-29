@@ -47,4 +47,13 @@ class LogUtility
         file_put_contents($logFilePath, implode(PHP_EOL, $lines));
 
     }
+
+    public static function getErrorLog() {
+        $logFilePath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Resources/Private/Log/Error.log';
+        if(false === file_exists($logFilePath)) {
+            $logWriter = fopen($logFilePath,'a+');
+            fclose($logWriter);
+        }
+        return file_get_contents($logFilePath);
+    }
 }

@@ -225,7 +225,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
         $newDomainConfig->setSocialEnTstamp($now);
         $newDomainConfig->setSocialDeTstamp($now);
-        $newDomainConfig->setImprintEnTstamp($now);;
+        $newDomainConfig->setImprintEnTstamp($now);
         $newDomainConfig->setImprintDeTstamp($now);
         $newDomainConfig->setPrivacyEnTstamp($now);
         $newDomainConfig->setPrivacyDeTstamp($now);
@@ -304,6 +304,9 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $debugInformations .= 'Client Secret: ' . substr($domainConfig->getClientSecret(), 0, 30) . '...' . PHP_EOL;
         $debugInformations .= 'API Host: ' . \ERecht24\Er24Rechtstexte\Utility\HelperUtility::API_HOST_URL . PHP_EOL;
         $debugInformations .= 'API Push URI: ' . $domainConfig->getDomain() . 'erecht24/v1/push' . PHP_EOL;
+        $debugInformations .= PHP_EOL;
+        $debugInformations .= 'Error Log:' . PHP_EOL;
+        $debugInformations .= \ERecht24\Er24Rechtstexte\Utility\LogUtility::getErrorLog();
         $debugInformations .= PHP_EOL;
         $debugInformations .= 'Extension informations:' . PHP_EOL;
 

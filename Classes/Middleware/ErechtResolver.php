@@ -3,7 +3,6 @@
 
 namespace ERecht24\Er24Rechtstexte\Middleware;
 
-
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -40,7 +39,8 @@ class ErechtResolver implements \Psr\Http\Server\MiddlewareInterface
         $domainConfig = $domainConfigRepository->findOneByClientSecret($secret);
 
         if($domainConfig === null) {
-            return new \TYPO3\CMS\Core\Http\JsonResponse(['message' => 'ClientID is unknown to the system'],401);
+            \ERecht24\Er24Rechtstexte\Utility\LogUtility::writeErrorLog('Push for unknown Client Secret requested' . $secret);
+            return new \TYPO3\CMS\Core\Http\JsonResponse(['message' => 'Client Secret is unknown to the system'],401);
         }
 
         if($type === 'imprint' && $domainConfig->getImprintSource() === 0

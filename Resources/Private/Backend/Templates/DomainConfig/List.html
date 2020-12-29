@@ -21,9 +21,8 @@
                 <thead>
                 <tr>
                     <th>Domain</th>
-                    <th>Site-Configuration [Language]</th>
+                    <th>Site-Configuration</th>
                     <th>API Key</th>
-                    <th>Status</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -31,9 +30,8 @@
                 <f:for each="{domainConfigs}" as="config">
                     <tr>
                         <td>{config.domain}</td>
-                        <td>{config.siteConfigName} [{config.siteLanguage}]</td>
+                        <td>{config.siteConfigName}</td>
                         <td>{config.apiKey}</td>
-                        <td></td>
                         <td>
                             <f:link.action action="edit" arguments="{domainConfig: config}" class="btn btn-primary t3js-record-delet">Bearbeiten</f:link.action>
                             <f:link.action action="delete" arguments="{domainConfig: config}" class="btn btn-danger site-config-delete">Löschen</f:link.action>

@@ -40,6 +40,8 @@ class HelperUtility
             $error_message = 'An Error occurred, Please try again later. If the error persists contact the admin.';
         }
 
+        LogUtility::writeErrorLog('API Error:' . $error_message);
+
         return $error_message;
     }
 
