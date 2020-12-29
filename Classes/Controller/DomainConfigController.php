@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace ERecht24\Er24Rechtstexte\Controller;
 
 
-use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -306,7 +305,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $debugInformations .= 'API Host: ' . \ERecht24\Er24Rechtstexte\Utility\HelperUtility::API_HOST_URL . PHP_EOL;
         $debugInformations .= 'API Push URI: ' . $domainConfig->getDomain() . 'erecht24/v1/push' . PHP_EOL;
         $debugInformations .= PHP_EOL;
-        $debugInformations .= 'Extension Informations:' . PHP_EOL;
+        $debugInformations .= 'Extension informations:' . PHP_EOL;
 
 
         /** @var PackageManager $packageManager */
