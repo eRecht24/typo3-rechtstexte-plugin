@@ -66,6 +66,9 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->domainConfigRepository = $domainConfigRepository;
     }
 
+    /**
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     */
     public function performUpdateAction() {
         $updateUtility = new \ERecht24\Er24Rechtstexte\Utility\UpdateUtility();
         if(true === $updateUtility->performSelfUpdate()) {
@@ -73,7 +76,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         } else {
             $this->addFlashMessage('eRecht24 Extension für TYPO3: Aktualisierung fehlgeschlagen!' , '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
         }
-        $this->redirect('list');
+        //$this->redirect('list');
     }
 
     /**

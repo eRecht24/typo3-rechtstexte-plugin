@@ -61,6 +61,9 @@ class UpdateUtility
         self::isUpdateAvailable();
     }
 
+    /**
+     * @return bool
+     */
     public function isUpdateAvailable() {
         $tags = json_decode(self::performApiRequest('repository/tags/'), true);
         $latest = $this->currentVersion;
@@ -74,6 +77,14 @@ class UpdateUtility
         return true;
     }
 
+    /**
+     * @return bool
+     * @throws \TYPO3\CMS\Core\Package\Exception\InvalidPackageKeyException
+     * @throws \TYPO3\CMS\Core\Package\Exception\InvalidPackageManifestException
+     * @throws \TYPO3\CMS\Core\Package\Exception\InvalidPackagePathException
+     * @throws \TYPO3\CMS\Core\Package\Exception\InvalidPackageStateException
+     * @throws \TYPO3\CMS\Extensionmanager\Exception\ExtensionManagerException
+     */
     public function performSelfUpdate() {
 
         $extensionKey = 'er24_rechtstexte';
@@ -144,7 +155,10 @@ class UpdateUtility
         $this->managementService->reloadPackageInformation($extensionKey);
         $extension = $this->managementService->getExtension($extensionKey);
 
+        GeneralUtility::rmdir($prePathNewVersion, true);
+
         return is_array($this->managementService->installExtension($extension));
+
     }
 
     /**
