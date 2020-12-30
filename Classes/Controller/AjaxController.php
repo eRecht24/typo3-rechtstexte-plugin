@@ -19,6 +19,11 @@ class AjaxController
     protected $apiUtility = null;
 
     /**
+     * @var \ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository
+     */
+    protected $domainConfigRepository = null;
+
+    /**
      * @param \ERecht24\Er24Rechtstexte\Utility\ApiUtility $apiUtility
      */
     public function injectApiUtility(\ERecht24\Er24Rechtstexte\Utility\ApiUtility $apiUtility) {
@@ -30,12 +35,21 @@ class AjaxController
     }
 
     /**
-     * @var \ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository
+     * @param \ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository $domainConfigRepository
      */
-    protected $domainConfigRepository = null;
-
     public function injectDomainConfigRepository(\ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository $domainConfigRepository) {
         $this->domainConfigRepository = $domainConfigRepository;
+    }
+
+    public function __construct() {
+        $typo3Version = new \TYPO3\CMS\Core\Information\Typo3Version();
+        if(version_compare($typo3Version,'10.4', '<')) {
+            // TODO: This constructor is just a fallback for TYPO3 9 LTS
+            $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+            $this->persistenceManager = $objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);
+            $this->apiUtility = $objectManager->get(\ERecht24\Er24Rechtstexte\Utility\ApiUtility::class);
+            $this->domainConfigRepository = $objectManager->get(\ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository::class);
+        }
     }
 
     /**
