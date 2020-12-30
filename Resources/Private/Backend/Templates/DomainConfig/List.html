@@ -8,6 +8,20 @@
         <f:translate key="backend.title"/>
     </h1>
 
+    <f:if condition="{updateAvailable}">
+        <f:be.infobox title="Aktualisierung verfügbar">
+            <p>Es steht eine Aktualisierung auf Version {latestVersion} zur Verfügung.</p>
+            <f:if condition="{composerMode}">
+                <f:then>
+                    <p>Dieses TYPO3 System wird im Composer-Modus betrieben. Für eine Aktualisierung nutzen Sie bitte Composer.</p>
+                </f:then>
+                <f:else>
+                    <f:link.action action="performUpdate" class="btn btn-success">Aktualisierung ausführen</f:link.action>
+                </f:else>
+            </f:if>
+        </f:be.infobox>
+    </f:if>
+
     <h2>
         <f:translate key="backend.overview_title"/>
     </h2>

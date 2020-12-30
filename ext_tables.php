@@ -19,7 +19,7 @@ call_user_func(
                 'main', // Submodule key
                 '', // Position
                 [
-                    \ERecht24\Er24Rechtstexte\Controller\DomainConfigController::class => 'list, show, new, create, edit, update, delete',
+                    \ERecht24\Er24Rechtstexte\Controller\DomainConfigController::class => 'list, new, create, edit, update, delete, performUpdate',
                 ],
                 [
                     'access' => 'user,group',

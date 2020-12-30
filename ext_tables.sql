@@ -31,5 +31,7 @@ CREATE TABLE tx_er24rechtstexte_domain_model_domainconfig (
 	site_config_name varchar(255) DEFAULT '' NOT NULL,
     site_language int(11) DEFAULT '0' NOT NULL,
     client_id varchar(255) DEFAULT '' NOT NULL,
-    client_secret varchar(255) DEFAULT '' NOT NULL
+    client_secret varchar(255) DEFAULT '' NOT NULL,
+
+    test_db_feld smallint(5) unsigned DEFAULT '0' NOT NULL
 );

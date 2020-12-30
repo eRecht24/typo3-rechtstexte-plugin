@@ -66,6 +66,16 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->domainConfigRepository = $domainConfigRepository;
     }
 
+    public function performUpdateAction() {
+        $updateUtility = new \ERecht24\Er24Rechtstexte\Utility\UpdateUtility();
+        if(true === $updateUtility->performSelfUpdate()) {
+            $this->addFlashMessage('eRecht24 Extension für TYPO3: Aktualisierung erfolgreich ausgeführt!' , '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        } else {
+            $this->addFlashMessage('eRecht24 Extension für TYPO3: Aktualisierung fehlgeschlagen!' , '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        }
+        $this->redirect('list');
+    }
+
     /**
      * action list
      *
@@ -73,6 +83,8 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function listAction()
     {
+
+        $updateUtility = new \ERecht24\Er24Rechtstexte\Utility\UpdateUtility();
 
         /** @var \TYPO3\CMS\Core\Site\SiteFinder $siteFinder */
         $siteFinder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Site\SiteFinder::class);
@@ -115,7 +127,10 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->view->assignMultiple([
             'domainConfigs' => $domainConfigs,
             'allSiteConfigurations' => $allSiteConfigurations,
-            'configuredDomains' => $configuredDomains
+            'configuredDomains' => $configuredDomains,
+            'updateAvailable' => $updateUtility->updateAvailable,
+            'latestVersion' => $updateUtility->latestVersion,
+            'composerMode' => $updateUtility->composeMode
         ]);
     }
 
