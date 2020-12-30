@@ -1,5 +1,5 @@
 define(['jquery',
-    'TYPO3/CMS/Core/Ajax/AjaxRequest',
+    './Ajax/AjaxRequest',
     'TYPO3/CMS/Backend/Severity',
     'TYPO3/CMS/Backend/Modal',
     'TYPO3/CMS/Backend/Notification'
