@@ -5,8 +5,21 @@ call_user_func(
     function()
     {
 
+        $vendorPrefix = '';
+        $typo3Version = new \TYPO3\CMS\Core\Information\Typo3Version();
+        $backendController = [
+            \ERecht24\Er24Rechtstexte\Controller\DomainConfigController::class => 'list, new, create, edit, update, delete, performUpdate',
+        ];
+
+        if(version_compare($typo3Version,'10.4', '<')) {
+            $vendorPrefix = 'ERecht24.';
+            $backendController = [
+                'DomainConfig' => 'list, new, create, edit, update, delete, performUpdate',
+            ];
+        }
+
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-            'Er24Rechtstexte',
+            $vendorPrefix.'Er24Rechtstexte',
             'Main',
             'eRecht24 Impressum oder Datenschutzerklärung auf dieser Seite einfügen.' // TODO
         );
@@ -14,13 +27,11 @@ call_user_func(
         if (TYPO3_MODE === 'BE') {
 
             \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-                'Er24Rechtstexte',
+                $vendorPrefix.'Er24Rechtstexte',
                 'tools', // Make module a submodule of 'tools'
                 'main', // Submodule key
                 '', // Position
-                [
-                    \ERecht24\Er24Rechtstexte\Controller\DomainConfigController::class => 'list, new, create, edit, update, delete, performUpdate',
-                ],
+                $backendController,
                 [
                     'access' => 'user,group',
                     'icon'   => 'EXT:er24_rechtstexte/Resources/Public/Icons/Extension.png',

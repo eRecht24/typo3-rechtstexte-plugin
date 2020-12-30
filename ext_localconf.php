@@ -5,17 +5,34 @@ call_user_func(
     function()
     {
 
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Er24Rechtstexte',
-            'Main',
-            [
-                \ERecht24\Er24Rechtstexte\Controller\DomainConfigController::class => 'show'
-            ],
-            // non-cacheable actions
-            [
-                \ERecht24\Er24Rechtstexte\Controller\DomainConfigController::class => ''
-            ]
-        );
+        $typo3Version = new \TYPO3\CMS\Core\Information\Typo3Version();
+
+        if(version_compare($typo3Version,'10.4', '<')) {
+            \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+                'ERecht24.Er24Rechtstexte',
+                'Main',
+                [
+                    'DomainConfig' => 'show'
+                ],
+                // non-cacheable actions
+                [
+                    'DomainConfig' => ''
+                ]
+            );
+        } else {
+            \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+                'Er24Rechtstexte',
+                'Main',
+                [
+                    \ERecht24\Er24Rechtstexte\Controller\DomainConfigController::class => 'show'
+                ],
+                // non-cacheable actions
+                [
+                    \ERecht24\Er24Rechtstexte\Controller\DomainConfigController::class => ''
+                ]
+            );
+        }
+
 
         // wizards
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(

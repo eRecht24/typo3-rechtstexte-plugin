@@ -1,11 +1,9 @@
 define(['jquery',
     'TYPO3/CMS/Core/Ajax/AjaxRequest',
-    'TYPO3/CMS/Backend/FormEngineValidation',
-    'TYPO3/CMS/Backend/Utility/MessageUtility',
     'TYPO3/CMS/Backend/Severity',
     'TYPO3/CMS/Backend/Modal',
     'TYPO3/CMS/Backend/Notification'
-  ], function ($, AjaxRequest, FormEngineValidation, MessageUtility, Severity, Modal, Notification) {
+  ], function ($, AjaxRequest, Severity, Modal, Notification) {
 
 
     var eRecht24Module = {
