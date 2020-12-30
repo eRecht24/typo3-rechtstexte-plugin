@@ -76,7 +76,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         } else {
             $this->addFlashMessage('eRecht24 Extension für TYPO3: Aktualisierung fehlgeschlagen!' , '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
         }
-        //$this->redirect('list');
+        $this->redirect('list');
     }
 
     /**
