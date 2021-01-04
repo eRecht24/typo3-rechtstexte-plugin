@@ -79,6 +79,11 @@ class HelperUtility
                 $domainConfig->setSocialEnTstamp($modified);
         }
 
+        $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+        /** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
+        $cacheManager = $objectManager->get(\TYPO3\CMS\Core\Cache\CacheManager::class);
+        $cacheManager->flushCachesByTag('er24_document_' . $domainConfig->getUid());
+
         return $domainConfig;
     }
 
