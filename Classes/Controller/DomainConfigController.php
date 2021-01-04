@@ -250,7 +250,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     public function createAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $newDomainConfig)
     {
 
-        $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) .  \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('config-was-created', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . ' ' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('config-was-created', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
 
         $now = time();
 
