@@ -20,7 +20,7 @@ class UpdateUtility
     /**
      * @var string
      */
-    const ACCESS_TOKEN = 'Sx8mKC_9tDQUyZzs1SmC';
+    const ACCESS_TOKEN = 'ybxPeRrDixBXRuaGY46w';
 
     /**
      * @var int|string
@@ -65,6 +65,14 @@ class UpdateUtility
      * @return bool
      */
     public function isUpdateAvailable() {
+
+        $apiRes = self::performApiRequest('repository/tags/');
+
+        if($apiRes === false) {
+            LogUtility::writeErrorLog('API Verbindung zu GIT Repository fehlgeschlagen ' . $this->latestVersion);
+            return false;
+        }
+
         $tags = json_decode(self::performApiRequest('repository/tags/'), true);
         $latest = $this->currentVersion;
         foreach($tags as $tag) {
