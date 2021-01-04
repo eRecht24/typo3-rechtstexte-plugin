@@ -52,37 +52,6 @@ class LegalDocument extends BaseApi
 
         return $response;
 
-//        // Api Request
-//        $response = $this->handleResponse(
-//            wp_remote_request(
-//                $this->getApiUrl($this->getApiUrlPath()),
-//                [
-//                    'method' => 'GET',
-//                    'headers' => [
-//                        'Content-Type' => 'application/json; charset=utf-8',
-//                        'eRecht24' => (string) $this->getApiKey()
-//                    ]
-//                ]
-//            )
-//        );
-//
-//        // Register default hooks
-//        $this->registerDefaultHooks();
-//
-//        // Apply filter hooks
-//        $response = apply_filters(
-//            self::getFilterIdentifier($this->documentType),
-//            $response
-//        );
-//
-//        // Apply action hooks
-//        do_action(
-//            self::getActionIdentifier($this->documentType),
-//            $response,
-//            $this->documentType
-//        );
-//
-//        return $response;
     }
 
     /**
