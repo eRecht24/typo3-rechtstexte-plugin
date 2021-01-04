@@ -2,6 +2,8 @@
 namespace ERecht24\Er24Rechtstexte\Utility;
 
 
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+
 class ApiUtility
 {
 
@@ -19,7 +21,7 @@ class ApiUtility
         if($clientResult->isSuccess() === false) {
             $errors[] = HelperUtility::getBestFittingApiErrorMessage($clientResult);
         } else {
-            $successes[] = 'API Client wurde entfernt';
+            $successes[] = LocalizationUtility::translate('api-client-removed', 'er24_rechtstexte');
             $domainConfig->setClientId('');
             $domainConfig->setClientSecret('');
         }
@@ -68,7 +70,7 @@ class ApiUtility
         }
 
         if($domainConfig->getApiKey() === '') {
-            $errors[] = 'Kein API Key hinterlegt';
+            $errors[] = LocalizationUtility::translate('no-api-key', 'er24_rechtstexte');
         }
 
         if($newApiKey !== $domainConfig->getApiKey() || $domainConfig->_isDirty('apiKey')) {
@@ -80,7 +82,7 @@ class ApiUtility
             $apiResponse = $client->listClients();
 
             if($apiResponse->isSuccess() === false && $domainConfig->getApiKey() !== '') {
-                $errors[] = 'Ungültiger API Key. Der neue API Key wurde nicht gespeichert!';
+                $errors[] = LocalizationUtility::translate('invalid-api-key', 'er24_rechtstexte');
                 $domainConfig->setApiKey($oldApiKey);
             } else if($domainConfig->getClientId() !== '' && $oldApiKey !== '') {
                 $handlerResponse = self::deleteDomainConfigClient($domainConfig, $oldApiKey);
@@ -103,14 +105,14 @@ class ApiUtility
             if($clientResult->isSuccess() === false) {
                 $errors[] = HelperUtility::getBestFittingApiErrorMessage($clientResult);
             } else {
-                $successes[] = 'Gültiger API Schlüssel. Verbindung zur eRecht24 API wurde aufgebaut.';
+                $successes[] = LocalizationUtility::translate('connection-established', 'er24_rechtstexte');
                 $domainConfig->setClientId($clientResult->getData('client_id'));
                 $domainConfig->setClientSecret($clientResult->getData('secret'));
             }
         }
 
         if($domainConfig->getClientId() === '') {
-            $errors[] = 'Es konnte kein Client für die Konfiguration erstellt werden.';
+            $errors[] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('client-creation-failed', 'er24_rechtstexte');
         }
 
         return [$errors, $successes];

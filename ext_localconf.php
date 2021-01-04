@@ -105,7 +105,7 @@ call_user_func(
         );
 
 
-        if (TYPO3_MODE=="BE" )   {
+        if (TYPO3_MODE === "BE" )   {
 
             // TODO: Language
 //            $label = LocalizationUtility::translate($key, $extensionKey);

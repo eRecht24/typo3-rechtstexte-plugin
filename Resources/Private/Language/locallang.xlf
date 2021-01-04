@@ -338,6 +338,18 @@
 			<trans-unit id="connection-established">
 				<source>Gültiger API Schlüssel. Verbindung zur eRecht24 API wurde aufgebaut.</source>
 			</trans-unit>
+			<trans-unit id="configuration">
+				<source>Konfiguration</source>
+			</trans-unit>
+			<trans-unit id="api-client-removed">
+				<source>API Client wurde entfernt</source>
+			</trans-unit>
+			<trans-unit id="invalid-api-key">
+				<source>Ungültiger API Key. Der neue API Key wurde nicht gespeichert!</source>
+			</trans-unit>
+			<trans-unit id="client-creation-failed">
+				<source>Es konnte kein Client für die Konfiguration erstellt werden.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -1,7 +1,7 @@
 <?php
 
 $GLOBALS['SiteConfiguration']['site']['columns']['eRecht24Config'] = [
-    'label' => 'eRecht24 Konfiguration',
+    'label' => 'eRecht24  ' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('configuration', 'er24_rechtstexte'),
     'config' => [
         'type' => 'select',
         'renderType' => 'selectSingle',
