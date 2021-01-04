@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 namespace ERecht24\Er24Rechtstexte\Api;
 
-//use eRecht24\LegalTexts\App\Hooks\Actions\DocumentImported as DatabaseStorer;
-//use eRecht24\LegalTexts\App\Hooks\Filter\DocumentImported as RequestSanitizer;
-
 class LegalDocument extends BaseApi
 {
     const ALLOWED_DOCUMENT_TYPES = [
