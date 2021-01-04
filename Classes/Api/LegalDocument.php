@@ -11,7 +11,10 @@ class LegalDocument extends BaseApi
         'privacyPolicySocialMedia'
     ];
 
-    private $documentType;
+    /**
+     * @var string
+     */
+    private $documentType = '';
 
     /**
      * LegalDocuments constructor.
