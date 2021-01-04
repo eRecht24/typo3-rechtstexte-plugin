@@ -69,7 +69,7 @@ class UpdateUtility
         $apiRes = self::performApiRequest('repository/tags/');
 
         if($apiRes === false) {
-            LogUtility::writeErrorLog('API Connection to GIT Repository failed. ' . $this->latestVersion);
+            LogUtility::writeErrorLog('API Verbindung zu GIT Repository fehlgeschlagen ' . $this->latestVersion);
             return false;
         }
 
@@ -101,8 +101,9 @@ class UpdateUtility
             throw new \Exception('The system is runnning in composer mode. This function should never have been called', 1607942004);
         }
 
-        $this->managementService = GeneralUtility::makeInstance(ExtensionManagementService::class);
-        $this->fileHandlingUtility = GeneralUtility::makeInstance(FileHandlingUtility::class);
+        $objectManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+        $this->managementService = $objectManager->get(ExtensionManagementService::class);
+        $this->fileHandlingUtility = $objectManager->get(FileHandlingUtility::class);
 
         $apiRes = $this->performApiRequest('repository/archive.zip?sha='.$this->latestVersion);
 
