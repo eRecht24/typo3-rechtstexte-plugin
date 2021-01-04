@@ -37,25 +37,6 @@ class Client extends BaseApi
         );
 
         return $response;
-
-//        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($response);
-//
-//        // register default hooks
-//        $this->registerAddClientHooks();
-//
-//        // Apply filter hooks
-//        $response = apply_filters(
-//            self::CLIENT_CREATED_FILTER,
-//            $response
-//        );
-//
-//        // Apply action hooks
-//        do_action(
-//        self::CLIENT_CREATED_ACTION,
-//            $response
-//        );
-//
-//        return $response;
     }
 
     /**
@@ -109,7 +90,7 @@ class Client extends BaseApi
         $request_body['cms']         = 'TYPO3';
         $request_body['cms_version'] = $typo3Version->getVersion();
         $request_body['plugin_name'] = 'eRecht24.de Rechtstexte für TYPO3';
-        $request_body['author_mail'] = 'test@test.com';
+        $request_body['author_mail'] = 'test@test.com'; // TODO
 
         return json_encode($request_body, JSON_UNESCAPED_UNICODE);
     }
