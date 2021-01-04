@@ -9,7 +9,7 @@
         <f:translate key="backend.title"/>
     </h1>
 
-    <h2>Neue eRecht24 Konfiguration erstellen</h2>
+    <h2><f:translate key="create-title" /></h2>
 
     <br />
 
@@ -29,7 +29,7 @@
                 <div class="form-group">
                     <label for="siteConfig">Site-Configuration</label>
                     <f:form.select property="siteConfigName" id="siteConfig" class="form-control">
-                        <f:form.select.option value="">Bitte wählen</f:form.select.option>
+                        <f:form.select.option value=""><f:translate key="please-choose" /></f:form.select.option>
                         <f:for each="{allSiteConfigurations}" as="siteConfig">
                             <f:form.select.option value="{siteConfig.identifier}" data="{domain: siteConfig.base}">{siteConfig.identifier}</f:form.select.option>
                         </f:for>
@@ -51,11 +51,11 @@
                 </div>
 
                 <f:link.action action="list" class="btn btn-default">
-                    Abbrechen
+                    <f:translate key="abort" />
                 </f:link.action>
 
                 <button type="submit" class="btn btn-success pull-right">
-                    Konfiguration erstellen
+                    <f:translate key="create-save" />
                 </button>
 
             </f:form>

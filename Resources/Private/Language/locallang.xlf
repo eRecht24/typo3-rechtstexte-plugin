@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="de" datatype="plaintext" original="EXT:er24_rechtstexte/Resources/Private/Language/locallang" date="2020-12-08T13:30:06Z" product-name="er24_rechtstexte">
+	<file source-language="de" datatype="plaintext" original="EXT:er24_rechtstexte/Resources/Private/Language/locallang"
+		  date="2020-12-08T13:30:06Z" product-name="er24_rechtstexte">
 		<header/>
 		<body>
 
@@ -24,77 +25,285 @@
 				<source>eRecht24 Konfiguration erstellen</source>
 			</trans-unit>
 
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig" resname="tx_er24rechtstexte_domain_model_domainconfig">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig"
+						resname="tx_er24rechtstexte_domain_model_domainconfig">
 				<source>Domain Config</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.domain" resname="tx_er24rechtstexte_domain_model_domainconfig.domain">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.domain"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.domain">
 				<source>Domain</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.api_key" resname="tx_er24rechtstexte_domain_model_domainconfig.api_key">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.api_key"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.api_key">
 				<source>API-Schlüssel</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_source" resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_source">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_source"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_source">
 				<source>Datenquelle</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_de" resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_de">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_de"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_de">
 				<source>HTML-Code (DE)</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_de_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_de_tstamp">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_de_tstamp">
 				<source>Letzte Aktualisierung</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_en" resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_en">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_en"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_en">
 				<source>HTML-Code (EN)</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_en_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_en_tstamp">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_en_tstamp"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_en_tstamp">
 				<source>Letzte Aktualisierung</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_source" resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_source">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_source"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_source">
 				<source>Datenquelle</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_de" resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_de">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_de"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_de">
 				<source>HTML-Code (DE)</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp">
 				<source>Letzte Aktualisierung</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_en" resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_en">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_en"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_en">
 				<source>HTML-Code (EN)</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_en_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_en_tstamp">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_en_tstamp"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_en_tstamp">
 				<source>Letzte Aktualisierung</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_source" resname="tx_er24rechtstexte_domain_model_domainconfig.social_source">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_source"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.social_source">
 				<source>Datenquelle</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_de" resname="tx_er24rechtstexte_domain_model_domainconfig.social_de">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_de"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.social_de">
 				<source>HTML-Code (DE)</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp">
 				<source>Letzte Aktualisierung</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_en" resname="tx_er24rechtstexte_domain_model_domainconfig.social_en">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_en"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.social_en">
 				<source>HTML-Code (EN)</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_en_tstamp" resname="tx_er24rechtstexte_domain_model_domainconfig.social_en_tstamp">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_en_tstamp"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.social_en_tstamp">
 				<source>Letzte Aktualisierung</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.analytics_id" resname="tx_er24rechtstexte_domain_model_domainconfig.analytics_id">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.analytics_id"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.analytics_id">
 				<source>Analytics Id</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking" resname="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking">
 				<source>Flag Embed Tracking</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed" resname="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed">
 				<source>Flag User Centrics Embed</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code" resname="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code">
 				<source>Flag Opt Out Code</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.root_pid" resname="tx_er24rechtstexte_domain_model_domainconfig.root_pid">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.root_pid"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.root_pid">
 				<source>Root Pid</source>
 			</trans-unit>
-			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.site_config_name" resname="tx_er24rechtstexte_domain_model_domainconfig.site_config_name">
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.site_config_name"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.site_config_name">
 				<source>Site Config Name</source>
+			</trans-unit>
+			<trans-unit id="tab-generic">
+				<source>Allgemein / API Key</source>
+			</trans-unit>
+			<trans-unit id="tab-generic-title">
+				<source>Allgemein / API Key</source>
+			</trans-unit>
+			<trans-unit id="tab-imprint">
+				<source>Impressum</source>
+			</trans-unit>
+			<trans-unit id="tab-privacy">
+				<source>Datenschutzerklärung</source>
+			</trans-unit>
+			<trans-unit id="tab-social">
+				<source>Datenschutz für Social-Media-Profile</source>
+			</trans-unit>
+			<trans-unit id="tab-analytics">
+				<source>Google Analytics</source>
+			</trans-unit>
+			<trans-unit id="tab-dok">
+				<source>Dokumentation</source>
+			</trans-unit>
+			<trans-unit id="tab-status">
+				<source>Pluginstatus</source>
+			</trans-unit>
+			<trans-unit id="tab-imprint-title">
+				<source>Impressum</source>
+			</trans-unit>
+			<trans-unit id="apikey-text">
+				<source><![CDATA[Geben Sie hier Ihren API-Schlüssel ein, welchen Sie für Ihre Webseite
+                                im <a href="https://e-recht24.de/mitglieder/tools/projekt-manager" target="_blank"
+                                       rel="nofollow noreferrer noopener">eRecht24 Projekt Manager für Websites</a>
+                                erzeugt haben.]]></source>
+			</trans-unit>
+			<trans-unit id="synclabel">
+				<source>Synchronisieren</source>
+			</trans-unit>
+			<trans-unit id="sync-all-button-text">
+				<source>Alle Rechtstexte synchronisieren und speichern</source>
+			</trans-unit>
+			<trans-unit id="tab-imprint-text">
+				<source>Wählen Sie hier, ob Sie die aktuellste Version Ihres Impressums vom eRecht24 Projekt Manager
+					abrufen möchten bzw. dieses durch den eRecht24 Projekt Manager eingefügt werden kann oder ob Sie
+					Ihr Impressum lokal pflegen möchten.
+				</source>
+			</trans-unit>
+			<trans-unit id="local-version">
+				<source>Lokale Version</source>
+			</trans-unit>
+			<trans-unit id="remote-version">
+				<source>eRecht24 Projekt Manager</source>
+			</trans-unit>
+			<trans-unit id="sync-and-save">
+				<source>Daten synchronisieren und speichern</source>
+			</trans-unit>
+			<trans-unit id="sync-local-with-remote">
+				<source>Lokale Daten mit den zuletzt synchronisierten Texten überschreiben</source>
+			</trans-unit>
+			<trans-unit id="local-append">
+				<source>Lokal</source>
+			</trans-unit>
+			<trans-unit id="tab-privacy-title">
+				<source>Datenschutzerklärung</source>
+			</trans-unit>
+			<trans-unit id="tab-privacy-text">
+				<source>Wählen Sie hier, ob Sie die aktuellste Version Ihrer Datenschutzerklärung vom eRecht24 Projekt
+					Manager abrufen möchten bzw. diese durch den eRecht24 Projekt Manager eingefügt werden kann oder
+					ob Sie Ihre Datenschutzerklärung lokal pflegen möchten.
+				</source>
+			</trans-unit>
+			<trans-unit id="tab-social-title">
+				<source>Datenschutz für Social-Media-Profile</source>
+			</trans-unit>
+			<trans-unit id="tab-social-text">
+				<source>Wählen Sie hier, ob Sie die aktuellste Version Ihrer Datenschutzerklärung für
+					Social-Media-Profile vom eRecht24 Projekt Manager abrufen möchten bzw. diese durch den eRecht24
+					Projekt Manager eingefügt werden kann oder ob Sie Ihre Datenschutzerklärung für
+					Social-Media-Profile lokal pflegen möchten.
+				</source>
+			</trans-unit>
+			<trans-unit id="tab-state-title">
+				<source>Statusübersicht</source>
+			</trans-unit>
+			<trans-unit id="tab-state-text">
+				<source>Hier können Sie prüfen, ob Ihr Server die Systemvoraussetzungen für dieses Plugin erfüllt und ob
+					die eRecht24-Server erreichbar sind.
+				</source>
+			</trans-unit>
+			<trans-unit id="curl-not-available">
+				<source>PHP cURL steht auf diesem Server nicht zur Verfügung. Ohne cURL kann keine Verbindung zur API
+					aufgebaut werden.
+				</source>
+			</trans-unit>
+			<trans-unit id="curl-is-installed">
+				<source>cURL ist im System installiert.</source>
+			</trans-unit>
+			<trans-unit id="eserver-access">
+				<source>eRecht24 Server ist erreichbar</source>
+			</trans-unit>
+			<trans-unit id="eserver-access-not-possible">
+				<source>Verbindungsaufbau mit eRecht24 Server nicht möglich.</source>
+			</trans-unit>
+			<trans-unit id="eserver-access-possible">
+				<source>Verbindung zum eRecht24-Server konnte erfolgreich hergestellt werden</source>
+			</trans-unit>
+			<trans-unit id="configuration-state">
+				<source>Die eRecht24 Konfiguration ist korrekt konfiguriert</source>
+			</trans-unit>
+			<trans-unit id="configuration-errors">
+				<source>Ihre Konfiguration ist fehlerhaft:</source>
+			</trans-unit>
+			<trans-unit id="configuration-is-good">
+				<source>Die API-Schnittstelle ist korrekt konfiguriert.</source>
+			</trans-unit>
+			<trans-unit id="eserver-push">
+				<source>eRecht24 Server antwortet</source>
+			</trans-unit>
+			<trans-unit id="eserver-push-not-possible">
+				<source>Der eRecht24 Server ist nicht in der Lage, neue Daten in Ihre TYPO3-Seite zu pushen.</source>
+			</trans-unit>
+			<trans-unit id="eserver-can-push">
+				<source>Der eRecht24 Server ist in der Lage, neue Daten in Ihre TYPO3-Seite zu pushen.</source>
+			</trans-unit>
+			<trans-unit id="refresh-connection">
+				<source>Verbindung auffrischen</source>
+			</trans-unit>
+			<trans-unit id="connection-not-possible-without-curl">
+				<source>Eine API Verbindung kann ohne cURL nicht hergestellt werden.</source>
+			</trans-unit>
+			<trans-unit id="debug-text">
+				<source><![CDATA[<p>
+                        Falls Sie Unterstützung benötigen, senden Sie uns bitte eine E-Mail. Fügen Sie die notwendigen Debuginformationen hinzu, indem Sie diesen Schritten folgen:
+                    </p>
+                    <ol>
+                        <li>Schreiben Sie eine E-Mail an <a href="mailto:support@e-recht24.de">support@e-recht24.de</a>.</li>
+                        <li>Beschreiben Sie das Problem so detailliert wie möglich.</li>
+                        <li>Klicken Sie auf den Button mit der Aufschrift "Debuginformationen in die Zwischenablage kopieren".</li>
+                        <li>Fügen Sie die Informationen in die E-Mail ein, indem Sie "Strg" + "V" drücken oder indem Sie einen Rechtsklick machen und auf "Einfügen" klicken.</li>
+                    </ol>]]></source>
+			</trans-unit>
+			<trans-unit id="copy-debug">
+				<source>Debuginformationen in die Zwischenablage kopieren</source>
+			</trans-unit>
+			<trans-unit id="update-available">
+				<source>Es steht eine Aktualisierung auf Version zur Verfügung</source>
+			</trans-unit>
+			<trans-unit id="cannot-update-composer">
+				<source>Dieses TYPO3 System wird im Composer-Modus betrieben. Für eine Aktualisierung nutzen Sie bitte
+					Composer.
+				</source>
+			</trans-unit>
+			<trans-unit id="process-update">
+				<source>Aktualisierung ausführen</source>
+			</trans-unit>
+			<trans-unit id="edit">
+				<source>Bearbeiten</source>
+			</trans-unit>
+			<trans-unit id="delete">
+				<source>Löschen</source>
+			</trans-unit>
+			<trans-unit id="siteconfigs-found">
+				<source>Die folgenden Seitenkonfigurationen wurden in diesem System gefunden, aber noch keiner eRecht24
+					Konfiguration zugewiesen.
+				</source>
+			</trans-unit>
+			<trans-unit id="create-title">
+				<source>Neue eRecht24 Konfiguration erstellen</source>
+			</trans-unit>
+			<trans-unit id="please-choose">
+				<source>Bitte wählen</source>
+			</trans-unit>
+			<trans-unit id="abort">
+				<source>Abbrechen</source>
+			</trans-unit>
+			<trans-unit id="create-save">
+				<source>Konfiguration erstellen</source>
+			</trans-unit>
+			<trans-unit id="edit-config-title">
+				<source>Konfigurieren Sie hier die Funktionalität des des Domain Plugins.</source>
+			</trans-unit>
+			<trans-unit id="back-to-overview">
+				<source>zurück zur Übersicht</source>
+			</trans-unit>
+			<trans-unit id="save">
+				<source>Speichern</source>
 			</trans-unit>
 		</body>
 	</file>

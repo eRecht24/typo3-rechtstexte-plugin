@@ -10,13 +10,13 @@
 
     <f:if condition="{updateAvailable}">
         <f:be.infobox title="Aktualisierung verfügbar">
-            <p>Es steht eine Aktualisierung auf Version {latestVersion} zur Verfügung.</p>
+            <p><f:translate key="update-available" />: Version {latestVersion}</p>
             <f:if condition="{composerMode}">
                 <f:then>
-                    <p>Dieses TYPO3 System wird im Composer-Modus betrieben. Für eine Aktualisierung nutzen Sie bitte Composer.</p>
+                    <p><f:translate key="cannot-update-composer" /></p>
                 </f:then>
                 <f:else>
-                    <f:link.action action="performUpdate" class="btn btn-success">Aktualisierung ausführen</f:link.action>
+                    <f:link.action action="performUpdate" class="btn btn-success"><f:translate key="process-update" /></f:link.action>
                 </f:else>
             </f:if>
         </f:be.infobox>
@@ -47,8 +47,8 @@
                         <td>{config.siteConfigName}</td>
                         <td>{config.apiKey}</td>
                         <td>
-                            <f:link.action action="edit" arguments="{domainConfig: config}" class="btn btn-primary t3js-record-delet">Bearbeiten</f:link.action>
-                            <f:link.action action="delete" arguments="{domainConfig: config}" class="btn btn-danger site-config-delete">Löschen</f:link.action>
+                            <f:link.action action="edit" arguments="{domainConfig: config}" class="btn btn-primary t3js-record-delet"><f:translate key="edit" /></f:link.action>
+                            <f:link.action action="delete" arguments="{domainConfig: config}" class="btn btn-danger site-config-delete"><f:translate key="delete" /></f:link.action>
                         </td>
                     </tr>
                 </f:for>
@@ -74,8 +74,7 @@
 
         <f:be.infobox title="Siteconfigurations ohne eRecht24 Anbindung gefunden" state="-1">
 
-            <p>Die folgenden Seitenkonfigurationen wurden in diesem System gefunden, aber noch keiner eRecht24
-                Konfiguration zugewiesen.</p>
+            <p><f:translate key="siteconfigs-found" /></p>
 
             <div class="table-fit">
                 <table class="table table-striped table-hover table-condensed">

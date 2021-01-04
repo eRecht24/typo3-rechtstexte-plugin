@@ -7,43 +7,43 @@
         <li role="presentation" class="t3js-tabmenu-item  active">
             <a href="#tab-1" title="" aria-controls="tab-1" role="tab" data-toggle="tab">
                 <core:icon identifier="fa-cog"/>
-                Allgemein / API Key
+                <f:translate key="tab-generic" />
             </a>
         </li>
         <li role="presentation" class="t3js-tabmenu-item ">
             <a href="#tab-2" title="" aria-controls="tab-2" role="tab" data-toggle="tab">
                 <core:icon identifier="fa-bullhorn"/>
-                Impressum
+                <f:translate key="tab-imprint" />
             </a>
         </li>
         <li role="presentation" class="t3js-tabmenu-item">
             <a href="#tab-privacy" title="" aria-controls="tab-3" role="tab" data-toggle="tab">
                 <core:icon identifier="fa-user"/>
-                Datenschutzerklärung
+                <f:translate key="tab-privacy" />
             </a>
         </li>
         <li role="presentation" class="t3js-tabmenu-item ">
             <a href="#tab-social" title="" aria-controls="tab-social" role="tab" data-toggle="tab">
                 <core:icon identifier="fa-facebook-square"/>
-                Datenschutz für Social-Media-Profile
+                <f:translate key="tab-social" />
             </a>
         </li>
         <li role="presentation" class="t3js-tabmenu-item ">
             <a href="#tab-google" title="" aria-controls="tab-google" role="tab" data-toggle="tab">
                 <core:icon identifier="fa-google"/>
-                Google Analytics
+                <f:translate key="tab-analytics" />
             </a>
         </li>
         <li role="presentation" class="t3js-tabmenu-item ">
             <a href="#tab-dok" title="" aria-controls="tab-dok" role="tab" data-toggle="tab">
                 <core:icon identifier="fa-question-circle"/>
-                Dokumentation
+                <f:translate key="tab-dok" />
             </a>
         </li>
         <li role="presentation" class="t3js-tabmenu-item {f:if(condition: errors, then: 'has-validation-error')}">
             <a href="#tab-status" title="" aria-controls="tab-status" role="tab" data-toggle="tab">
                 <core:icon identifier="fa-check-circle"/>
-                Pluginstatus
+                <f:translate key="tab-status" />
             </a>
         </li>
     </ul>
@@ -52,7 +52,7 @@
             <div class="panel panel-tab">
                 <div class="panel-body">
 
-                    <h3>Allgemein / API Key</h3>
+                    <h3><f:translate key="tab-generic-title" /></h3>
 
                     <div class="form-group row">
                         <label for="domain" class="col-sm-2 col-form-label">
@@ -70,22 +70,18 @@
                         </div>
                         <div class="col-sm-10">
                             <f:form.textfield property="apiKey" id="apiKey" class="form-control" />
-                            <p class="text-muted">Geben Sie hier Ihren API-Schlüssel ein, welchen Sie für Ihre Webseite
-                                im <a href="https://e-recht24.de/mitglieder/tools/projekt-manager" target="_blank"
-                                       rel="nofollow noreferrer noopener">eRecht24 Projekt Manager für Websites</a>
-                                erzeugt haben.</p>
+                            <p class="text-muted"><f:format.raw><f:translate key="apikey-text" /></f:format.raw></p>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-2 col-form-label">
                             <label>
-                                Synchronisieren
+                                <f:translate key="synclabel" />
                             </label>
                         </div>
                         <div class="col-sm-10">
-                            <button type="button" class="btn btn-primary" id="syncAllDocuments" {f:if(condition: domainConfig.clientId, else: 'disabled')}>Alle Rechtstexte
-                                synchronisieren und
-                                speichern
+                            <button type="button" class="btn btn-primary" id="syncAllDocuments" {f:if(condition: domainConfig.clientId, else: 'disabled')}>
+                                <f:translate key="sync-all-button-text" />
                             </button>
                         </div>
                     </div>
@@ -95,10 +91,8 @@
         <div role="tabpanel" class="tab-pane tab-imprint" id="tab-2" data-source="{domainConfig.imprintSource}">
             <div class="panel panel-tab">
                 <div class="panel-body">
-                    <h3>Impressum</h3>
-                    <p>Wählen Sie hier, ob Sie die aktuellste Version Ihres Impressums vom eRecht24 Projekt Manager
-                        abrufen möchten bzw. dieses durch den eRecht24 Projekt Manager eingefügt werden kann oder ob Sie
-                        Ihr Impressum lokal pflegen möchten.</p>
+                    <h3><f:translate key="tab-imprint-title" /></h3>
+                    <p><f:translate key="tab-imprint-text" /></p>
 
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">
@@ -106,13 +100,13 @@
                         </label>
                         <div class="col-sm-10">
                             <div class="checkbox checkbox-type-toggle">
-                                <span class="label-left">Lokale Version</span>
+                                <span class="label-left"><f:translate key="local-version" /></span>
                                 <f:form.checkbox property="imprintSource" id="imprintSource" value="1"
                                                  class="checkbox-input"/>
                                 <label class="checkbox-label" for="imprintSource">
                                     <span class="checkbox-label-text">&nbsp;</span>
                                 </label>
-                                <span class="label-right">eRecht24 Projekt Manager</span>
+                                <span class="label-right"><f:translate key="remote-version" /></span>
                             </div>
                         </div>
                     </div>
@@ -120,14 +114,14 @@
                     <div class="form-group row">
                         <div class="col-sm-2 col-form-label">
                             <label>
-                                Synchronisieren
+                                <f:translate key="synclabel" />
                             </label>
                         </div>
                         <div class="col-sm-10">
-                            <button type="button" class="btn btn-primary remote-content" id="syncImprint" {f:if(condition: domainConfig.clientId, else: 'disabled')}>Daten synchronisieren und speichern</button>
+                            <button type="button" class="btn btn-primary remote-content" id="syncImprint" {f:if(condition: domainConfig.clientId, else: 'disabled')}><f:translate key="sync-and-save" /></button>
                             <button type="button" class="btn btn-primary local-content" id="imprintRestoreRemote"
                                 {f:if(condition: '{domainConfig.imprintDe} || {domainConfig.imprintEn}', else: 'disabled')}
-                            >Lokale Daten mit den zuletzt synchronisierten Texten überschreiben</button>
+                            ><f:translate key="sync-local-with-remote" /></button>
                         </div>
                     </div>
 
@@ -138,12 +132,12 @@
                                 <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_de"/>
                             </label>
                             <label for="imprintDeLocal" class="local-content">
-                                HTML-Code (DE) - Lokal
+                                HTML-Code (DE) - <f:translate key="local-append" />
                             </label>
                         </div>
                         <div class="col-sm-10">
                             <f:form.textarea property="imprintDe" id="imprintDe" cols="40" rows="7"
-                                             class="form-control remote-content"/>
+                                             class="form-control remote-content" readonly="1"/>
                             <f:form.textarea property="imprintDeLocal" id="imprintDeLocal" cols="40" rows="7"
                                              class="form-control local-content"/>
                         </div>
@@ -168,11 +162,11 @@
                             <label for="imprintEn" class="remote-content">
                                 <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_en"/>
                             </label>
-                            <label for="imprintEnLocal" class="local-content">HTML-Code (EN) - Lokal</label>
+                            <label for="imprintEnLocal" class="local-content">HTML-Code (EN) - <f:translate key="local-append" /></label>
                         </div>
                         <div class="col-sm-10">
                             <f:form.textarea property="imprintEn" id="imprintEn" cols="40" rows="7"
-                                             class="form-control remote-content"/>
+                                             class="form-control remote-content" readonly="1"/>
                             <f:form.textarea property="imprintEnLocal" id="imprintEnLocal" cols="40" rows="7"
                                              class="form-control local-content"/>
                         </div>
@@ -198,11 +192,8 @@
             <div class="panel panel-tab">
                 <div class="panel-body">
 
-                    <h3>Datenschutzerklärung</h3>
-                    <p>Wählen Sie hier, ob Sie die aktuellste Version Ihrer Datenschutzerklärung vom eRecht24 Projekt
-                        Manager abrufen möchten bzw. diese durch den eRecht24 Projekt Manager eingefügt werden kann oder
-                        ob Sie Ihre Datenschutzerklärung lokal pflegen möchten.</p>
-
+                    <h3><f:translate key="tab-privacy-title" /></h3>
+                    <p><f:translate key="tab-privacy-text" /></p>
 
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">
@@ -210,13 +201,13 @@
                         </label>
                         <div class="col-sm-10">
                             <div class="checkbox checkbox-type-toggle">
-                                <span class="label-left">Lokale Version</span>
+                                <span class="label-left"><f:translate key="local-version" /></span>
                                 <f:form.checkbox property="privacySource" id="privacySource" value="1"
                                                  class="checkbox-input"/>
                                 <label class="checkbox-label" for="privacySource">
                                     <span class="checkbox-label-text">&nbsp;</span>
                                 </label>
-                                <span class="label-right">eRecht24 Projekt Manager</span>
+                                <span class="label-right"><f:translate key="remote-version" /></span>
                             </div>
                         </div>
                     </div>
@@ -224,14 +215,14 @@
                     <div class="form-group row">
                         <div class="col-sm-2 col-form-label">
                             <label>
-                                Synchronisieren
+                                <f:translate key="synclabel" />
                             </label>
                         </div>
                         <div class="col-sm-10">
-                            <button type="button" class="btn btn-primary remote-content" id="syncPrivacy" {f:if(condition: domainConfig.clientId, else: 'disabled')}>Daten synchronisieren und speichern</button>
+                            <button type="button" class="btn btn-primary remote-content" id="syncPrivacy" {f:if(condition: domainConfig.clientId, else: 'disabled')}><f:translate key="sync-and-save" /></button>
                             <button type="button" class="btn btn-primary local-content" id="privacyRestoreRemote"
                                     {f:if(condition: '{domainConfig.privacyDe} || {domainConfig.privacyEn}', else: 'disabled')}
-                            >Lokale Daten mit den zuletzt synchronisierten Texten überschreiben</button>
+                            ><f:translate key="sync-local-with-remote" /></button>
                         </div>
                     </div>
 
@@ -241,12 +232,12 @@
                                 <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_de"/>
                             </label>
                             <label for="privacyDeLocal" class="local-content">
-                                HTML-Code (DE) - Lokal
+                                HTML-Code (DE) - <f:translate key="local-append" />
                             </label>
                         </div>
                         <div class="col-sm-10">
                             <f:form.textarea property="privacyDe" id="privacyDe" cols="40" rows="7"
-                                             class="form-control remote-content"/>
+                                             class="form-control remote-content" readonly="1"/>
                             <f:form.textarea property="privacyDeLocal" id="privacyDeLocal" cols="40" rows="7"
                                              class="form-control local-content"/>
                         </div>
@@ -272,12 +263,12 @@
                                 <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_en"/>
                             </label>
                             <label for="privacyEnLocal" class="local-content">
-                                HTML-Code (EN) - Lokal
+                                HTML-Code (EN) - <f:translate key="local-append" />
                             </label>
                         </div>
                         <div class="col-sm-10">
                             <f:form.textarea property="privacyEn" id="privacyEn" cols="40" rows="7"
-                                             class="form-control remote-content"/>
+                                             class="form-control remote-content" readonly="1"/>
                             <f:form.textarea property="privacyEnLocal" id="privacyEnLocal" cols="40" rows="7"
                                              class="form-control local-content"/>
                         </div>
@@ -302,11 +293,8 @@
             <div class="panel panel-tab">
                 <div class="panel-body">
 
-                    <h3>Datenschutz für Social-Media-Profile</h3>
-                    <p>Wählen Sie hier, ob Sie die aktuellste Version Ihrer Datenschutzerklärung für
-                        Social-Media-Profile vom eRecht24 Projekt Manager abrufen möchten bzw. diese durch den eRecht24
-                        Projekt Manager eingefügt werden kann oder ob Sie Ihre Datenschutzerklärung für
-                        Social-Media-Profile lokal pflegen möchten.</p>
+                    <h3><f:translate key="tab-social-title" /></h3>
+                    <p><f:translate key="tab-social-text" /></p>
 
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">
@@ -314,12 +302,12 @@
                         </label>
                         <div class="col-sm-10">
                             <div class="checkbox checkbox-type-toggle">
-                                <span class="label-left">Lokale Version</span>
+                                <span class="label-left"><f:translate key="local-version" /></span>
                                 <f:form.checkbox property="socialSource" id="socialSource" value="1" class="checkbox-input"/>
                                 <label class="checkbox-label" for="socialSource">
                                     <span class="checkbox-label-text">&nbsp;</span>
                                 </label>
-                                <span class="label-right">eRecht24 Projekt Manager</span>
+                                <span class="label-right"><f:translate key="remote-version" /></span>
                             </div>
                         </div>
                     </div>
@@ -327,14 +315,14 @@
                     <div class="form-group row">
                         <div class="col-sm-2 col-form-label">
                             <label>
-                                Synchronisieren
+                                <f:translate key="synclabel" />
                             </label>
                         </div>
                         <div class="col-sm-10">
-                            <button type="button" class="btn btn-primary remote-content" id="syncSocial" {f:if(condition: domainConfig.clientId, else: 'disabled')}>Daten synchronisieren und speichern</button>
+                            <button type="button" class="btn btn-primary remote-content" id="syncSocial" {f:if(condition: domainConfig.clientId, else: 'disabled')}><f:translate key="sync-and-save" /></button>
                             <button type="button" class="btn btn-primary local-content" id="socialRestoreRemote"
                                 {f:if(condition: '{domainConfig.socialDe} || {domainConfig.socialEn}', else: 'disabled')}
-                            >Lokale Daten mit den zuletzt synchronisierten Texten überschreiben</button>
+                            ><f:translate key="sync-local-with-remote" /></button>
                         </div>
                     </div>
 
@@ -345,11 +333,11 @@
                                 <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_de"/>
                             </label>
                             <label for="socialDeLocal" class="local-content">
-                                HTML-Code (DE) - Lokal
+                                HTML-Code (DE) - <f:translate key="local-append" />
                             </label>
                         </div>
                         <div class="col-sm-10">
-                            <f:form.textarea property="socialDe" id="socialDe" cols="40" rows="7" class="form-control remote-content"/>
+                            <f:form.textarea property="socialDe" id="socialDe" cols="40" rows="7" class="form-control remote-content" readonly="1"/>
                             <f:form.textarea property="socialDeLocal" id="socialDeLocal" cols="40" rows="7" class="form-control local-content"/>
                         </div>
                     </div>
@@ -372,11 +360,11 @@
                                 <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_en"/>
                             </label>
                             <label for="socialEnLocal" class="local-content">
-                                HTML-Code (EN) - Lokal
+                                HTML-Code (EN) - <f:translate key="local-append" />
                             </label>
                         </div>
                         <div class="col-sm-10">
-                            <f:form.textarea property="socialEn" id="socialEn" cols="40" rows="7" class="form-control remote-content"/>
+                            <f:form.textarea property="socialEn" id="socialEn" cols="40" rows="7" class="form-control remote-content" readonly="1"/>
                             <f:form.textarea property="socialEnLocal" id="socialEnLocal" cols="40" rows="7" class="form-control local-content"/>
                         </div>
                     </div>
@@ -476,9 +464,9 @@
             <div class="panel panel-tab">
                 <div class="panel-body">
 
-                    <h3>Statusübersicht</h3>
+                    <h3><f:translate key="tab-state-title" /></h3>
 
-                    <p>Hier können Sie prüfen, ob Ihr Server die Systemvoraussetzungen für dieses Plugin erfüllt und ob die eRecht24-Server erreichbar sind.</p>
+                    <p><f:translate key="tab-state-text" /></p>
 
                     <table border="0" id="stateTable" class="state-table has-errors-{errors}">
                         <tbody>
@@ -487,33 +475,33 @@
                                 <td>
                                     <div class="errortext">
                                         <span style="color: red;"><core:icon identifier="actions-close" /></span>
-                                        PHP cURL steht auf diesem Server nicht zur Verfügung. Ohne cURL kann keine Verbindung zur API aufgebaut werden.
+                                        <f:translate key="curl-not-available" />
                                     </div>
                                     <div class="fine-text">
                                         <span style="color: green;"><core:icon identifier="actions-check" /></span>
-                                        cURL ist im System installiert.
+                                        <f:translate key="curl-is-installed" />
                                     </div>
                                 </td>
                             </tr>
                             <tr id="connectionStateRow" class="state-row has-error-{erechtServerError}">
-                                <td>eRecht24 Server ist erreichbar</td>
+                                <td><f:translate key="eserver-access" /></td>
                                 <td>
                                     <div class="errortext">
                                         <span style="color: red;"><core:icon identifier="actions-close" /></span>
-                                        Verbindungsaufbau mit eRecht24 Server nicht möglich.
+                                        <f:translate key="eserver-access-not-possible" />
                                     </div>
                                     <div class="fine-text">
                                         <span style="color: green;"><core:icon identifier="actions-check" /></span>
-                                        Verbindung zum eRecht24-Server konnte erfolgreich hergestellt werden
+                                        <f:translate key="eserver-access-possible" />
                                     </div>
                                 </td>
                             </tr>
                             <tr id="configStateRow" class="state-row has-error-{configError}">
-                                <td>Die eRecht24 Konfiguration ist korrekt konfiguriert</td>
+                                <td><f:translate key="configuration-state" /></td>
                                 <td>
                                     <div class="errortext">
                                         <span style="color: red;"><core:icon identifier="actions-close" /></span>
-                                        Ihre Konfiguration ist fehlerhaft:
+                                        <f:translate key="configuration-errors" />
                                         <f:if condition="{configErrorMessages}">
                                             <ul>
                                                 <f:for each="{configErrorMessages}" as="configErrorMessage">
@@ -524,29 +512,29 @@
                                     </div>
                                     <div class="fine-text">
                                         <span style="color: green;"><core:icon identifier="actions-check" /></span>
-                                        Die API-Schnittstelle ist korrekt konfiguriert.<br />
+                                        <f:translate key="configuration-is-good" /><br />
                                     </div>
                                 </td>
                             </tr>
                             <tr id="pushStateRow" class="state-row has-error-{pushError}">
-                                <td>eRecht24 Server antwortet</td>
+                                <td><f:translate key="eserver-push" /></td>
                                 <td>
                                     <div class="errortext">
                                         <span style="color: red;"><core:icon identifier="actions-close" /></span>
-                                        Der eRecht24 Server ist nicht in der Lage, neue Daten in Ihre TYPO3-Seite zu pushen.
+                                        <f:translate key="eserver-push-not-possible" />
                                     </div>
                                     <div class="fine-text">
                                         <span style="color: green;"><core:icon identifier="actions-check" /></span>
-                                        Der eRecht24 Server ist in der Lage, neue Daten in Ihre TYPO3-Seite zu pushen.
+                                        <f:translate key="eserver-can-push" />
                                     </div>
                                 </td>
                             </tr>
                             <tr id="error-row">
                                 <td></td>
                                 <td>
-                                    <button type="button" id="selfRepair" class="btn btn-primary" {f:if(condition: curlError, then: 'disabled')}>Verbindung auffrischen</button>
+                                    <button type="button" id="selfRepair" class="btn btn-primary" {f:if(condition: curlError, then: 'disabled')}><f:translate key="refresh-connection" /></button>
                                     <f:if condition="{curlError}">
-                                        <p class="text-warning">Eine API Verbindung kann ohne cURL nicht hergestellt werden.</p>
+                                        <p class="text-warning"><f:translate key="connection-not-possible-without-curl" /></p>
                                     </f:if>
                                 </td>
                             </tr>
@@ -555,19 +543,11 @@
 
                     <br /><br />
 
-                    <p>
-                        Falls Sie Unterstützung benötigen, senden Sie uns bitte eine E-Mail. Fügen Sie die notwendigen Debuginformationen hinzu, indem Sie diesen Schritten folgen:
-                    </p>
-                    <ol>
-                        <li>Schreiben Sie eine E-Mail an <a href="mailto:support@e-recht24.de">support@e-recht24.de</a>.</li>
-                        <li>Beschreiben Sie das Problem so detailliert wie möglich.</li>
-                        <li>Klicken Sie auf den Button mit der Aufschrift "Debuginformationen in die Zwischenablage kopieren".</li>
-                        <li>Fügen Sie die Informationen in die E-Mail ein, indem Sie "Strg" + "V" drücken oder indem Sie einen Rechtsklick machen und auf "Einfügen" klicken.</li>
-                    </ol>
+                    <f:format.raw><f:translate key="debug-text" /></f:format.raw>
 
                     <textarea rows="10" id="debugInformations" disabled class="form-control">{debugInformations}</textarea>
 
-                    <button type="button" id="copyDebugInformations" class="btn btn-primary">Debuginformationen in die Zwischenablage kopieren</button>
+                    <button type="button" id="copyDebugInformations" class="btn btn-primary"><f:translate key="copy-debug" /></button>
 
                 </div>
             </div>

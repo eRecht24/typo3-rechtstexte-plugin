@@ -9,7 +9,7 @@
         <f:translate key="backend.title"/>
     </h1>
 
-    <h2>Konfigurieren Sie hier die Funktionalität des des Domain Plugins.</h2>
+    <h2><f:translate key="edit-config-title" /></h2>
 
     <f:flashMessages/>
 
@@ -17,8 +17,8 @@
 
     <f:form action="update" name="domainConfig" object="{domainConfig}" id="domainConfigEditForm">
         <f:render partial="DomainConfig/FormFields" arguments="{_all}"/>
-        <f:link.action action="list" class="btn btn-default" style="margin-right: 30px;">zurück zur Übersicht</f:link.action>
-        <button type="submit" class="btn btn-primary">Speichern</button>
+        <f:link.action action="list" class="btn btn-default" style="margin-right: 30px;"><f:translate key="back-to-overview" /></f:link.action>
+        <button type="submit" class="btn btn-primary"><f:translate key="save" /></button>
     </f:form>
 </f:section>
 </html>
