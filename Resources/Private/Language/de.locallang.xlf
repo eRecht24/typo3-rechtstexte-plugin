@@ -372,6 +372,22 @@
 			<trans-unit id="privacyPolicySocialMedia_imported">
 				<target>Social-Media Datenschutzerklärung synchronisiert</target>
 			</trans-unit>
+			<trans-unit id="analytics-text">
+				<target>Sie können den vollständigen Google Analytics Tracking-Code inkl. Codesnippet für das Setzen des
+					Opt-Out-Cookies auch über dieses Plugin generieren lassen.
+				</target>
+			</trans-unit>
+			<trans-unit id="analytics-hint">
+				<target>Geben Sie hier Ihre Google Analytics Tracking ID im Format UA-12345687-1 ein</target>
+			</trans-unit>
+			<trans-unit id="usercentrics-hint">
+				<target>Sofern die Usercentrics Consent Management Platform in Ihrer Website nutzen, können Sie diese
+					Option aktivieren.
+					Somit wird Ihr Google Analytics Quellcode zunächst in deaktiviertem Zustand ausgeliefert und erst
+					nach der
+					Erteilung der Cookie-Einwilligung durch den Nutzer über das Cookie-Banner aktiviert.
+				</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

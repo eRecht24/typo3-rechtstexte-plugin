@@ -172,7 +172,8 @@
 				<source>Synchronise and save all legal texts</source>
 			</trans-unit>
 			<trans-unit id="tab-imprint-text">
-				<source>Select here whether you would like to retrieve the latest version of your imprint from the eRecht24 Project Manager or whether it can be inserted by the eRecht24 Project Manager.
+				<source>Select here whether you would like to retrieve the latest version of your imprint from the
+					eRecht24 Project Manager or whether it can be inserted by the eRecht24 Project Manager.
 					or if it can be inserted by the eRecht24 Project Manager, or if you want to maintain your
 					would like to maintain your imprint locally.
 				</source>
@@ -196,7 +197,8 @@
 				<source>Privacypolicy</source>
 			</trans-unit>
 			<trans-unit id="tab-privacy-text">
-				<source>Select here whether you would like to retrieve the latest version of your privacy policy from the eRecht24 Project Manager or whether it can be inserted by the eRecht24 Project Manager.
+				<source>Select here whether you would like to retrieve the latest version of your privacy policy from
+					the eRecht24 Project Manager or whether it can be inserted by the eRecht24 Project Manager.
 					Manager or whether this can be inserted by the eRecht24 Project Manager, or
 					whether you would like to maintain your privacy policy locally.
 				</source>
@@ -205,8 +207,10 @@
 				<source>Privacypolicy for Social-Media-Profiles</source>
 			</trans-unit>
 			<trans-unit id="tab-social-text">
-				<source>Select here whether you would like to retrieve the most current version of your privacy policy for
-					social media profiles from the eRecht24 Project Manager or whether it can be inserted by the eRecht24 Project Manager.
+				<source>Select here whether you would like to retrieve the most current version of your privacy policy
+					for
+					social media profiles from the eRecht24 Project Manager or whether it can be inserted by the
+					eRecht24 Project Manager.
 					Project Manager or whether you would like to maintain your data protection declaration for
 					social media profiles locally.
 				</source>
@@ -295,7 +299,8 @@
 				<source>Delete</source>
 			</trans-unit>
 			<trans-unit id="siteconfigs-found">
-				<source>The following page configurations were found in this system, but have not yet been assigned to an eRecht24
+				<source>The following page configurations were found in this system, but have not yet been assigned to
+					an eRecht24
 					configuration.
 				</source>
 			</trans-unit>
@@ -394,6 +399,22 @@
 			</trans-unit>
 			<trans-unit id="privacyPolicySocialMedia_imported">
 				<source>Social media privacy policy synchronised</source>
+			</trans-unit>
+			<trans-unit id="analytics-text">
+				<source>You can also generate the complete Google Analytics tracking code incl. code snippet for setting the opt-out cookie via this plugin.
+					opt-out cookie can also be generated via this plugin.
+				</source>
+			</trans-unit>
+			<trans-unit id="analytics-hint">
+				<source>Enter your Google Analytics Tracking ID here in the format UA-12345687-1</source>
+			</trans-unit>
+			<trans-unit id="usercentrics-hint">
+				<source>If you use the Usercentrics Consent Management Platform on your website, you can activate this option.
+					activate this option.
+					This means that your Google Analytics source code is initially delivered in a deactivated state and only
+					after the
+					only activated after the user has given their consent to the cookie via the cookie banner.
+				</source>
 			</trans-unit>
 		</body>
 	</file>
