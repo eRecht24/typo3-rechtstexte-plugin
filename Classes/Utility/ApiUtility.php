@@ -49,7 +49,7 @@ class ApiUtility
             }
         } else {
             HelperUtility::assignDocumentToDomainConfig($document, $domainConfig, $documentType);
-            $successes[] = $documentType . '_imported';
+            $successes[] = LocalizationUtility::translate($documentType . '_imported', 'er24_rechtstexte');
         }
 
         return [$errors, $successes];
@@ -112,7 +112,7 @@ class ApiUtility
         }
 
         if($domainConfig->getClientId() === '') {
-            $errors[] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('client-creation-failed', 'er24_rechtstexte');
+            $errors[] = LocalizationUtility::translate('client-creation-failed', 'er24_rechtstexte');
         }
 
         return [$errors, $successes];

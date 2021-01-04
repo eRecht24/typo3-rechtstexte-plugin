@@ -373,6 +373,15 @@
 			<trans-unit id="error">
 				<source>Fehler</source>
 			</trans-unit>
+			<trans-unit id="imprint_imported">
+				<source>Impressum synchronisiert</source>
+			</trans-unit>
+			<trans-unit id="privacyPolicy_imported">
+				<source>Datenschutzerklärung synchronisiert</source>
+			</trans-unit>
+			<trans-unit id="privacyPolicySocialMedia_imported">
+				<source>Social-Media Datenschutzerklärung synchronisiert</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
