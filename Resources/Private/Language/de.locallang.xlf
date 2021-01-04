@@ -1,399 +1,376 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext"
-		  original="EXT:er24_rechtstexte/Resources/Private/Language/locallang" date="2020-12-08T13:30:06Z"
-		  product-name="er24_rechtstexte">
+	<file source-language="en" target-language="de" datatype="plaintext" original="EXT:er24_rechtstexte/Resources/Private/Language/locallang"
+		  date="2020-12-08T13:30:06Z" product-name="er24_rechtstexte">
 		<header/>
 		<body>
 			<trans-unit id="backend.title">
-				<source>eRecht24 Legaltexts plugin</source>
+				<target>eRecht24 Rechtstexte Plugin</target>
 			</trans-unit>
 			<trans-unit id="backend.overview_title">
-				<source>Configuration overview</source>
+				<target>Konfigurationsübersicht</target>
 			</trans-unit>
 			<trans-unit id="backend.no_configs_title">
-				<source>No configuration found</source>
+				<target>Keine Konfiguration gefunden</target>
 			</trans-unit>
 			<trans-unit id="backend.no_configs_description">
-				<source>No eRecht24 configurations have been set up yet.</source>
+				<target>Es wurden noch keine eRecht24 Konfigurationen eingerichtet.</target>
 			</trans-unit>
 			<trans-unit id="backend.create_config">
-				<source>Create eRecht24 configuration</source>
+				<target>eRecht24 Konfiguration erstellen</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig"
 						resname="tx_er24rechtstexte_domain_model_domainconfig">
-				<source>Domain Config</source>
+				<target>Domain Config</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.domain"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.domain">
-				<source>Domain</source>
+				<target>Domain</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.api_key"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.api_key">
-				<source>API-Key</source>
+				<target>API-Schlüssel</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_source"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_source">
-				<source>Source</source>
+				<target>Datenquelle</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_de"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_de">
-				<source>HTML-Code (DE)</source>
+				<target>HTML-Code (DE)</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_de_tstamp">
-				<source>Last update</source>
+				<target>Letzte Aktualisierung</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_en"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_en">
-				<source>HTML-Code (EN)</source>
-
+				<target>HTML-Code (EN)</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.imprint_en_tstamp"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.imprint_en_tstamp">
-				<source>Last update</source>
+				<target>Letzte Aktualisierung</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_source"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_source">
-				<source>Source</source>
-
+				<target>Datenquelle</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_de"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_de">
-				<source>HTML-Code (DE)</source>
-
+				<target>HTML-Code (DE)</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp">
-				<source>Last update</source>
-
+				<target>Letzte Aktualisierung</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_en"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_en">
-				<source>HTML-Code (EN)</source>
-
+				<target>HTML-Code (EN)</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.privacy_en_tstamp"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.privacy_en_tstamp">
-				<source>Last update</source>
-
+				<target>Letzte Aktualisierung</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_source"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.social_source">
-				<source>Source</source>
-
+				<target>Datenquelle</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_de"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.social_de">
-				<source>HTML-Code (DE)</source>
-
+				<target>HTML-Code (DE)</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp">
-				<source>Last update</source>
-
+				<target>Letzte Aktualisierung</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_en"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.social_en">
-				<source>HTML-Code (EN)</source>
-
+				<target>HTML-Code (EN)</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.social_en_tstamp"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.social_en_tstamp">
-				<source>Last update</source>
-
+				<target>Letzte Aktualisierung</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.analytics_id"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.analytics_id">
-				<source>Google Analytics ID</source>
-
+				<target>Google Analytics ID</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking">
-				<source>Embed tracking code?</source>
-
+				<target>Trackingcode einbinden?</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed">
-				<source>Embed tracking code for Usercentrics?</source>
-
+				<target>Tracking-Code gem. Usercentrics einbinden?</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code">
-				<source>Embed Optout-Code?</source>
-
+				<target>Optout Code einbinden?</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.root_pid"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.root_pid">
-				<source>Root Pid</source>
+				<target>Root Pid</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.site_config_name"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.site_config_name">
-				<source>Site Config Name</source>
+				<target>Site Config Name</target>
 			</trans-unit>
 			<trans-unit id="tab-generic">
-				<source>Generic / API Key</source>
+				<target>Allgemein / API Key</target>
 			</trans-unit>
 			<trans-unit id="tab-generic-title">
-				<source>Generic / API Key</source>
+				<target>Allgemein / API Key</target>
 			</trans-unit>
 			<trans-unit id="tab-imprint">
-				<source>Imprint</source>
+				<target>Impressum</target>
 			</trans-unit>
 			<trans-unit id="tab-privacy">
-				<source>Privacypolicy</source>
+				<target>Datenschutzerklärung</target>
 			</trans-unit>
 			<trans-unit id="tab-social">
-				<source>Privacypolicy for Social-Media-Profiles</source>
-
+				<target>Datenschutz für Social-Media-Profile</target>
 			</trans-unit>
 			<trans-unit id="tab-analytics">
-				<source>Google Analytics</source>
+				<target>Google Analytics</target>
 			</trans-unit>
 			<trans-unit id="tab-dok">
-				<source>Documentation</source>
+				<target>Dokumentation</target>
 			</trans-unit>
 			<trans-unit id="tab-status">
-				<source>Pluginstate</source>
+				<target>Pluginstatus</target>
 			</trans-unit>
 			<trans-unit id="tab-imprint-title">
-				<source>Imprint</source>
+				<target>Impressum</target>
 			</trans-unit>
 			<trans-unit id="apikey-text">
-				<source><![CDATA[Enter your API key here, which you can use for your website in the <a href="" target"_blank".
-                                in the <a href="https://e-recht24.de/mitglieder/tools/projekt-manager" target="_blank"
-                                       rel="nofollow noreferrer noopener">eRecht24 Project Manager for websites</a>.
-                                have created.]]></source>
-
+				<target><![CDATA[Geben Sie hier Ihren API-Schlüssel ein, welchen Sie für Ihre Webseite
+                                im <a href="https://e-recht24.de/mitglieder/tools/projekt-manager" target="_blank"
+                                       rel="nofollow noreferrer noopener">eRecht24 Projekt Manager für Websites</a>
+                                erzeugt haben.]]></target>
 			</trans-unit>
 			<trans-unit id="synclabel">
-				<source>Synchronise</source>
+				<target>Synchronisieren</target>
 			</trans-unit>
 			<trans-unit id="sync-all-button-text">
-				<source>Synchronise and save all legal texts</source>
+				<target>Alle Rechtstexte synchronisieren und speichern</target>
 			</trans-unit>
 			<trans-unit id="tab-imprint-text">
-				<source>Select here whether you would like to retrieve the latest version of your imprint from the eRecht24 Project Manager or whether it can be inserted by the eRecht24 Project Manager.
-					or if it can be inserted by the eRecht24 Project Manager, or if you want to maintain your
-					would like to maintain your imprint locally.
-				</source>
+				<target>Wählen Sie hier, ob Sie die aktuellste Version Ihres Impressums vom eRecht24 Projekt Manager
+					abrufen möchten bzw. dieses durch den eRecht24 Projekt Manager eingefügt werden kann oder ob Sie
+					Ihr Impressum lokal pflegen möchten.
+				</target>
 			</trans-unit>
 			<trans-unit id="local-version">
-				<source>Local Version</source>
+				<target>Lokale Version</target>
 			</trans-unit>
 			<trans-unit id="remote-version">
-				<source>eRecht24 Project Manager</source>
+				<target>eRecht24 Projekt Manager</target>
 			</trans-unit>
 			<trans-unit id="sync-and-save">
-				<source>Synchronise and save data</source>
+				<target>Daten synchronisieren und speichern</target>
 			</trans-unit>
 			<trans-unit id="sync-local-with-remote">
-				<source>Overwrite local data with the last synchronised texts</source>
+				<target>Lokale Daten mit den zuletzt synchronisierten Texten überschreiben</target>
 			</trans-unit>
 			<trans-unit id="local-append">
-				<source>Local</source>
+				<target>Lokal</target>
 			</trans-unit>
 			<trans-unit id="tab-privacy-title">
-				<source>Privacypolicy</source>
+				<target>Datenschutzerklärung</target>
 			</trans-unit>
 			<trans-unit id="tab-privacy-text">
-				<source>Select here whether you would like to retrieve the latest version of your privacy policy from the eRecht24 Project Manager or whether it can be inserted by the eRecht24 Project Manager.
-					Manager or whether this can be inserted by the eRecht24 Project Manager, or
-					whether you would like to maintain your privacy policy locally.
-				</source>
+				<target>Wählen Sie hier, ob Sie die aktuellste Version Ihrer Datenschutzerklärung vom eRecht24 Projekt
+					Manager abrufen möchten bzw. diese durch den eRecht24 Projekt Manager eingefügt werden kann oder
+					ob Sie Ihre Datenschutzerklärung lokal pflegen möchten.
+				</target>
 			</trans-unit>
 			<trans-unit id="tab-social-title">
-				<source>Privacypolicy for Social-Media-Profiles</source>
+				<target>Datenschutz für Social-Media-Profile</target>
 			</trans-unit>
 			<trans-unit id="tab-social-text">
-				<source>Select here whether you would like to retrieve the most current version of your privacy policy for
-					social media profiles from the eRecht24 Project Manager or whether it can be inserted by the eRecht24 Project Manager.
-					Project Manager or whether you would like to maintain your data protection declaration for
-					social media profiles locally.
-				</source>
-
+				<target>Wählen Sie hier, ob Sie die aktuellste Version Ihrer Datenschutzerklärung für
+					Social-Media-Profile vom eRecht24 Projekt Manager abrufen möchten bzw. diese durch den eRecht24
+					Projekt Manager eingefügt werden kann oder ob Sie Ihre Datenschutzerklärung für
+					Social-Media-Profile lokal pflegen möchten.
+				</target>
 			</trans-unit>
 			<trans-unit id="tab-state-title">
-				<source>Status overview</source>
-
+				<target>Statusübersicht</target>
 			</trans-unit>
 			<trans-unit id="tab-state-text">
-				<source>Here you can check whether your server meets the system requirements for this plugin and whether
-					the eRecht24 servers are accessible.
-				</source>
+				<target>Hier können Sie prüfen, ob Ihr Server die Systemvoraussetzungen für dieses Plugin erfüllt und ob
+					die eRecht24-Server erreichbar sind.
+				</target>
 			</trans-unit>
 			<trans-unit id="curl-not-available">
-				<source>PHP cURL is not available on this server. Without cURL, no connection to the API
-					can be established.
-				</source>
+				<target>PHP cURL steht auf diesem Server nicht zur Verfügung. Ohne cURL kann keine Verbindung zur API
+					aufgebaut werden.
+				</target>
 			</trans-unit>
 			<trans-unit id="curl-is-installed">
-				<source>cURL is installed in the system.</source>
+				<target>cURL ist im System installiert.</target>
 			</trans-unit>
 			<trans-unit id="eserver-access">
-				<source>eRecht24 server is reachable</source>
+				<target>eRecht24 Server ist erreichbar</target>
 			</trans-unit>
 			<trans-unit id="eserver-access-not-possible">
-				<source>Connection with eRecht24 server not possible.</source>
+				<target>Verbindungsaufbau mit eRecht24 Server nicht möglich.</target>
 			</trans-unit>
 			<trans-unit id="eserver-access-possible">
-				<source>Connection to the eRecht24 server could be established successfully</source>
+				<target>Verbindung zum eRecht24-Server konnte erfolgreich hergestellt werden</target>
 			</trans-unit>
 			<trans-unit id="configuration-state">
-				<source>The eRecht24 configuration is correctly configured</source>
+				<target>Die eRecht24 Konfiguration ist korrekt konfiguriert</target>
 			</trans-unit>
 			<trans-unit id="configuration-errors">
-				<source>Your configuration is faulty:</source>
+				<target>Ihre Konfiguration ist fehlerhaft:</target>
 			</trans-unit>
 			<trans-unit id="configuration-is-good">
-				<source>The API interface is configured correctly.</source>
+				<target>Die API-Schnittstelle ist korrekt konfiguriert.</target>
 			</trans-unit>
 			<trans-unit id="eserver-push">
-				<source>eRecht24 Server answers</source>
+				<target>eRecht24 Server antwortet</target>
 			</trans-unit>
 			<trans-unit id="eserver-push-not-possible">
-				<source>The eRecht24 server is not able to push new data into your TYPO3 page.</source>
+				<target>Der eRecht24 Server ist nicht in der Lage, neue Daten in Ihre TYPO3-Seite zu pushen.</target>
 			</trans-unit>
 			<trans-unit id="eserver-can-push">
-				<source>The eRecht24 server is able to push new data into your TYPO3 page.</source>
+				<target>Der eRecht24 Server ist in der Lage, neue Daten in Ihre TYPO3-Seite zu pushen.</target>
 			</trans-unit>
 			<trans-unit id="refresh-connection">
-				<source>Refresh connection</source>
+				<target>Verbindung auffrischen</target>
 			</trans-unit>
 			<trans-unit id="connection-not-possible-without-curl">
-				<source>An API connection cannot be established without cURL.</source>
+				<target>Eine API Verbindung kann ohne cURL nicht hergestellt werden.</target>
 			</trans-unit>
 			<trans-unit id="debug-text">
-				<source><![CDATA[<p>
-                        If you need assistance, please send us an email. Add the necessary debug information by following these steps:
+				<target><![CDATA[<p>
+                        Falls Sie Unterstützung benötigen, senden Sie uns bitte eine E-Mail. Fügen Sie die notwendigen Debuginformationen hinzu, indem Sie diesen Schritten folgen:
                     </p>
                     <ol>
-                        <li>Write an email to <a href="mailto:support@e-recht24.de">support@e-recht24.de</a>.</li>
-                        <li>Describe the problem in as much detail as possible.</li>
-                        <li>Click on the button labelled "Copy debug information to clipboard".</li>
-                        <li>Paste the information into the email by pressing "Ctrl" + "V" or by right-clicking and clicking "Paste".</li>
-                    </ol>]]></source>
-
+                        <li>Schreiben Sie eine E-Mail an <a href="mailto:support@e-recht24.de">support@e-recht24.de</a>.</li>
+                        <li>Beschreiben Sie das Problem so detailliert wie möglich.</li>
+                        <li>Klicken Sie auf den Button mit der Aufschrift "Debuginformationen in die Zwischenablage kopieren".</li>
+                        <li>Fügen Sie die Informationen in die E-Mail ein, indem Sie "Strg" + "V" drücken oder indem Sie einen Rechtsklick machen und auf "Einfügen" klicken.</li>
+                    </ol>]]></target>
 			</trans-unit>
 			<trans-unit id="copy-debug">
-				<source>Copy debug information to the clipboard</source>
+				<target>Debuginformationen in die Zwischenablage kopieren</target>
 			</trans-unit>
 			<trans-unit id="update-available">
-				<source>An update to version is available</source>
+				<target>Es steht eine Aktualisierung auf Version zur Verfügung</target>
 			</trans-unit>
 			<trans-unit id="cannot-update-composer">
-				<source>This TYPO3 system is operated in Composer mode. For an update please use
+				<target>Dieses TYPO3 System wird im Composer-Modus betrieben. Für eine Aktualisierung nutzen Sie bitte
 					Composer.
-				</source>
+				</target>
 			</trans-unit>
 			<trans-unit id="process-update">
-				<source>Perform update</source>
+				<target>Aktualisierung ausführen</target>
 			</trans-unit>
 			<trans-unit id="edit">
-				<source>Edit</source>
+				<target>Bearbeiten</target>
 			</trans-unit>
 			<trans-unit id="delete">
-				<source>Delete</source>
+				<target>Löschen</target>
 			</trans-unit>
 			<trans-unit id="siteconfigs-found">
-				<source>The following page configurations were found in this system, but have not yet been assigned to an eRecht24
-					configuration.
-				</source>
+				<target>Die folgenden Seitenkonfigurationen wurden in diesem System gefunden, aber noch keiner eRecht24 Konfiguration zugewiesen.</target>
 			</trans-unit>
 			<trans-unit id="create-title">
-				<source>Create new eRecht24 configuration</source>
+				<target>Neue eRecht24 Konfiguration erstellen</target>
 			</trans-unit>
 			<trans-unit id="please-choose">
-				<source>Please choose</source>
+				<target>Bitte wählen</target>
 			</trans-unit>
 			<trans-unit id="abort">
-				<source>Abort</source>
+				<target>Abbrechen</target>
 			</trans-unit>
 			<trans-unit id="create-save">
-				<source>Create configuration</source>
+				<target>Konfiguration erstellen</target>
 			</trans-unit>
 			<trans-unit id="edit-config-title">
-				<source>Configure the functionality of the domain plugin here.</source>
+				<target>Konfigurieren Sie hier die Funktionalität des des Domain Plugins.</target>
 			</trans-unit>
 			<trans-unit id="back-to-overview">
-				<source>back to overview</source>
+				<target>zurück zur Übersicht</target>
 			</trans-unit>
 			<trans-unit id="save">
-				<source>Save</source>
+				<target>Speichern</target>
 			</trans-unit>
 			<trans-unit id="message-prefix">
-				<source>eRecht24 legaltexts for TYPO3:</source>
+				<target>eRecht24 Extension für TYPO3:</target>
 			</trans-unit>
 			<trans-unit id="update-success">
-				<source>Update successfully executed!</source>
+				<target>Aktualisierung erfolgreich ausgeführt!</target>
 			</trans-unit>
 			<trans-unit id="update-failed">
-				<source>Update failed!</source>
+				<target>Aktualisierung fehlgeschlagen!</target>
 			</trans-unit>
 			<trans-unit id="configuration-not-found">
-				<source>eRecht24 configuration could not be found.</source>
+				<target>eRecht24 Konfiguration konnte nicht gefunden werden.</target>
 			</trans-unit>
 			<trans-unit id="document-not-found">
-				<source>Document could not be determined</source>
+				<target>Dokument konnte nicht ermittelt werden</target>
 			</trans-unit>
 			<trans-unit id="config-was-created">
-				<source>The configuration has been created successfully.</source>
+				<target>Die Konfiguration wurde erfolgreich erstellt.</target>
 			</trans-unit>
 			<trans-unit id="config-was-deleted">
-				<source>The configuration was successfully deleted.</source>
+				<target>Die Konfiguration wurde erfolgreich gelöscht.</target>
 			</trans-unit>
 			<trans-unit id="no-api-key">
-				<source>No API key stored</source>
+				<target>Kein API Key hinterlegt</target>
 			</trans-unit>
 			<trans-unit id="unknown-document-requested">
-				<source>Invalid document requested:</source>
+				<target>Ungültiges Dokument angefordert:</target>
 			</trans-unit>
 			<trans-unit id="auto-saved">
-				<source>Automatically saved.</source>
+				<target>Automatisch gespeichert.</target>
 			</trans-unit>
 			<trans-unit id="connection-established">
-				<source>Valid API key. Connection to the eRecht24 API has been established.</source>
+				<target>Gültiger API Schlüssel. Verbindung zur eRecht24 API wurde aufgebaut.</target>
 			</trans-unit>
 			<trans-unit id="configuration">
-				<source>Configuration</source>
+				<target>Konfiguration</target>
 			</trans-unit>
 			<trans-unit id="api-client-removed">
-				<source>API Client has been removed</source>
+				<target>API Client wurde entfernt</target>
 			</trans-unit>
 			<trans-unit id="invalid-api-key">
-				<source>Invalid API Key. The new API key has not been saved!</source>
+				<target>Ungültiger API Key. Der neue API Key wurde nicht gespeichert!</target>
 			</trans-unit>
 			<trans-unit id="client-creation-failed">
-				<source>No client could be created for the configuration.</source>
+				<target>Es konnte kein Client für die Konfiguration erstellt werden.</target>
 			</trans-unit>
 			<trans-unit id="plugin-title">
-				<source>Insert eRecht24 imprint or privacy policy on this page.</source>
+				<target>eRecht24 Impressum oder Datenschutzerklärung auf dieser Seite einfügen.</target>
 			</trans-unit>
 			<trans-unit id="connection_error_detected">
-				<source>Errors were detected when checking the API connection. Please check the Plugin status</source>
+				<target>Bei der Prüfung der API Verbindung wurden Fehler festgestellt. Bitte überprüfen Sie den Pluginstatus</target>
 			</trans-unit>
 			<trans-unit id="module-loading">
-				<source>Loading</source>
+				<target>Loading</target>
 			</trans-unit>
 			<trans-unit id="attention">
-				<source>Attention</source>
+				<target>Achtung</target>
 			</trans-unit>
 			<trans-unit id="delete-confirm">
-				<source>Are you sure you want to delete this API configuration?</source>
+				<target>Sind Sie sicher, dass Sie diese API Konfiguration löschen möchten?</target>
 			</trans-unit>
 			<trans-unit id="debug-was-copied">
-				<source>Debug information has been transferred to your clipboard.</source>
+				<target>Debuginformationen wurden in Ihre Zwischenablage übertragen.</target>
 			</trans-unit>
 			<trans-unit id="error">
-				<source>Error</source>
+				<target>Fehler</target>
 			</trans-unit>
 			<trans-unit id="imprint_imported">
-				<source>Imprint synchronised</source>
+				<target>Impressum synchronisiert</target>
 			</trans-unit>
 			<trans-unit id="privacyPolicy_imported">
-				<source>Privacy policy synchronised</source>
+				<target>Datenschutzerklärung synchronisiert</target>
 			</trans-unit>
 			<trans-unit id="privacyPolicySocialMedia_imported">
-				<source>Social media privacy policy synchronised</source>
+				<target>Social-Media Datenschutzerklärung synchronisiert</target>
 			</trans-unit>
 		</body>
 	</file>
