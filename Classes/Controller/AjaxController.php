@@ -4,9 +4,15 @@ namespace ERecht24\Er24Rechtstexte\Controller;
 use ERecht24\Er24Rechtstexte\Utility\HelperUtility;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\Response;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class AjaxController
 {
+
+    /**
+     * @var string
+     */
+    protected $extensionName = 'er24_rechtstexte';
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
@@ -69,9 +75,9 @@ class AjaxController
         $documentType = $request->getQueryParams()['documentType'];
 
         if($domainConfig->getApiKey() === '') {
-            $errors[] = 'Kein API Key hinterlegt';
+            $errors[] = LocalizationUtility::translate('no-api-key', $this->extensionName);
         } else if(false === in_array($documentType, \ERecht24\Er24Rechtstexte\Api\LegalDocument::ALLOWED_DOCUMENT_TYPES)) {
-            $errors[] = 'Ungültiges Dokument '. $documentType .' angefordert';
+            $errors[] = LocalizationUtility::translate('unknown-document-requested', $this->extensionName). ' ' . $documentType;
         }else {
             $documentClient = new \ERecht24\Er24Rechtstexte\Api\LegalDocument($domainConfig->getApiKey(), $documentType, $domainConfig->getDomain());
             $document = $documentClient->importDocument();
@@ -144,7 +150,7 @@ class AjaxController
         }
 
         if(count($errors) === 0) {
-            $successes[] = 'Automatisch gespeichert.';
+            $successes[] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('auto-saved', $this->extensionName);
         }
 
 
@@ -244,7 +250,7 @@ class AjaxController
                     $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
                 } else {
                     $fixed[] = 'clientConfiguration';
-                    $successes[] = 'Gültiger API Schlüssel. Verbindung zur eRecht24 API wurde aufgebaut.';
+                    $successes[] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('connection-established', $this->extensionName);
                     $domainConfig->setClientId($response->getData('client_id'));
                     $domainConfig->setClientSecret($response->getData('secret'));
 
@@ -298,8 +304,6 @@ class AjaxController
                 'domain' => $language->getBase()->getScheme() . '://' . $language->getBase()->getHost() . '/'
             ];
         }
-
-        //$response = new Response(json_encode($languageInformations), 200, ['Content-Type' => 'application/json; charset=utf-8']);
 
         return new \TYPO3\CMS\Core\Http\JsonResponse($languageInformations);
     }

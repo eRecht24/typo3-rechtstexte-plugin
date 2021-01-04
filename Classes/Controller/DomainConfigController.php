@@ -7,6 +7,7 @@ namespace ERecht24\Er24Rechtstexte\Controller;
 use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /***
  *
@@ -24,6 +25,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
+
+    /**
+     * @var string
+     */
+    protected $extensionName = 'er24_rechtstexte';
 
     /**
      * domainConfigRepository
@@ -72,9 +78,9 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     public function performUpdateAction() {
         $updateUtility = new \ERecht24\Er24Rechtstexte\Utility\UpdateUtility();
         if(true === $updateUtility->performSelfUpdate()) {
-            $this->addFlashMessage('eRecht24 Extension für TYPO3: Aktualisierung erfolgreich ausgeführt!' , '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . LocalizationUtility::translate('update-success', $this->extensionName) , '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         } else {
-            $this->addFlashMessage('eRecht24 Extension für TYPO3: Aktualisierung fehlgeschlagen!' , '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+            $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . LocalizationUtility::translate('update-failed', $this->extensionName) , '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
         }
         $this->redirect('list');
     }
@@ -147,7 +153,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $domainConfig = $this->domainConfigRepository->findByUid($this->settings['configId']);
         if ($domainConfig === null) {
             // TODO
-            $this->addFlashMessage('eRecht24 Konfiguration konnte nicht gefunden werden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+            $this->addFlashMessage(LocalizationUtility::translate('configuration-not-found', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
         }
 
 
@@ -187,7 +193,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 'outputText' => $outputText
             ]);
         } else {
-            $this->addFlashMessage('Dokument konnte nicht ermittelt werden', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+            $this->addFlashMessage(LocalizationUtility::translate('document-not-found', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
         }
 
     }
@@ -244,7 +250,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     public function createAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $newDomainConfig)
     {
 
-        $this->addFlashMessage('eRecht24 Extension für TYPO3: Die Konfiguration wurde erfolgreich erstellt.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) .  \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('config-was-created', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
 
         $now = time();
 
@@ -392,12 +398,12 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     {
         if (count($apiHandlerResult[0]) > 0) {
             foreach ($apiHandlerResult[0] as $error) {
-                $this->addFlashMessage('eRecht24 Extension für TYPO3: ' . $error, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+                $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . ' ' . $error, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
             }
         }
         if (count($apiHandlerResult[1]) > 0) {
             foreach ($apiHandlerResult[1] as $success) {
-                $this->addFlashMessage('eRecht24 Extension für TYPO3: ' . $success, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+                $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . ' ' . $success, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
             }
         }
     }
@@ -425,7 +431,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             $siteConfiguration->write($domainConfig->getSiteConfigName(), $configurationArray);
         }
 
-        $this->addFlashMessage('eRecht24 Extension für TYPO3: Die Konfiguration wurde erfolgreich gelöscht.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . ' ' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('config-was-deleted', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->domainConfigRepository->remove($domainConfig);
         $this->redirect('list');
     }

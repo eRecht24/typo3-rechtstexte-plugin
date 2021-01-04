@@ -305,6 +305,39 @@
 			<trans-unit id="save">
 				<source>Speichern</source>
 			</trans-unit>
+			<trans-unit id="message-prefix">
+				<source>eRecht24 Extension für TYPO3:</source>
+			</trans-unit>
+			<trans-unit id="update-success">
+				<source>Aktualisierung erfolgreich ausgeführt!</source>
+			</trans-unit>
+			<trans-unit id="update-failed">
+				<source>Aktualisierung fehlgeschlagen!</source>
+			</trans-unit>
+			<trans-unit id="configuration-not-found">
+				<source>eRecht24 Konfiguration konnte nicht gefunden werden.</source>
+			</trans-unit>
+			<trans-unit id="document-not-found">
+				<source>Dokument konnte nicht ermittelt werden</source>
+			</trans-unit>
+			<trans-unit id="config-was-created">
+				<source>Die Konfiguration wurde erfolgreich erstellt.</source>
+			</trans-unit>
+			<trans-unit id="config-was-deleted">
+				<source>Die Konfiguration wurde erfolgreich gelöscht.</source>
+			</trans-unit>
+			<trans-unit id="no-api-key">
+				<source>Kein API Key hinterlegt</source>
+			</trans-unit>
+			<trans-unit id="unknown-document-requested">
+				<source>Ungültiges Dokument angefordert:</source>
+			</trans-unit>
+			<trans-unit id="auto-saved">
+				<source>Automatisch gespeichert.</source>
+			</trans-unit>
+			<trans-unit id="connection-established">
+				<source>Gültiger API Schlüssel. Verbindung zur eRecht24 API wurde aufgebaut.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
