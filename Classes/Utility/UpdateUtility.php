@@ -69,7 +69,7 @@ class UpdateUtility
         $apiRes = self::performApiRequest('repository/tags/');
 
         if($apiRes === false) {
-            LogUtility::writeErrorLog('API Verbindung zu GIT Repository fehlgeschlagen ' . $this->latestVersion);
+            LogUtility::writeErrorLog('API Connection to GIT Repository failed. ' . $this->latestVersion);
             return false;
         }
 
