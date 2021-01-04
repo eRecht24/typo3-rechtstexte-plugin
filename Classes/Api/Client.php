@@ -105,7 +105,7 @@ class Client extends BaseApi
         $typo3Version = new \TYPO3\CMS\Core\Information\Typo3Version();
 
         $request_body['push_method'] = 'GET';
-        $request_body['push_uri']    = $this->domain . 'erecht24/v1/push';
+        $request_body['push_uri']    = $this->domain . '/erecht24/v1/push';
         $request_body['cms']         = 'TYPO3';
         $request_body['cms_version'] = $typo3Version->getVersion();
         $request_body['plugin_name'] = 'eRecht24.de Rechtstexte für TYPO3';

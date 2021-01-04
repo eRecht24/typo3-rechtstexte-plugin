@@ -17,7 +17,8 @@ class ErechtResolver implements \Psr\Http\Server\MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
 
-        if($request->getUri()->getPath() !== '/erecht24/v1/push') {
+
+        if(false === strpos($request->getUri()->getPath(), '/erecht24/v1/push')) {
             return $handler->handle($request);
         }
 
