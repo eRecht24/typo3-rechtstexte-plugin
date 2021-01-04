@@ -47,7 +47,7 @@ define(['jquery',
     eRecht24Module.handleError = function (errors) {
       for (var error of errors) {
         Notification.error(
-          'Fehler', 'eRecht24 Extension für TYPO3: ' + error, 5
+          TYPO3.lang.error, TYPO3.lang.message_prefix + ' ' + error, 5
         );
       }
     }
@@ -55,7 +55,7 @@ define(['jquery',
     eRecht24Module.handleSuccess = function (successes) {
       for (var success of successes) {
         Notification.success(
-          'OK', 'eRecht24 Extension für TYPO3: ' + success, 5
+          'OK', TYPO3.lang.message_prefix + ' ' + success, 5
         );
       }
     }
@@ -237,8 +237,6 @@ define(['jquery',
         arguments.properties[$(this).attr('id')] = enabled ? 1 : 0;
 
 
-        console.log(arguments);
-
         new AjaxRequest(TYPO3.settings.ajaxUrls.er24_saveDomainConfig)
           .withQueryArguments(arguments)
           .get().then(async function (response) {
@@ -390,6 +388,7 @@ define(['jquery',
     }
 
     if ($('#domainConfigEditForm').length > 0) {
+
       eRecht24Module.showLoader();
       eRecht24Module.domainConfigId = parseInt($('#domainConfigId').val());
       eRecht24Module.trackingEnabled = $('#flagEmbedTracking').is(':checked');
@@ -401,7 +400,7 @@ define(['jquery',
       eRecht24Module.hideLoader();
 
       if ($('.t3js-tabmenu-item.has-validation-error').length > 0) {
-        var errors = ['Bei der Prüfung der API Verbindung wurden Fehler festgestellt. Bitte überprüfen Sie den Pluginstatus'];
+        var errors = [TYPO3.lang.connection_error_detected];
         eRecht24Module.handleError(errors);
       }
 
@@ -448,7 +447,7 @@ define(['jquery',
         $debugInformations.select();
         document.execCommand("copy");
         $debugInformations.attr('disabled', 'disabled')
-        var success = ['Debuginformationen wurden in Ihre Zwischenablage übertragen.'];
+        var success = [TYPO3.lang.debug_was_copied];
         eRecht24Module.handleSuccess(success);
       });
 
@@ -457,9 +456,9 @@ define(['jquery',
     $('.site-config-delete').click(function (e) {
       e.preventDefault();
       var target = $(this).attr('href');
-      Modal.confirm('Achtung', 'Sind Sie sicher, dass Sie diese API Konfiguration löschen möchten?', Severity.danger, [
+      Modal.confirm(TYPO3.lang.attention, TYPO3.lang.delete_confirm, Severity.danger, [
         {
-          text: 'Löschen',
+          text: TYPO3.lang.delete,
           active: true,
           trigger: function () {
             Modal.dismiss();
@@ -468,7 +467,7 @@ define(['jquery',
             }, 500);
           }
         }, {
-          text: 'Abbrechen',
+          text: TYPO3.lang.abort,
           trigger: function () {
             Modal.dismiss();
           }

@@ -18,12 +18,6 @@ call_user_func(
             ];
         }
 
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-            $vendorPrefix.'Er24Rechtstexte',
-            'Main',
-            'eRecht24 Impressum oder Datenschutzerklärung auf dieser Seite einfügen.' // TODO
-        );
-
         if (TYPO3_MODE === 'BE') {
 
             \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
@@ -44,9 +38,6 @@ call_user_func(
         }
 
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('er24_rechtstexte', 'Configuration/TypoScript', 'eRecht24 Rechtstexte Extension');
-
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_er24rechtstexte_domain_model_domainconfig', 'EXT:er24_rechtstexte/Resources/Private/Language/locallang_csh_tx_er24rechtstexte_domain_model_domainconfig.xlf');
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_er24rechtstexte_domain_model_domainconfig');
 
     }
 );

@@ -108,7 +108,10 @@ call_user_func(
         if (TYPO3_MODE === "BE" )   {
 
             // TODO: Language
+
+
 //            $label = LocalizationUtility::translate($key, $extensionKey);
+
 //            $pageRenderer->addInlineLanguageLabel($key, $label);
 
 //            $pageRenderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);

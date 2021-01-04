@@ -350,6 +350,29 @@
 			<trans-unit id="client-creation-failed">
 				<source>Es konnte kein Client für die Konfiguration erstellt werden.</source>
 			</trans-unit>
+			<trans-unit id="plugin-title">
+				<source>eRecht24 Impressum oder Datenschutzerklärung auf dieser Seite einfügen.</source>
+			</trans-unit>
+			<trans-unit id="connection_error_detected">
+				<source>Bei der Prüfung der API Verbindung wurden Fehler festgestellt. Bitte überprüfen Sie den
+					Pluginstatus
+				</source>
+			</trans-unit>
+			<trans-unit id="module-loading">
+				<source>Loading</source>
+			</trans-unit>
+			<trans-unit id="attention">
+				<source>Achtung</source>
+			</trans-unit>
+			<trans-unit id="delete-confirm">
+				<source>Sind Sie sicher, dass Sie diese API Konfiguration löschen möchten?</source>
+			</trans-unit>
+			<trans-unit id="debug-was-copied">
+				<source>Debuginformationen wurden in Ihre Zwischenablage übertragen.</source>
+			</trans-unit>
+			<trans-unit id="error">
+				<source>Fehler</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

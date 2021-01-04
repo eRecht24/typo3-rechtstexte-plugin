@@ -286,6 +286,24 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     public function editAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig)
     {
 
+        $jsRequiredLanguageKeys = [
+            'connection_error_detected',
+            'message-prefix',
+            'attention',
+            'delete-confirm',
+            'delete',
+            'abort',
+            'debug-was-copied',
+            'error'
+        ];
+
+        $pageRenderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
+
+        foreach ($jsRequiredLanguageKeys as $key) {
+            $label = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($key, 'er24_rechtstexte');
+            $pageRenderer->addInlineLanguageLabel(str_replace('-', '_', $key), $label);
+        }
+
         $errors = $pushError = $configError = $erechtServerError = $curlError = false;
         $configErrorMessages = [];
 
