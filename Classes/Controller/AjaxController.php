@@ -43,7 +43,7 @@ class AjaxController
 
     public function __construct() {
         $typo3Version = new \TYPO3\CMS\Core\Information\Typo3Version();
-        if(version_compare($typo3Version,'10.4', '<')) {
+        if(version_compare($typo3Version->getVersion(),'10.4', '<')) {
             // TODO: This constructor is just a fallback for TYPO3 9 LTS
             $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
             $this->persistenceManager = $objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);

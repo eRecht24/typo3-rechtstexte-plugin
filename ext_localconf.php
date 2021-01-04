@@ -7,7 +7,7 @@ call_user_func(
 
         $typo3Version = new \TYPO3\CMS\Core\Information\Typo3Version();
 
-        if(version_compare($typo3Version,'10.4', '<')) {
+        if(version_compare($typo3Version->getVersion(),'10.4', '<')) {
             \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
                 'ERecht24.Er24Rechtstexte',
                 'Main',
@@ -54,7 +54,7 @@ call_user_func(
            }'
         );
 
-		$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+        $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
 
         $iconRegistry->registerIcon(
             'er24_rechtstexte-plugin-main',

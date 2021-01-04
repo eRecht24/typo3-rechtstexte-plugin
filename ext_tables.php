@@ -11,7 +11,7 @@ call_user_func(
             \ERecht24\Er24Rechtstexte\Controller\DomainConfigController::class => 'list, new, create, edit, update, delete, performUpdate',
         ];
 
-        if(version_compare($typo3Version,'10.4', '<')) {
+        if(version_compare($typo3Version->getVersion(),'10.4', '<')) {
             $vendorPrefix = 'ERecht24.';
             $backendController = [
                 'DomainConfig' => 'list, new, create, edit, update, delete, performUpdate',

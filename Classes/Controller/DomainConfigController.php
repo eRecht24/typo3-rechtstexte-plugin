@@ -150,7 +150,14 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             $this->addFlashMessage('eRecht24 Konfiguration konnte nicht gefunden werden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
         }
 
-        $language = ucfirst($GLOBALS['TSFE']->getLanguage()->getTwoLetterIsoCode());
+
+        $typo3Version = new \TYPO3\CMS\Core\Information\Typo3Version();
+
+        if(version_compare($typo3Version->getVersion(),'10.4', '<')) {
+            $language = ucFirst($GLOBALS['TSFE']->sys_language_isocode);
+        } else {
+            $language = ucfirst($GLOBALS['TSFE']->getLanguage()->getTwoLetterIsoCode());
+        }
 
         if ($language !== 'De') {
             $language = 'En';

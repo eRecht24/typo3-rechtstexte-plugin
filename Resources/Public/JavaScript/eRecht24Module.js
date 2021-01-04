@@ -127,7 +127,7 @@ define(['jquery',
 
             if (resolved.response) {
               var response = resolved.response;
-              if (response.html_de && response.html_en && response.modified) {
+              if (typeof(response.html_de) !== 'undefined' && typeof(response.html_en) !== 'undefined' && typeof(response.modified) !== 'undefined') {
                 $('#' + partType + 'De').val(response.html_de);
                 $('#' + partType + 'En').val(response.html_en);
                 $('#' + partType + 'DeTstamp').val(response.modified);
