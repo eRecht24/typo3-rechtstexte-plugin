@@ -411,10 +411,8 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->domainConfigRepository->update($domainConfig);
         $this->persistenceManager->persistAll();
 
-        /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
-        $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
         /** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
-        $cacheManager = $objectManager->get(\TYPO3\CMS\Core\Cache\CacheManager::class);
+        $cacheManager = $this->objectManager->get(\TYPO3\CMS\Core\Cache\CacheManager::class);
         $cacheManager->flushCachesByTag('er24_document_' . $domainConfig->getUid());
 
         $this->redirect('edit', null, null, ['domainConfig' => $domainConfig->getUid()]);
