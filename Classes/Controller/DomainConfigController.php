@@ -154,6 +154,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         if ($domainConfig === null) {
             // TODO
             $this->addFlashMessage(LocalizationUtility::translate('configuration-not-found', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+            return $this->view->render();
         }
 
 
