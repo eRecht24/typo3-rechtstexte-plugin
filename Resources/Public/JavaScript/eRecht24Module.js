@@ -458,7 +458,7 @@ define(['jquery',
       var target = $(this).attr('href');
       Modal.confirm(TYPO3.lang.attention, TYPO3.lang.delete_confirm, Severity.danger, [
         {
-          text: TYPO3.lang.delete,
+          text: top.TYPO3.lang.delete,
           active: true,
           trigger: function () {
             Modal.dismiss();

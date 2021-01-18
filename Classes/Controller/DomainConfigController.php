@@ -93,6 +93,19 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     public function listAction()
     {
 
+        $jsRequiredLanguageKeys = [
+            'attention',
+            'delete-confirm',
+            'abort'
+        ];
+
+        $pageRenderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
+
+        foreach ($jsRequiredLanguageKeys as $key) {
+            $label = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($key, 'er24_rechtstexte');
+            $pageRenderer->addInlineLanguageLabel(str_replace('-', '_', $key), $label);
+        }
+
         $updateUtility = new \ERecht24\Er24Rechtstexte\Utility\UpdateUtility();
 
         /** @var \TYPO3\CMS\Core\Site\SiteFinder $siteFinder */
