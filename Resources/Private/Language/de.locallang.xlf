@@ -391,6 +391,12 @@
 			<trans-unit id="flex-auto-detect">
 				<target>automatisch ermittelt</target>
 			</trans-unit>
+			<trans-unit id="update-exists">
+				<target>Aktualisierung verfügbar</target>
+			</trans-unit>
+			<trans-unit id="unconfigured-configurations-exist">
+				<target>Siteconfigurations ohne eRecht24 Anbindung gefunden</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

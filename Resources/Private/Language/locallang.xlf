@@ -419,6 +419,12 @@
 			<trans-unit id="flex-auto-detect">
 				<source>Auto detected</source>
 			</trans-unit>
+			<trans-unit id="update-exists">
+				<source>Update available</source>
+			</trans-unit>
+			<trans-unit id="unconfigured-configurations-exist">
+				<source>Siteconfigurations found without eRecht24 connection</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

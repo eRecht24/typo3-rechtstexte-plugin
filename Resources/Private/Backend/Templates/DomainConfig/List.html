@@ -9,7 +9,7 @@
     </h1>
 
     <f:if condition="{updateAvailable}">
-        <f:be.infobox title="Aktualisierung verfügbar">
+        <f:be.infobox title="{f:translate(key: 'update-exists')}">
             <p><f:translate key="update-available" />: Version {latestVersion}</p>
             <f:if condition="{composerMode}">
                 <f:then>
@@ -72,7 +72,7 @@
 
     <f:if condition="{allSiteConfigurations}">
 
-        <f:be.infobox title="Siteconfigurations ohne eRecht24 Anbindung gefunden" state="-1">
+        <f:be.infobox title="{f:translate(key: 'update-exists')}" state="-1">
 
             <p><f:translate key="siteconfigs-found" /></p>
 
