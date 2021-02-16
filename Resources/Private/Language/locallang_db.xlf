@@ -76,10 +76,10 @@
 				<source>Site Config Name</source>
 			</trans-unit>
 			<trans-unit id="tx_er24_rechtstexte_main.name" resname="tx_er24_rechtstexte_main.name">
-				<source>eRecht24 Rechtstexte</source>
+				<source>eRecht24 Legal texts</source>
 			</trans-unit>
 			<trans-unit id="tx_er24_rechtstexte_main.description" resname="tx_er24_rechtstexte_main.description">
-				<source>eRecht24 Impressum oder Datenschutzerklärung auf dieser Seite einfügen.</source>
+				<source>Insert eRecht24 imprint or privacy policy on this page.</source>
 			</trans-unit>
 		</body>
 	</file>

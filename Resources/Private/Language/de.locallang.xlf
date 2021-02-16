@@ -388,6 +388,9 @@
 					Erteilung der Cookie-Einwilligung durch den Nutzer über das Cookie-Banner aktiviert.
 				</target>
 			</trans-unit>
+			<trans-unit id="flex-auto-detect">
+				<target>automatisch ermittelt</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

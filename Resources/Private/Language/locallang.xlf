@@ -416,6 +416,9 @@
 					only activated after the user has given their consent to the cookie via the cookie banner.
 				</source>
 			</trans-unit>
+			<trans-unit id="flex-auto-detect">
+				<source>Auto detected</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

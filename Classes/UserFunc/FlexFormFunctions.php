@@ -19,7 +19,7 @@ class FlexFormFunctions
             if($domainConfig instanceof \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig) {
                 $config['items'] = [];
                 $config['items'][] = [
-                  'Automatisch ermittelt: ' . $domainConfig->getDomain(), $domainConfig->getUid(), 'tcarecords-tx_er24rechtstexte_domain_model_domainconfig-default' // TODO
+                  \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('flex-auto-detect', 'er24_rechtstexte') . ': ' . $domainConfig->getDomain(), $domainConfig->getUid(), 'tcarecords-tx_er24rechtstexte_domain_model_domainconfig-default' // TODO
                 ];
             }
         } catch(\Exception $e) {}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="EXT:er24_rechtstexte/Resources/Private/Language/locallang_db" date="2020-12-08T13:30:06Z" product-name="er24_rechtstexte">
+		<header/>
+		<body>
+			<trans-unit id="tx_er24_rechtstexte_main.name" resname="tx_er24_rechtstexte_main.name">
+				<target>eRecht24 Rechtstexte</target>
+			</trans-unit>
+			<trans-unit id="tx_er24_rechtstexte_main.description" resname="tx_er24_rechtstexte_main.description">
+				<target>eRecht24 Impressum oder Datenschutzerklärung auf dieser Seite einfügen.</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
