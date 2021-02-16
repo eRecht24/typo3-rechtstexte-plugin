@@ -265,6 +265,17 @@ class AjaxController
                     }
                 }
             }
+        } else {
+            $clientResult = $client->addClient();
+            if($clientResult->isSuccess() === false) {
+                $errors[] = HelperUtility::getBestFittingApiErrorMessage($clientResult);
+            } else {
+                $successes[] = LocalizationUtility::translate('connection-established', 'er24_rechtstexte_lts8');
+                $domainConfig->setClientId($clientResult->getData('client_id'));
+                $domainConfig->setClientSecret($clientResult->getData('secret'));
+                $this->domainConfigRepository->update($domainConfig);
+                $this->persistenceManager->persistAll();
+            }
         }
 
         return new \TYPO3\CMS\Core\Http\JsonResponse([
