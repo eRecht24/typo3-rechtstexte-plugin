@@ -114,7 +114,7 @@
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed">
-				<source>Embed tracking code for Usercentrics?</source>
+				<source><![CDATA[Embed tracking code<br/>for Usercentrics?]]></source>
 
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code"
@@ -137,13 +137,13 @@
 				<source>Generic / API Key</source>
 			</trans-unit>
 			<trans-unit id="tab-imprint">
-				<source>Imprint</source>
+				<source>Site Notice</source>
 			</trans-unit>
 			<trans-unit id="tab-privacy">
-				<source>Privacypolicy</source>
+				<source>Privacy Policy</source>
 			</trans-unit>
 			<trans-unit id="tab-social">
-				<source>Privacypolicy for Social-Media-Profiles</source>
+				<source>Privacy Policy for social media appearances</source>
 
 			</trans-unit>
 			<trans-unit id="tab-analytics">
@@ -153,10 +153,10 @@
 				<source>Documentation</source>
 			</trans-unit>
 			<trans-unit id="tab-status">
-				<source>Pluginstate</source>
+				<source>Status</source>
 			</trans-unit>
 			<trans-unit id="tab-imprint-title">
-				<source>Imprint</source>
+				<source>Site Notice</source>
 			</trans-unit>
 			<trans-unit id="apikey-text">
 				<source><![CDATA[Enter your API key here, which you can use for your website in the <a href="" target"_blank".
@@ -172,10 +172,10 @@
 				<source>Synchronise and save all legal texts</source>
 			</trans-unit>
 			<trans-unit id="tab-imprint-text">
-				<source>Select here whether you would like to retrieve the latest version of your imprint from the
+				<source>Select here whether you would like to retrieve the latest version of your site notice from the
 					eRecht24 Project Manager or whether it can be inserted by the eRecht24 Project Manager.
 					or if it can be inserted by the eRecht24 Project Manager, or if you want to maintain your
-					would like to maintain your imprint locally.
+					would like to maintain your site notice locally.
 				</source>
 			</trans-unit>
 			<trans-unit id="local-version">
@@ -194,7 +194,7 @@
 				<source>Local</source>
 			</trans-unit>
 			<trans-unit id="tab-privacy-title">
-				<source>Privacypolicy</source>
+				<source>Privacy Policy</source>
 			</trans-unit>
 			<trans-unit id="tab-privacy-text">
 				<source>Select here whether you would like to retrieve the latest version of your privacy policy from
@@ -204,7 +204,7 @@
 				</source>
 			</trans-unit>
 			<trans-unit id="tab-social-title">
-				<source>Privacypolicy for Social-Media-Profiles</source>
+				<source>Privacy Policy for social media appearances</source>
 			</trans-unit>
 			<trans-unit id="tab-social-text">
 				<source>Select here whether you would like to retrieve the most current version of your privacy policy
@@ -371,7 +371,7 @@
 				<source>No client could be created for the configuration.</source>
 			</trans-unit>
 			<trans-unit id="plugin-title">
-				<source>Insert eRecht24 imprint or privacy policy on this page.</source>
+				<source>Insert eRecht24 site notice or privacy policy on this page.</source>
 			</trans-unit>
 			<trans-unit id="connection_error_detected">
 				<source>Errors were detected when checking the API connection. Please check the Plugin status</source>
@@ -392,7 +392,7 @@
 				<source>Error</source>
 			</trans-unit>
 			<trans-unit id="imprint_imported">
-				<source>Imprint synchronised</source>
+				<source>Site Notice synchronised</source>
 			</trans-unit>
 			<trans-unit id="privacyPolicy_imported">
 				<source>Privacy policy synchronised</source>
@@ -401,19 +401,15 @@
 				<source>Social media privacy policy synchronised</source>
 			</trans-unit>
 			<trans-unit id="analytics-text">
-				<source>You can also generate the complete Google Analytics tracking code incl. code snippet for setting the opt-out cookie via this plugin.
-					opt-out cookie can also be generated via this plugin.
-				</source>
+				<source>You can also generate the complete Google Analytics tracking code including a code snippet for setting the opt-out cookie with this plugin.</source>
 			</trans-unit>
 			<trans-unit id="analytics-hint">
 				<source>Enter your Google Analytics Tracking ID here in the format UA-12345687-1</source>
 			</trans-unit>
 			<trans-unit id="usercentrics-hint">
-				<source>If you use the Usercentrics Consent Management Platform on your website, you can activate this option.
-					activate this option.
-					This means that your Google Analytics source code is initially delivered in a deactivated state and only
-					after the
-					only activated after the user has given their consent to the cookie via the cookie banner.
+				<source>If you use the Usercentrics Consent Management Platform on your website, you should activate this option.
+					With this option activated your Google Analytics source code is initially delivered in a deactivated state.
+					After the user has given their consent to the cookie Google Analytics is activated.
 				</source>
 			</trans-unit>
 			<trans-unit id="flex-auto-detect">
