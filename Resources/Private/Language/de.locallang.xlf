@@ -100,7 +100,7 @@
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed">
-				<target>Tracking-Code gem. Usercentrics einbinden?</target>
+				<target>Tracking-Code gemeinsam mit Usercentrics einbinden?</target>
 			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code">
@@ -144,7 +144,7 @@
 			<trans-unit id="apikey-text">
 				<target><![CDATA[Geben Sie hier Ihren API-Schlüssel ein, welchen Sie für Ihre Webseite
                                 im <a href="https://e-recht24.de/mitglieder/tools/projekt-manager" target="_blank"
-                                       rel="nofollow noreferrer noopener">eRecht24 Projekt Manager für Websites</a>
+                                       rel="nofollow noreferrer noopener">eRecht24 Projekt Manager für Webseiten</a>
                                 erzeugt haben.]]></target>
 			</trans-unit>
 			<trans-unit id="synclabel">
@@ -289,16 +289,16 @@
 				<target>Konfiguration erstellen</target>
 			</trans-unit>
 			<trans-unit id="edit-config-title">
-				<target>Konfigurieren Sie hier die Funktionalität des des Domain Plugins.</target>
+				<target>Konfigurieren Sie hier die Funktionalität des eRecht24 Rechtstexte Plugins.</target>
 			</trans-unit>
 			<trans-unit id="back-to-overview">
-				<target>zurück zur Übersicht</target>
+				<target>Zurück zur Übersicht</target>
 			</trans-unit>
 			<trans-unit id="save">
 				<target>Speichern</target>
 			</trans-unit>
 			<trans-unit id="message-prefix">
-				<target>eRecht24 Extension für TYPO3:</target>
+				<target>eRecht24 Rechtstexte Plugin:</target>
 			</trans-unit>
 			<trans-unit id="update-success">
 				<target>Aktualisierung erfolgreich ausgeführt!</target>
@@ -378,7 +378,7 @@
 				</target>
 			</trans-unit>
 			<trans-unit id="analytics-hint">
-				<target>Geben Sie hier Ihre Google Analytics Tracking ID im Format UA-12345687-1 ein</target>
+				<target>Geben Sie hier Ihre Google Analytics Tracking ID im Format G-XXXXXXX oder UA-12345687-1 ein.</target>
 			</trans-unit>
 			<trans-unit id="usercentrics-hint">
 				<target>Sofern die Usercentrics Consent Management Platform in Ihrer Website nutzen, können Sie diese
