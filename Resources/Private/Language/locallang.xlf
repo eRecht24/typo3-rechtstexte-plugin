@@ -160,9 +160,7 @@
 			</trans-unit>
 			<trans-unit id="apikey-text">
 				<source><![CDATA[Enter your API key here, which you can use for your website in the <a href="" target"_blank".
-                                in the <a href="https://e-recht24.de/mitglieder/tools/projekt-manager" target="_blank"
-                                       rel="nofollow noreferrer noopener">eRecht24 Project Manager for websites</a>.
-                                have created.]]></source>
+                                       rel="nofollow noreferrer noopener">eRecht24 Project Manager for websites</a>.]]></source>
 
 			</trans-unit>
 			<trans-unit id="synclabel">
@@ -320,13 +318,13 @@
 				<source>Configure the functionality of the domain plugin here.</source>
 			</trans-unit>
 			<trans-unit id="back-to-overview">
-				<source>back to overview</source>
+				<source>Back to overview</source>
 			</trans-unit>
 			<trans-unit id="save">
 				<source>Save</source>
 			</trans-unit>
 			<trans-unit id="message-prefix">
-				<source>eRecht24 legaltexts for TYPO3:</source>
+				<source>eRecht24 legal texts for TYPO3:</source>
 			</trans-unit>
 			<trans-unit id="update-success">
 				<source>Update successfully executed!</source>
