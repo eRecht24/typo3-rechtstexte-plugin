@@ -412,6 +412,10 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $apiHandlerResult = $this->apiUtility->handleDomainConfigUpdate($domainConfig, $domainConfig->getApiKey());
         self::handleApiHandlerResults($apiHandlerResult);
 
+        if ($domainConfig->getImprintSource() === null) $domainConfig->setImprintSource(0);
+        if ($domainConfig->getSocialSource() === null) $domainConfig->setSocialSource(0);
+        if ($domainConfig->getPrivacySource() === null) $domainConfig->setPrivacySource(0);
+
         $this->domainConfigRepository->update($domainConfig);
         $this->persistenceManager->persistAll();
 
