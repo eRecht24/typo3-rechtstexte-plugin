@@ -9,7 +9,7 @@
 				<el>
                     <settings.configId>
                         <TCEforms>
-                            <label>Welche eRecht24 Konfiguration soll verwendet werden?</label>
+                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/de.locallang.xlf:flex.configselect</label>
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
@@ -27,7 +27,7 @@
                     </settings.configId>
                     <settings.documentType>
                         <TCEforms>
-                            <label>Welcher Dokumentyp soll angezeigt werden?</label>
+                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/de.locallang.xlf:flex.documenttype</label>
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
@@ -55,7 +55,7 @@
                     </settings.documentType>
                     <settings.documentLanguage>
                         <TCEforms>
-                            <label>In welcher Sprache soll es angezeigt werden?</label>
+                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/de.locallang.xlf:flex.documentlang</label>
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
@@ -79,7 +79,7 @@
                     </settings.documentLanguage>
                     <settings.removeHeadline>
                         <TCEforms>
-                            <label>H1 Überschrift aus Text entfernen?</label>
+                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/de.locallang.xlf:flex.removeheadline</label>
                             <config>
                                 <type>check</type>
                             </config>

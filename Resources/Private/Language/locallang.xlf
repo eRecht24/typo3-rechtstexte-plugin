@@ -421,6 +421,18 @@
 			<trans-unit id="unconfigured-configurations-exist">
 				<source>Siteconfigurations found without eRecht24 connection</source>
 			</trans-unit>
+			<trans-unit id="flex.configselect">
+				<source>Which eRecht24 configuration should be used?</source>
+			</trans-unit>
+			<trans-unit id="flex.documenttype">
+				<source>Which document type should be displayed?</source>
+			</trans-unit>
+			<trans-unit id="flex.documentlang">
+				<source>In which language should it be displayed?</source>
+			</trans-unit>
+			<trans-unit id="flex.removeheadline">
+				<source>Remove H1 heading from text?</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
