@@ -53,6 +53,30 @@
                             </config>
                         </TCEforms>
                     </settings.documentType>
+                    <settings.documentLanguage>
+                        <TCEforms>
+                            <label>In welcher Sprache soll es angezeigt werden?</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <items>
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">Bitte wählen</numIndex>
+                                        <numIndex index="1"></numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">Deutsch</numIndex>
+                                        <numIndex index="1">De</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">English</numIndex>
+                                        <numIndex index="1">En</numIndex>
+                                    </numIndex>
+                                </items>
+                                <eval>required</eval>
+                            </config>
+                        </TCEforms>
+                    </settings.documentLanguage>
                     <settings.removeHeadline>
                         <TCEforms>
                             <label>H1 Überschrift aus Text entfernen?</label>
