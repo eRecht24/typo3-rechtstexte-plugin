@@ -17,6 +17,7 @@ class AnalyticsHeaderData
             /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig */
             $domainConfig = $objectManager->get(\ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository::class)->findOneByDomain((string) $siteConfig->getBase());
 
+            $analytics4Tracking = false;
 
             if($domainConfig !== null) {
 
@@ -24,6 +25,10 @@ class AnalyticsHeaderData
                 $GLOBALS['TSFE']->addCacheTags(['er24_analytics_'.$domainConfig->getUid()]);
 
                 if($domainConfig->getFlagEmbedTracking() === true && $domainConfig->getAnalyticsId() !== '') {
+
+                    if (substr($domainConfig->getAnalyticsId(),0,2) === 'G-') {
+                       $analytics4Tracking = true;
+                    }
 
                     if($domainConfig->getFlagOptOutCode() === true) {
                         $embedCode =
@@ -50,8 +55,7 @@ function gaOptout() {
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag(\'js\', new Date());
-    gtag(\'config\', "'.$domainConfig->getAnalyticsId().'", { \'anonymize_ip\': true });
-</script>';
+    gtag(\'config\', "'.$domainConfig->getAnalyticsId().'"';
                     } else {
                         $embedCode .=
 '<script async src="//www.googletagmanager.com/gtag/js?id='.$domainConfig->getAnalyticsId().'"></script>
@@ -59,14 +63,17 @@ function gaOptout() {
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag(\'js\', new Date());
-    gtag(\'config\', "'.$domainConfig->getAnalyticsId().'", { \'anonymize_ip\': true });
-</script>';
+    gtag(\'config\', "'.$domainConfig->getAnalyticsId().'"';
                     }
 
+                    if (false === $analytics4Tracking) {
+                        $embedCode .= ', { \'anonymize_ip\': true }';
+                    }
+
+                    $embedCode .= ');</script>';
+
                     return $embedCode;
-
                 }
-
             }
         } catch(\Exception $e) {}
     }
