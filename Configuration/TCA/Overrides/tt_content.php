@@ -11,7 +11,8 @@ if(version_compare($typo3Version->getVersion(),'10.4', '<')) {
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
     $vendorPrefix.'Er24Rechtstexte',
     'Main',
-    'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:plugin-title'
+    'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:plugin-title',
+    'er24_rechtstexte-plugin-main'
 );
 
 $pluginSignature = 'er24rechtstexte_main';
