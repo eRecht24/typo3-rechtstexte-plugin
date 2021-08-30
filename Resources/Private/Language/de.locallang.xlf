@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" target-language="de" datatype="plaintext" original="EXT:er24_rechtstexte/Resources/Private/Language/locallang"
+	<file source-language="en" target-language="de" datatype="plaintext"
+		  original="EXT:er24_rechtstexte/Resources/Private/Language/locallang"
 		  date="2020-12-08T13:30:06Z" product-name="er24_rechtstexte">
 		<header/>
 		<body>
@@ -274,7 +275,9 @@
 				<target>Löschen</target>
 			</trans-unit>
 			<trans-unit id="siteconfigs-found">
-				<target>Die folgenden Seitenkonfigurationen wurden in diesem System gefunden, aber noch keiner eRecht24 Konfiguration zugewiesen.</target>
+				<target>Die folgenden Seitenkonfigurationen wurden in diesem System gefunden, aber noch keiner eRecht24
+					Konfiguration zugewiesen.
+				</target>
 			</trans-unit>
 			<trans-unit id="create-title">
 				<target>Neue eRecht24 Konfiguration erstellen</target>
@@ -346,7 +349,9 @@
 				<target>eRecht24 Impressum oder Datenschutzerklärung auf dieser Seite einfügen.</target>
 			</trans-unit>
 			<trans-unit id="connection_error_detected">
-				<target>Bei der Prüfung der API Verbindung wurden Fehler festgestellt. Bitte überprüfen Sie den Pluginstatus</target>
+				<target>Bei der Prüfung der API Verbindung wurden Fehler festgestellt. Bitte überprüfen Sie den
+					Pluginstatus
+				</target>
 			</trans-unit>
 			<trans-unit id="module-loading">
 				<target>Loading</target>
@@ -378,7 +383,8 @@
 				</target>
 			</trans-unit>
 			<trans-unit id="analytics-hint">
-				<target>Geben Sie hier Ihre Google Analytics Tracking ID im Format G-XXXXXXX oder UA-12345687-1 ein.</target>
+				<target>Geben Sie hier Ihre Google Analytics Tracking ID im Format G-XXXXXXX oder UA-12345687-1 ein.
+				</target>
 			</trans-unit>
 			<trans-unit id="usercentrics-hint">
 				<target>Sofern die Usercentrics Consent Management Platform in Ihrer Website nutzen, können Sie diese
@@ -396,6 +402,18 @@
 			</trans-unit>
 			<trans-unit id="unconfigured-configurations-exist">
 				<target>Siteconfigurations ohne eRecht24 Anbindung gefunden</target>
+			</trans-unit>
+			<trans-unit id="flex.configselect">
+				<target>Welche eRecht24 Konfiguration soll verwendet werden?</target>
+			</trans-unit>
+			<trans-unit id="flex.documenttype">
+				<target>Welcher Dokumentyp soll angezeigt werden?</target>
+			</trans-unit>
+			<trans-unit id="flex.documentlang">
+				<target>In welcher Sprache soll es angezeigt werden?</target>
+			</trans-unit>
+			<trans-unit id="flex.removeheadline">
+				<target>H1 Überschrift aus Text entfernen?</target>
 			</trans-unit>
 		</body>
 	</file>

@@ -171,17 +171,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         }
 
 
-        $typo3Version = new \TYPO3\CMS\Core\Information\Typo3Version();
-
-        if(version_compare($typo3Version->getVersion(),'10.4', '<')) {
-            $language = ucFirst($GLOBALS['TSFE']->sys_language_isocode);
-        } else {
-            $language = ucfirst($GLOBALS['TSFE']->getLanguage()->getTwoLetterIsoCode());
-        }
-
-        if ($language !== 'De') {
-            $language = 'En';
-        }
+        $language = $this->settings['documentLanguage'];
 
         switch ($this->settings['documentType']) {
             case 'imprint':

@@ -9,7 +9,7 @@
 				<el>
                     <settings.configId>
                         <TCEforms>
-                            <label>Welche eRecht24 Konfiguration soll verwendet werden?</label>
+                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/de.locallang.xlf:flex.configselect</label>
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
@@ -27,7 +27,7 @@
                     </settings.configId>
                     <settings.documentType>
                         <TCEforms>
-                            <label>Welcher Dokumentyp soll angezeigt werden?</label>
+                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/de.locallang.xlf:flex.documenttype</label>
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
@@ -53,9 +53,33 @@
                             </config>
                         </TCEforms>
                     </settings.documentType>
+                    <settings.documentLanguage>
+                        <TCEforms>
+                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/de.locallang.xlf:flex.documentlang</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <items>
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">Bitte wählen</numIndex>
+                                        <numIndex index="1"></numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">Deutsch</numIndex>
+                                        <numIndex index="1">De</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">English</numIndex>
+                                        <numIndex index="1">En</numIndex>
+                                    </numIndex>
+                                </items>
+                                <eval>required</eval>
+                            </config>
+                        </TCEforms>
+                    </settings.documentLanguage>
                     <settings.removeHeadline>
                         <TCEforms>
-                            <label>H1 Überschrift aus Text entfernen?</label>
+                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/de.locallang.xlf:flex.removeheadline</label>
                             <config>
                                 <type>check</type>
                             </config>

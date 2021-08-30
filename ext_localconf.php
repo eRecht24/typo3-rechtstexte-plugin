@@ -58,8 +58,8 @@ call_user_func(
 
         $iconRegistry->registerIcon(
             'er24_rechtstexte-plugin-main',
-            \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
-            ['source' => 'EXT:er24_rechtstexte/Resources/Public/Icons/Extension.png']
+            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+            ['source' => 'EXT:er24_rechtstexte/Resources/Public/Icons/Extension.svg']
         );
 
         $iconRegistry->registerIcon(

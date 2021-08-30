@@ -28,7 +28,7 @@ call_user_func(
                 $backendController,
                 [
                     'access' => 'user,group',
-                    'icon'   => 'EXT:er24_rechtstexte/Resources/Public/Icons/Extension.png',
+                    'icon'   => 'EXT:er24_rechtstexte/Resources/Public/Icons/Extension.svg',
                     'labels' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_main.xlf',
                 ]
             );
