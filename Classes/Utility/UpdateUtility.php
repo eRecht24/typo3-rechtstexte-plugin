@@ -15,12 +15,7 @@ class UpdateUtility
     /**
      * @var string
      */
-    const REPOSITORY_URL = 'https://git.muensmedia.de/api/v4/projects/333/';
-
-    /**
-     * @var string
-     */
-    const ACCESS_TOKEN = 'ybxPeRrDixBXRuaGY46w';
+    const REPOSITORY_URL = 'https://api.github.com/repos/eRecht24/typo3-rechtstexte-plugin/';
 
     /**
      * @var int|string
@@ -66,14 +61,14 @@ class UpdateUtility
      */
     public function isUpdateAvailable() {
 
-        $apiRes = self::performApiRequest('repository/tags/');
+        $apiRes = self::performApiRequest('tags');
 
         if($apiRes === false) {
             LogUtility::writeErrorLog('API Verbindung zu GIT Repository fehlgeschlagen ' . $this->latestVersion);
             return false;
         }
 
-        $tags = json_decode(self::performApiRequest('repository/tags/'), true);
+        $tags = json_decode($apiRes, true);
         $latest = $this->currentVersion;
         foreach($tags as $tag) {
             if(version_compare($latest, $tag['name'], '<')) {
@@ -105,7 +100,7 @@ class UpdateUtility
         $this->managementService = $objectManager->get(ExtensionManagementService::class);
         $this->fileHandlingUtility = $objectManager->get(FileHandlingUtility::class);
 
-        $apiRes = $this->performApiRequest('repository/archive.zip?sha='.$this->latestVersion);
+        $apiRes = $this->performApiRequest('zipball/'.$this->latestVersion);
 
         if($apiRes === false) {
             LogUtility::writeErrorLog('Selfupdate fehlgeschlagen: cURL Error bei Download von Tag ' . $this->latestVersion);
@@ -177,9 +172,10 @@ class UpdateUtility
     protected function performApiRequest($requestUrl) {
         $ch = curl_init(self::REPOSITORY_URL . $requestUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('PRIVATE-TOKEN: ' . self::ACCESS_TOKEN));
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'eRecht24 Rechtstexte Extension for TYPO3 v' . $this->currentVersion);
         $res = curl_exec($ch);
-        if(curl_getinfo($ch, CURLINFO_RESPONSE_CODE) !== 200) {
+        if (curl_getinfo($ch, CURLINFO_RESPONSE_CODE) !== 200) {
             return false;
         }
         return $res;
