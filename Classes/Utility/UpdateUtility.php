@@ -112,15 +112,9 @@ class UpdateUtility
         fwrite($tempWriter,$apiRes);
         fclose($tempWriter);
 
-        $backupPath = Environment::getVarPath() . '/transient/erecht24backup' . substr(sha1('er24_rechtstexte' . microtime()), 0, 7) . '/';
         $prePathNewVersion = Environment::getVarPath() . '/transient/erecht24update' . substr(sha1('er24_rechtstexte' . microtime()), 0, 7) . '/';
 
         GeneralUtility::mkdir($prePathNewVersion);
-//        GeneralUtility::mkdir($backupPath);
-//        GeneralUtility::copyDirectory(
-//            $this->fileHandlingUtility->getExtensionDir($extensionKey),
-//            $backupPath
-//        );
 
         $zip = new \ZipArchive();
         $zip->open($tempFile);
