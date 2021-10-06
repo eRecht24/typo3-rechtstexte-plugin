@@ -1,0 +1,64 @@
+stages:
+  - packaging
+  - release
+
+include:
+  - project: 'muensmedia-docker/gitlab-ci-recipes'
+    ref: master
+    file: '/compression/.pack-zip-archive.yml'
+  - project: 'muensmedia-docker/gitlab-ci-recipes'
+    ref: master
+    file: '/deployment/.rsync.yml'
+
+"Create zip archive":
+  extends: .pack-zip
+  stage: packaging
+  variables:
+    ZIP_ARCHIVE_PATH: '../.release/'
+    ZIP_ARCHIVE_NAME: er24_rechtstexte-${CI_COMMIT_TAG}
+    ZIP_DESTINATION: ${ZIP_ARCHIVE_PATH}er24_rechtstexte-${CI_COMMIT_TAG}${ZIP_FILE_EXTENSION}
+  before_script:
+    - unlink .editorconfig
+    - unlink .gitlab-ci.yml
+  after_script:
+    - mkdir .release
+    - cp ${ZIP_DESTINATION} .release/
+    - cp ${ZIP_DESTINATION} .release/er24_rechtstexte.zip
+  artifacts:
+    paths:
+      - .release
+  only:
+    - tags
+
+# upload new version to download server
+deploy:rsync:
+  extends: .deploy-rsync
+  stage: release
+  needs:
+    - "Create zip archive"
+  variables:
+    PATH_TO_RSYNCIGNORE: ''
+    FOLDER_TO_SYNC: '.release/'
+    RSYNC_OPTIONS: ''
+  before_script:
+    - ls -la ${FOLDER_TO_SYNC}
+  only:
+    - tags
+
+"Publish new version to TER":
+  stage: release
+  needs:
+    - "Create zip archive"
+  image: composer:2
+  before_script:
+    - composer global require typo3/tailor
+  script:
+    - >
+      if [ -n "$CI_COMMIT_TAG" ] && [ -n "$TYPO3_API_TOKEN" ] && [ -n "$TYPO3_EXTENSION_KEY" ]; then
+        echo -e "Preparing upload of release ${CI_COMMIT_TAG} to TER\n"
+        # Upload
+        echo "Uploading release ${CI_COMMIT_TAG} to TER"
+        /tmp/vendor/bin/tailor ter:publish --artefact=.release/er24_rechtstexte.zip "$CI_COMMIT_TAG" "$TYPO3_EXTENSION_KEY"
+      fi;
+  only:
+    - tags
