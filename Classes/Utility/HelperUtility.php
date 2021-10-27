@@ -7,11 +7,11 @@ class HelperUtility
 
     const PLUGIN_NAME = 'er24_rechtstexte';
 
-    const PLUGIN_VERSION = '1.0.0';
+    const PLUGIN_VERSION = '1.0.14';
 
     const PLUGIN_TEXT_DOMAIN = 'erecht24';
 
-    const API_HOST_URL = 'https://sandbox.api.e-recht24.de';
+    const API_HOST_URL = 'https://api.e-recht24.de';
 
     const REST_NAMESPACE = 'erecht24/v1';
 
