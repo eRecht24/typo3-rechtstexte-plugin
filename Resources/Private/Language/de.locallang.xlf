@@ -144,7 +144,7 @@
 			</trans-unit>
 			<trans-unit id="apikey-text">
 				<target><![CDATA[Geben Sie hier Ihren API-Schlüssel ein, welchen Sie für Ihre Webseite
-                                im <a href="https://e-recht24.de/mitglieder/tools/projekt-manager" target="_blank"
+                                im <a href="%s" target="_blank"
                                        rel="nofollow noreferrer noopener">eRecht24 Projekt Manager für Webseiten</a>
                                 erzeugt haben.]]></target>
 			</trans-unit>

@@ -159,9 +159,7 @@
 				<source>Site Notice</source>
 			</trans-unit>
 			<trans-unit id="apikey-text">
-				<source><![CDATA[Enter your API key here, which you can use for your website in the <a href="" target"_blank".
-                                       rel="nofollow noreferrer noopener">eRecht24 Project Manager for websites</a>.]]></source>
-
+				<source><![CDATA[Enter your API key here, which you can use for your website in the <a href="%s" target="_blank" rel="nofollow noreferrer noopener">eRecht24 Project Manager for websites</a>.]]></source>
 			</trans-unit>
 			<trans-unit id="synclabel">
 				<source>Synchronise</source>
