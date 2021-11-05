@@ -235,6 +235,12 @@
 			<trans-unit id="configuration-errors">
 				<target>Ihre Konfiguration ist fehlerhaft:</target>
 			</trans-unit>
+			<trans-unit id="noclient_exists">
+				<target>Es wurde kein Client an der eRecht24 Rechtstexte-API registriert.</target>
+			</trans-unit>
+			<trans-unit id="noapikey_exists">
+				<target>Es wurde kein API Key für die eRecht24 Rechtstexte-API eingetragen.</target>
+			</trans-unit>
 			<trans-unit id="configuration-is-good">
 				<target>Die API-Schnittstelle ist korrekt konfiguriert.</target>
 			</trans-unit>

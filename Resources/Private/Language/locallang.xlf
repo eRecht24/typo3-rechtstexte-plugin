@@ -253,6 +253,12 @@
 			<trans-unit id="configuration-errors">
 				<source>Your configuration is faulty:</source>
 			</trans-unit>
+			<trans-unit id="noclient_exists">
+				<source>There is no client registered for eRecht24 Rechtstexte API.</source>
+			</trans-unit>
+			<trans-unit id="noapikey_exists">
+				<source>The API key for eRecht24 Rechtstexte API is missing.</source>
+			</trans-unit>
 			<trans-unit id="configuration-is-good">
 				<source>The API interface is configured correctly.</source>
 			</trans-unit>
