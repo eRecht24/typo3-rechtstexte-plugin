@@ -23,7 +23,7 @@
 
                 <div class="form-group">
                     <label for="domain">Domain</label>
-                    <f:form.textfield property="domain" type="url" id="domain" class="form-control" required="1"/>
+                    <f:form.textfield property="domain" type="text" id="domain" class="form-control" pattern="https?:\/\/[\S]+" title="{f:translate(key:'domain-validator')}" required="1"/>
                 </div>
 
                 <div class="form-group">

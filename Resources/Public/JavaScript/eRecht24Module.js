@@ -351,7 +351,7 @@ define(['jquery',
 
         var $selectedOption = $(this).find('option:selected');
 
-        if ($selectedOption.data('domain')) {
+        if ($selectedOption.data('domain') && $selectedOption.data('domain') !== '/') {
           $('#domain').val($selectedOption.data('domain'));
         } else {
           $('#domain').val('');

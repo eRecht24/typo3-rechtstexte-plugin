@@ -302,6 +302,9 @@
 					configuration.
 				</source>
 			</trans-unit>
+			<trans-unit id="domain-validator">
+				<source>Please enter your domain in the following format: https://domain.com or http://domain.com.</source>
+			</trans-unit>
 			<trans-unit id="create-title">
 				<source>Create new eRecht24 configuration</source>
 			</trans-unit>

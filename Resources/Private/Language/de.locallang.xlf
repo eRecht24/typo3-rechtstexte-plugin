@@ -279,6 +279,9 @@
 					Konfiguration zugewiesen.
 				</target>
 			</trans-unit>
+			<trans-unit id="domain-validator">
+				<target>Bitte geben Sie Ihre Domain im Format https://domain.de oder http://domain.de an.</target>
+			</trans-unit>
 			<trans-unit id="create-title">
 				<target>Neue eRecht24 Konfiguration erstellen</target>
 			</trans-unit>
