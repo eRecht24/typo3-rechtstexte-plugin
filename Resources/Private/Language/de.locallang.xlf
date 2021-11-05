@@ -107,6 +107,16 @@
 						resname="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code">
 				<target>Optout Code einbinden?</target>
 			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.opt_out_code_help"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.opt_out_code_help">
+				<source><![CDATA[Wenn Sie <b>entgegen unserer Empfehlung</b> keine aktive Einwilligung für die Nutzung von Google Analytics einholen, sollten Sie zumindest die Möglichkeit zum sogenannten Opt-Out geben. Aktivieren Sie dazu diese Option und gehen Sie wie folgt vor:
+                                     <ol>
+                                         <li>Fügen Sie unterhalb Ihrer Datenschutzerklärung folgenden Text ein: <code>Google Analytics deaktivieren</code></li>
+                                         <li>Fügen Sie unterhalb dieses Texts folgenden HTML-Code ein: <code>&lt;button onclick=&quot;gaOptout();&quot;&gt;Google Analytics deaktivieren&lt;/button&gt;</code></li>
+                                         <li>WordPress entfernt unter Umständen die Javascript-Funktion. Prüfen Sie auf Ihrer Website durch Anklicken des Opt-Out-Buttons, ob der Cookie gesetzt wird. Funktioniert dieser Button nicht und wird somit nach dem Klick der Opt-Out-Cookie nicht gesetzt, ist Ihre Google-Analytics-Einbindung ohne Verwendung eines Consent-Tools <b>nicht rechtssicher</b>!</li>
+									 </ol>
+				]]></source>
+			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.root_pid"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.root_pid">
 				<target>Root Pid</target>
