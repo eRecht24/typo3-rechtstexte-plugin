@@ -15,7 +15,11 @@ Dafür gehen Sie wie folgt vor:
 2. Klicken Sie dort neben dem Projektnamen auf das Symbol Einstellungen (Zahnradsymbol).
 3. Klicken Sie auf die Schaltfläche _Neuen API-Schlüssel erzeugen_.
 4. Kopieren Sie den API-Schlüssel in die Zwischenablage.
-5. Wechseln Sie im TYPO3-Backend in das eRecht24 Rechtstexte Plugin und fügen Sie den API-Schlüssel in das zugehörige Feld unter dem Reiter _API-Schlüssel_. Tragen Sie unter dem Reiter _Domain_ die URL Ihrer Webseite ein und wählen Sie die jeweilige _Site-Konfiguration_ aus. Klicken Sie auf _Konfiguration erstellen_, um die Einstellung zu übernehmen.
+5. Wechseln Sie im TYPO3-Backend in das eRecht24 Rechtstexte Plugin.
+6. Fügen Sie den API-Schlüssel in das zugehörige Feld unter dem Reiter API-Schlüssel.
+7. Tragen Sie unter dem Reiter Domain die URL Ihrer Webseite ein und wählen Sie die jeweilige Site-Konfiguration aus.
+8. Klicken Sie auf Konfiguration erstellen, um die Einstellung zu übernehmen.
+9. Wollen Sie das Rechtstexte Plugin mit weiteren Webseiten in Ihrer TYPO3 Installation verwenden, können Sie weitere Konfigurationen anlegen, indem Sie diese Schritte wiederholen.
 
 **Ihr eRecht24 Rechtstexte Plugin kann ab sofort mit dem eRecht24 Projekt Manager kommunizieren.**
 
