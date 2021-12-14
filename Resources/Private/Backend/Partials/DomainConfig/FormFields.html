@@ -99,19 +99,34 @@
                             <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.imprint_source"/>
                         </label>
                         <div class="col-sm-10">
-                            <div class="d-flex align-items-center">
-                                <div class="pr-2"><span class="label-left"><f:translate key="local-version" /></span></div>
-                                <div class="px-2">
-                                    <div class="form-check form-switch checkbox checkbox-type-toggle">
-                                        <f:form.checkbox property="imprintSource" id="imprintSource" value="1"
-                                                         class="checkbox-input form-check-input"/>
-                                        <label class="checkbox-label" for="imprintSource">
-                                            <span class="checkbox-label-text"> </span>
-                                        </label>
+                            <f:if condition="{t3version} >= 11000000">
+                                <f:then>
+                                    <div class="d-flex align-items-center">
+                                        <div class="pr-2"><span class="label-left"><f:translate key="local-version" /></span></div>
+                                        <div class="px-2">
+                                            <div class="form-check form-switch">
+                                                <f:form.checkbox property="imprintSource" id="imprintSource" value="1"
+                                                                 class="form-check-input"/>
+                                                <label class="checkbox-label" for="imprintSource">
+                                                    <span class="checkbox-label-text"> </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="pl-2"><span class="label-right"><f:translate key="remote-version" /></span></div>
                                     </div>
-                                </div>
-                                <div class="pl-2"><span class="label-right"><f:translate key="remote-version" /></span></div>
-                            </div>
+                                </f:then>
+                                <f:else>
+                                    <div class="checkbox checkbox-type-toggle">
+                                        <span class="label-left"><f:translate key="local-version" /></span>
+                                        <f:form.checkbox property="imprintSource" id="imprintSource" value="1"
+                                                         class="checkbox-input"/>
+                                        <label class="checkbox-label" for="imprintSource">
+                                            <span class="checkbox-label-text">&nbsp;</span>
+                                        </label>
+                                        <span class="label-right"><f:translate key="remote-version" /></span>
+                                    </div>
+                                </f:else>
+                            </f:if>
                         </div>
                     </div>
 
@@ -204,19 +219,34 @@
                             <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.privacy_source"/>
                         </label>
                         <div class="col-sm-10">
-                            <div class="d-flex align-items-center">
-                                <div class="pr-2"><span class="label-left"><f:translate key="local-version" /></span></div>
-                                <div class="px-2">
-                                    <div class="form-check form-switch checkbox checkbox-type-toggle">
-                                        <f:form.checkbox property="privacySource" id="privacySource" value="1"
-                                                         class="checkbox-input form-check-input"/>
-                                        <label class="checkbox-label" for="privacySource">
-                                            <span class="checkbox-label-text"> </span>
-                                        </label>
+                            <f:if condition="{t3version} >= 11000000">
+                                <f:then>
+                                    <div class="d-flex align-items-center">
+                                        <div class="pr-2"><span class="label-left"><f:translate key="local-version" /></span></div>
+                                        <div class="px-2">
+                                            <div class="form-check form-switch">
+                                                <f:form.checkbox property="privacySource" id="privacySource" value="1"
+                                                                 class="form-check-input"/>
+                                                <label class="checkbox-label" for="privacySource">
+                                                    <span class="checkbox-label-text"> </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="pl-2"><span class="label-right"><f:translate key="remote-version" /></span></div>
                                     </div>
-                                </div>
-                                <div class="pl-2"><span class="label-right"><f:translate key="remote-version" /></span></div>
-                            </div>
+                                </f:then>
+                                <f:else>
+                                    <div class="checkbox checkbox-type-toggle">
+                                        <span class="label-left"><f:translate key="local-version" /></span>
+                                        <f:form.checkbox property="privacySource" id="privacySource" value="1"
+                                                         class="checkbox-input"/>
+                                        <label class="checkbox-label" for="privacySource">
+                                            <span class="checkbox-label-text">&nbsp;</span>
+                                        </label>
+                                        <span class="label-right"><f:translate key="remote-version" /></span>
+                                    </div>
+                                </f:else>
+                            </f:if>
                         </div>
                     </div>
 
@@ -309,19 +339,34 @@
                             <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.social_source"/>
                         </label>
                         <div class="col-sm-10">
-                            <div class="d-flex align-items-center">
-                                <div class="pr-2"><span class="label-left"><f:translate key="local-version" /></span></div>
-                                <div class="px-2">
-                                    <div class="form-check form-switch checkbox checkbox-type-toggle">
-                                        <f:form.checkbox property="socialSource" id="socialSource" value="1"
-                                                         class="checkbox-input form-check-input"/>
-                                        <label class="checkbox-label" for="socialSource">
-                                            <span class="checkbox-label-text"> </span>
-                                        </label>
+                            <f:if condition="{t3version} >= 11000000">
+                                <f:then>
+                                    <div class="d-flex align-items-center">
+                                        <div class="pr-2"><span class="label-left"><f:translate key="local-version" /></span></div>
+                                        <div class="px-2">
+                                            <div class="form-check form-switch">
+                                                <f:form.checkbox property="socialSource" id="socialSource" value="1"
+                                                                 class="form-check-input"/>
+                                                <label class="checkbox-label" for="socialSource">
+                                                    <span class="checkbox-label-text"> </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="pl-2"><span class="label-right"><f:translate key="remote-version" /></span></div>
                                     </div>
-                                </div>
-                                <div class="pl-2"><span class="label-right"><f:translate key="remote-version" /></span></div>
-                            </div>
+                                </f:then>
+                                <f:else>
+                                    <div class="checkbox checkbox-type-toggle">
+                                        <span class="label-left"><f:translate key="local-version" /></span>
+                                        <f:form.checkbox property="socialSource" id="socialSource" value="1"
+                                                         class="checkbox-input"/>
+                                        <label class="checkbox-label" for="socialSource">
+                                            <span class="checkbox-label-text">&nbsp;</span>
+                                        </label>
+                                        <span class="label-right"><f:translate key="remote-version" /></span>
+                                    </div>
+                                </f:else>
+                            </f:if>
                         </div>
                     </div>
 
@@ -423,13 +468,25 @@
                             <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_embed_tracking"/>
                         </label>
                         <div class="col-sm-10">
-                            <div class="form-check form-switch checkbox checkbox-type-toggle">
-                                <f:form.checkbox property="flagEmbedTracking" id="flagEmbedTracking" value="1"
-                                                 class="checkbox-input form-check-input"/>
-                                <label class="checkbox-label" for="flagEmbedTracking">
-                                    <span class="checkbox-label-text"> </span>
-                                </label>
-                            </div>
+                            <f:if condition="{t3version} >= 11000000">
+                                <f:then>
+                                    <div class="form-check form-switch">
+                                        <f:form.checkbox property="flagEmbedTracking" id="flagEmbedTracking" value="1"
+                                                         class="form-check-input"/>
+                                        <label class="checkbox-label" for="flagEmbedTracking">
+                                            <span class="checkbox-label-text"> </span>
+                                        </label>
+                                    </div>
+                                </f:then>
+                                <f:else>
+                                    <div class="checkbox checkbox-type-toggle">
+                                        <f:form.checkbox property="flagEmbedTracking" id="flagEmbedTracking" value="1" class="checkbox-input"/>
+                                        <label class="checkbox-label" for="flagEmbedTracking">
+                                            <span class="checkbox-label-text">&nbsp;</span>
+                                        </label>
+                                    </div>
+                                </f:else>
+                            </f:if>
                         </div>
                     </div>
 
@@ -438,13 +495,25 @@
                             <f:format.raw><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_user_centrics_embed"/></f:format.raw>
                         </label>
                         <div class="col-sm-10">
-                            <div class="form-check form-switch checkbox checkbox-type-toggle">
-                                <f:form.checkbox property="flagUserCentricsEmbed" id="flagUserCentricsEmbed" value="1"
-                                                 class="checkbox-input form-check-input"/>
-                                <label class="checkbox-label" for="flagUserCentricsEmbed">
-                                    <span class="checkbox-label-text"> </span>
-                                </label>
-                            </div>
+                            <f:if condition="{t3version} >= 11000000">
+                                <f:then>
+                                    <div class="form-check form-switch">
+                                        <f:form.checkbox property="flagUserCentricsEmbed" id="flagUserCentricsEmbed" value="1"
+                                                         class="form-check-input"/>
+                                        <label class="checkbox-label" for="flagUserCentricsEmbed">
+                                            <span class="checkbox-label-text"> </span>
+                                        </label>
+                                    </div>
+                                </f:then>
+                                <f:else>
+                                    <div class="checkbox checkbox-type-toggle">
+                                        <f:form.checkbox property="flagUserCentricsEmbed" id="flagUserCentricsEmbed" value="1" class="checkbox-input"/>
+                                        <label class="checkbox-label" for="flagUserCentricsEmbed">
+                                            <span class="checkbox-label-text">&nbsp;</span>
+                                        </label>
+                                    </div>
+                                </f:else>
+                            </f:if>
                              <p>
                                 <f:translate key="usercentrics-hint" />
                             </p>
@@ -455,13 +524,25 @@
                             <f:translate key="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code"/>
                         </label>
                         <div class="col-sm-10">
-                            <div class="form-check form-switch checkbox checkbox-type-toggle">
-                                <f:form.checkbox property="flagOptOutCode" id="flagOptOutCode" value="1"
-                                                 class="checkbox-input form-check-input"/>
-                                <label class="checkbox-label" for="flagOptOutCode">
-                                    <span class="checkbox-label-text"> </span>
-                                </label>
-                            </div>
+                            <f:if condition="{t3version} >= 11000000">
+                                <f:then>
+                                    <div class="form-check form-switch">
+                                        <f:form.checkbox property="flagOptOutCode" id="flagOptOutCode" value="1"
+                                                         class="form-check-input"/>
+                                        <label class="checkbox-label" for="flagOptOutCode">
+                                            <span class="checkbox-label-text"> </span>
+                                        </label>
+                                    </div>
+                                </f:then>
+                                <f:else>
+                                    <div class="checkbox checkbox-type-toggle">
+                                        <f:form.checkbox property="flagOptOutCode" id="flagOptOutCode" value="1" class="checkbox-input"/>
+                                        <label class="checkbox-label" for="flagOptOutCode">
+                                            <span class="checkbox-label-text">&nbsp;</span>
+                                        </label>
+                                    </div>
+                                </f:else>
+                            </f:if>
                             <div class="description" style="margin-top: 10px"><f:format.raw><f:translate key="tx_er24rechtstexte_domain_model_domainconfig.opt_out_code_help"/></f:format.raw></div>
                         </div>
                     </div>
