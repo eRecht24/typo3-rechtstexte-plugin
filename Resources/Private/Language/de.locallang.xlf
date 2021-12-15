@@ -434,6 +434,9 @@
 			<trans-unit id="flex.removeheadline">
 				<target>H1 Überschrift aus Text entfernen?</target>
 			</trans-unit>
+			<trans-unit id="flex.pleaseselect">
+				<target>Bitte wählen</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

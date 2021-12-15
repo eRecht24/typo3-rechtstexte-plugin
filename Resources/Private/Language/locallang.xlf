@@ -447,6 +447,9 @@
 			<trans-unit id="flex.removeheadline">
 				<source>Remove H1 heading from text?</source>
 			</trans-unit>
+			<trans-unit id="flex.pleaseselect">
+				<source>Please select</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -9,13 +9,13 @@
 				<el>
                     <settings.configId>
                         <TCEforms>
-                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/de.locallang.xlf:flex.configselect</label>
+                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.configselect</label>
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
                                 <items>
                                     <numIndex index="0" type="array">
-                                        <numIndex index="0">Bitte wählen</numIndex>
+                                        <numIndex index="0">LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.pleaseselect</numIndex>
                                         <numIndex index="1"></numIndex>
                                     </numIndex>
                                 </items>
@@ -27,13 +27,13 @@
                     </settings.configId>
                     <settings.documentType>
                         <TCEforms>
-                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/de.locallang.xlf:flex.documenttype</label>
+                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.documenttype</label>
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
                                 <items>
                                     <numIndex index="0" type="array">
-                                        <numIndex index="0">Bitte wählen</numIndex>
+                                        <numIndex index="0">LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.pleaseselect</numIndex>
                                         <numIndex index="1"></numIndex>
                                     </numIndex>
                                     <numIndex index="1" type="array">
@@ -55,13 +55,13 @@
                     </settings.documentType>
                     <settings.documentLanguage>
                         <TCEforms>
-                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/de.locallang.xlf:flex.documentlang</label>
+                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.documentlang</label>
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
                                 <items>
                                     <numIndex index="0" type="array">
-                                        <numIndex index="0">Bitte wählen</numIndex>
+                                        <numIndex index="0">LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.pleaseselect</numIndex>
                                         <numIndex index="1"></numIndex>
                                     </numIndex>
                                     <numIndex index="1" type="array">
@@ -79,7 +79,7 @@
                     </settings.documentLanguage>
                     <settings.removeHeadline>
                         <TCEforms>
-                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/de.locallang.xlf:flex.removeheadline</label>
+                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.removeheadline</label>
                             <config>
                                 <type>check</type>
                             </config>
