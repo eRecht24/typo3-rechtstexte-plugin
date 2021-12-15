@@ -7,6 +7,7 @@ namespace ERecht24\Er24Rechtstexte\Controller;
 use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /***
@@ -396,7 +397,8 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             'configErrorMessages' => $configErrorMessages,
             'curlError' => $curlError,
             'debugInformations' => $debugInformations,
-            'documentation' => $documentation
+            'documentation' => $documentation,
+            't3version' => VersionNumberUtility::convertVersionNumberToInteger( VersionNumberUtility::getNumericTypo3Version() )
         ]);
     }
 
