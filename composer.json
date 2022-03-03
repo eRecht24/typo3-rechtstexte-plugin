@@ -12,7 +12,6 @@
         }
     },
     "replace": {
-        "erecht24/er24-rechtstexte": "self.version",
         "typo3-ter/er24_rechtstexte": "self.version"
     },
 	"extra": {
