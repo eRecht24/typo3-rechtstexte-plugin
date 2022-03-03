@@ -38,7 +38,8 @@ _**Notice**: Synchronize your data in the future after each change of the imprin
 1. Open the editing view of your page, in which the imprint should be displayed in the future.
 2. Click on the _+ Inthalt_ button and select the eRecht24 legal texts item under the _Plug-Ins_ tab.
 3. In the dialog that appears, select _Imprint_ from the drop-down list under the _Plug-In_ tab for "_Which document type should be displayed?_" and click on it.
-4. Save your page.
+4. Under „_Which language should it be displayed in?_“, select the desired display language.
+5. Save your page.
 
 _**Notice**: The imprint is created in the eRecht24 Project Manager with the heading "Imprint". If your page also has the heading "Imprint", this could lead to duplication. In this case, activate the option "Remove H1 heading from text" in the plug-in menu under step 3. Then the heading will be removed from the imprint text in the display._
 
@@ -51,7 +52,7 @@ To retrieve your privacy policy, please proceed as described under the section _
 
 ### Integrating the privacy policy into a page
 
-To integrate your privacy policy, please proceed as described under the section _Imprint_.
+To integrate your privacy policy, please proceed as described under the section _Imprint_. Under „_Which document type should be displayed?_“, select the option _privacy policy_.
 
 _**Notice**: Always include the imprint and privacy policy on separate pages, as this is required by law. Make both pages accessible by link from every subpage of the website._
 
@@ -64,7 +65,7 @@ To retrieve your privacy policy for social media profiles, please proceed as des
 
 ### Integrating the privacy policy for social media profiles into a page
 
-To integrate your privacy policy for social media profiles, please proceed as described under the section _Imprint_.
+To integrate your privacy policy for social media profiles, please proceed as described under the section _Imprint_. Under „_Which document type should be displayed?_“, select the option _privacy policy for social media profiles_.
 
 _**Important**: If you link to your privacy policy page from your social media profile, please add the anchor point #socialmediaprofile at the end of the URL after copying the URL to your privacy policy into your social media profile. This way, the page view will immediately jump to the passage for the social media profiles after the link is called up._
 

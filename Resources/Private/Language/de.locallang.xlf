@@ -107,6 +107,15 @@
 						resname="tx_er24rechtstexte_domain_model_domainconfig.flag_opt_out_code">
 				<target>Optout Code einbinden?</target>
 			</trans-unit>
+			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.opt_out_code_help"
+						resname="tx_er24rechtstexte_domain_model_domainconfig.opt_out_code_help">
+				<target><![CDATA[Wenn Sie <b>entgegen unserer Empfehlung</b> keine aktive Einwilligung für die Nutzung von Google Analytics einholen, sollten Sie zumindest die Möglichkeit zum sogenannten Opt-Out geben. Aktivieren Sie dazu diese Option und gehen Sie wie folgt vor:
+                                     <ol>
+                                         <li>Fügen Sie unterhalb Ihrer Datenschutzerklärung folgenden Text ein: <code>Google Analytics deaktivieren</code></li>
+                                         <li>Fügen Sie unterhalb dieses Texts folgenden HTML-Code ein: <code>&lt;button onclick=&quot;gaOptout();&quot;&gt;Google Analytics deaktivieren&lt;/button&gt;</code></li>
+									 </ol>
+				]]></target>
+			</trans-unit>
 			<trans-unit id="tx_er24rechtstexte_domain_model_domainconfig.root_pid"
 						resname="tx_er24rechtstexte_domain_model_domainconfig.root_pid">
 				<target>Root Pid</target>
@@ -144,7 +153,7 @@
 			</trans-unit>
 			<trans-unit id="apikey-text">
 				<target><![CDATA[Geben Sie hier Ihren API-Schlüssel ein, welchen Sie für Ihre Webseite
-                                im <a href="https://e-recht24.de/mitglieder/tools/projekt-manager" target="_blank"
+                                im <a href="%s" target="_blank"
                                        rel="nofollow noreferrer noopener">eRecht24 Projekt Manager für Webseiten</a>
                                 erzeugt haben.]]></target>
 			</trans-unit>
@@ -225,6 +234,12 @@
 			<trans-unit id="configuration-errors">
 				<target>Ihre Konfiguration ist fehlerhaft:</target>
 			</trans-unit>
+			<trans-unit id="noclient_exists">
+				<target>Es wurde kein Client an der eRecht24 Rechtstexte-API registriert.</target>
+			</trans-unit>
+			<trans-unit id="noapikey_exists">
+				<target>Es wurde kein API Key für die eRecht24 Rechtstexte-API eingetragen.</target>
+			</trans-unit>
 			<trans-unit id="configuration-is-good">
 				<target>Die API-Schnittstelle ist korrekt konfiguriert.</target>
 			</trans-unit>
@@ -278,6 +293,9 @@
 				<target>Die folgenden Seitenkonfigurationen wurden in diesem System gefunden, aber noch keiner eRecht24
 					Konfiguration zugewiesen.
 				</target>
+			</trans-unit>
+			<trans-unit id="domain-validator">
+				<target>Bitte geben Sie Ihre Domain im Format https://domain.de oder http://domain.de an.</target>
 			</trans-unit>
 			<trans-unit id="create-title">
 				<target>Neue eRecht24 Konfiguration erstellen</target>
@@ -349,9 +367,7 @@
 				<target>eRecht24 Impressum oder Datenschutzerklärung auf dieser Seite einfügen.</target>
 			</trans-unit>
 			<trans-unit id="connection_error_detected">
-				<target>Bei der Prüfung der API Verbindung wurden Fehler festgestellt. Bitte überprüfen Sie den
-					Pluginstatus
-				</target>
+				<target>Bei der Prüfung der API Verbindung wurden Fehler festgestellt. Bitte überprüfen Sie den	Pluginstatus.</target>
 			</trans-unit>
 			<trans-unit id="module-loading">
 				<target>Loading</target>
@@ -401,7 +417,7 @@
 				<target>Aktualisierung verfügbar</target>
 			</trans-unit>
 			<trans-unit id="unconfigured-configurations-exist">
-				<target>Siteconfigurations ohne eRecht24 Anbindung gefunden</target>
+				<target>Seitenkonfigurationen ohne eRecht24 Anbindung gefunden</target>
 			</trans-unit>
 			<trans-unit id="flex.configselect">
 				<target>Welche eRecht24 Konfiguration soll verwendet werden?</target>
@@ -414,6 +430,9 @@
 			</trans-unit>
 			<trans-unit id="flex.removeheadline">
 				<target>H1 Überschrift aus Text entfernen?</target>
+			</trans-unit>
+			<trans-unit id="flex.pleaseselect">
+				<target>Bitte wählen</target>
 			</trans-unit>
 		</body>
 	</file>

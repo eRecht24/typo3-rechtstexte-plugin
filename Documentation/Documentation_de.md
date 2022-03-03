@@ -38,7 +38,8 @@ _**Hinweis**: Synchronisieren Sie ihre Daten künftig nach jeder Änderung des I
 1. Rufen Sie die Bearbeitungsansicht Ihrer Seite auf, in welchem das Impressum künftig angezeigt werden soll.
 2. Klicken Sie auf den Button _+ Inthalt_ und wählen Sie unter dem Reiter _Plug-Ins_ den Punkt eRecht24 Rechtstexte aus.
 3. Wählen Sie in dem angezeigten Dialog unter dem Reiter _Plug-In_ bei „_Welcher Dokumenttyp soll angezeigt werden?_“ in der Auswahlliste den Eintrag _Impressum_ aus und klicken Sie darauf.
-4. Speichern Sie Ihre Seite.
+4. Wählen Sie unter „_In welcher Sprache soll es angezeigt werden?_“ die gewünschte Anzeigesprache aus.
+5. Speichern Sie Ihre Seite.
 
 _**Hinweis**: Das Impressum wird im eRecht24 Projekt Manager mit der Überschrift „Impressum“ erstellt. Sofern Ihre Seite ebenfalls die Überschrift „Impressum“ hat, könnte es hier zu einer Dopplung kommen. In diesem Fall aktivieren Sie die Option „H1 Überschrift aus Text entfernen“ im Plug-In Menü unter Schritt 3. Dann wird die Überschrift aus dem Impressumtext in der Anzeige entfernt._
 
@@ -51,7 +52,7 @@ Zum Abrufen Ihrer Datenschutzerklärung gehen Sie bitte vor unter dem Punkt _Imp
 
 ### Integrieren der Datenschutzerklärung in eine Seite
 
-Zum Integrieren Ihrer Datenschutzerklärung gehen Sie bitte vor unter dem Punkt _Impressum_ beschrieben.
+Zum Integrieren Ihrer Datenschutzerklärung gehen Sie bitte vor unter dem Punkt _Impressum_ beschrieben. Wählen Sie unter dem Punkt „_Welcher Dokumenttyp soll angezeigt werden?_“ die Option Datenschutzerklärung aus.
 
 _**Hinweis**: Fügen Sie Impressum und Datenschutzerklärung immer auf separaten Seiten ein, da der Gesetzgeber dies so verlangt. Machen Sie beide Seiten von jeder Unterseite der Website aus per Link erreichbar._
 
@@ -64,7 +65,7 @@ Zum Abrufen Ihrer Social-Media-Datenschutzerklärung gehen Sie bitte vor unter d
 
 ### Integrieren der Datenschutzerklärung in eine Seite für Ihre Social-Media-Profile
 
-Zum Integrieren Ihrer Social-Media-Datenschutzerklärung gehen Sie bitte vor unter dem Punkt _Impressum_ beschrieben.
+Zum Integrieren Ihrer Social-Media-Datenschutzerklärung gehen Sie bitte vor unter dem Punkt _Impressum_ beschrieben. Wählen Sie unter dem Punkt „_Welcher Dokumenttyp soll angezeigt werden?_“ die Option _Datenschutzerklärung für Ihre Social-Media-Profile_ aus.
 
 _**Wichtig**: Wenn Sie aus Ihrem Social-Media-Profil auf die Seite Ihrer Datenschutzerklärung verlinken, fügen Sie bitte nach dem Kopieren der URL zu Ihrer Datenschutzerklärung in Ihr Social-Media-Profil am Ende der URL zusätzlich den Ankerpunkt #socialmediaprofile an. So springt die Seitenansicht nach dem Aufrufen des Links gleich zum Passus für die Social-Media-Profile._
 
