@@ -21,5 +21,10 @@ Download and install the [extension](https://extensions.typo3.org/extension/er24
 Please use the following manual for initial configuration:
 https://www.e-recht24.de/mitglieder/tools/erecht24-rechtstexte-plugin/typo3/
 
+If you want to use the mail bot spam protection, you have to put the following code in your config:
+```typoscript
+config.spamProtectEmailAddresses = ascii
+```
+
 ## Contribute
 **Pull Requests** are welcome! Please don't forget to add an issue and connect it to your pull requests. This is very helpful to understand what kind of issue the PR is going to solve.

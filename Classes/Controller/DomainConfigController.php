@@ -198,15 +198,19 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 $outputText = substr($outputText,strpos($outputText,'</h1>')+5);
             }
 
-            // replace emails with contao spambot safe links
-            // try to get it working with not normalized domain names
-            // please use idn syntax: https://de.wikipedia.org/wiki/Internationalisierter_Domainname
-            $mailRegex = "/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+.[a-zA-Z])/";
-            preg_match_all($mailRegex, $outputText, $matches);
+            // check if outputText isn't empty
+            if (strlen(trim($outputText)) > 0) {
+                // replace emails with TYPO3 spambot safe links
+                // try to get it working with not normalized domain names
+                // please use idn syntax: https://de.wikipedia.org/wiki/Internationalisierter_Domainname
+                $mailRegex = "/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+.[a-zA-Z])/";
+                preg_match_all($mailRegex, $outputText, $matches);
 
-            foreach ($matches[0] as $match) {
-                $outputText = str_replace($match, $this->createEmailLink($match), $outputText);
+                foreach ($matches[0] as $match) {
+                    $outputText = str_replace($match, $this->createEmailLink($match), $outputText);
+                }
             }
+
             $GLOBALS['TSFE']->addCacheTags(['er24_document_'.$domainConfig->getUid()]);
 
             $this->view->assignMultiple([
