@@ -4,11 +4,15 @@ declare(strict_types=1);
 namespace ERecht24\Er24Rechtstexte\Controller;
 
 
+use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Frontend\Typolink\LinkResultFactory;
 
 /***
  *
@@ -194,6 +198,15 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 $outputText = substr($outputText,strpos($outputText,'</h1>')+5);
             }
 
+            // replace emails with contao spambot safe links
+            // try to get it working with not normalized domain names
+            // please use idn syntax: https://de.wikipedia.org/wiki/Internationalisierter_Domainname
+            $mailRegex = "/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+.[a-zA-Z])/";
+            preg_match_all($mailRegex, $outputText, $matches);
+
+            foreach ($matches[0] as $match) {
+                $outputText = str_replace($match, $this->createEmailLink($match), $outputText);
+            }
             $GLOBALS['TSFE']->addCacheTags(['er24_document_'.$domainConfig->getUid()]);
 
             $this->view->assignMultiple([
@@ -203,6 +216,27 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             $this->addFlashMessage(LocalizationUtility::translate('document-not-found', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
         }
 
+    }
+
+    private function createEmailLink(string $email) {
+        $linkHref = 'mailto:' . $email;
+        $linkText = htmlspecialchars($email);
+        if (ApplicationType::fromRequest($this->request)->isFrontend()) {
+            /** @var TypoScriptFrontendController $frontend */
+            $frontend = $GLOBALS['TSFE'];
+            // passing HTML encoded link text
+            $frontend->cObj->typoLink($linkText, ['parameter' => $linkHref]);
+            $linkResult = $frontend->cObj->lastTypoLinkResult;
+            if ($linkResult) {
+                $escapeSpecialCharacters = false;
+                $linkHref = $linkResult->getUrl();
+                $linkText = (string)$linkResult->getLinkText();
+                $attributes = $linkResult->getAttributes();
+                unset($attributes['href']);
+            }
+        }
+
+        return "<a href='" . $linkHref . "'>". $linkText."</a>";
     }
 
     /**
