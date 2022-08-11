@@ -80,12 +80,13 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     /**
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
-    public function performUpdateAction() {
+    public function performUpdateAction()
+    {
         $updateUtility = new \ERecht24\Er24Rechtstexte\Utility\UpdateUtility();
-        if(true === $updateUtility->performSelfUpdate()) {
-            $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . LocalizationUtility::translate('update-success', $this->extensionName) , '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        if (true === $updateUtility->performSelfUpdate()) {
+            $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . LocalizationUtility::translate('update-success', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         } else {
-            $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . LocalizationUtility::translate('update-failed', $this->extensionName) , '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+            $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . LocalizationUtility::translate('update-failed', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
         }
         $this->redirect('list');
     }
@@ -194,8 +195,8 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         if (method_exists($domainConfig, $getterFunctionName)) {
             $outputText = $domainConfig->$getterFunctionName();
 
-            if(true === (bool) $this->settings['removeHeadline'] && strpos($outputText,'</h1>') !== false) {
-                $outputText = substr($outputText,strpos($outputText,'</h1>')+5);
+            if (true === (bool)$this->settings['removeHeadline'] && strpos($outputText, '</h1>') !== false) {
+                $outputText = substr($outputText, strpos($outputText, '</h1>') + 5);
             }
 
             // check if outputText isn't empty
@@ -211,7 +212,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 }
             }
 
-            $GLOBALS['TSFE']->addCacheTags(['er24_document_'.$domainConfig->getUid()]);
+            $GLOBALS['TSFE']->addCacheTags(['er24_document_' . $domainConfig->getUid()]);
 
             $this->view->assignMultiple([
                 'outputText' => $outputText
@@ -222,7 +223,8 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
     }
 
-    private function createEmailLink(string $email) {
+    private function createEmailLink(string $email)
+    {
         $linkHref = 'mailto:' . $email;
         $linkText = htmlspecialchars($email);
         if (ApplicationType::fromRequest($this->request)->isFrontend()) {
@@ -240,7 +242,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             }
         }
 
-        return "<a href='" . $linkHref . "'>". $linkText."</a>";
+        return "<a href='" . $linkHref . "'>" . $linkText . "</a>";
     }
 
     /**
@@ -274,7 +276,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         // Remove already used Siteconfigs
         /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig */
         foreach ($allDomainConfigs as $domainConfig) {
-            if(true === array_key_exists($domainConfig->getSiteConfigName(), $allSites)) {
+            if (true === array_key_exists($domainConfig->getSiteConfigName(), $allSites)) {
                 unset($allSites[$domainConfig->getSiteConfigName()]);
             }
         }
@@ -354,10 +356,10 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
         $updateUtility = new \ERecht24\Er24Rechtstexte\Utility\UpdateUtility();
 
-        if($domainConfig->getClientId() !== '') {
+        if ($domainConfig->getClientId() !== '') {
             $client = new \ERecht24\Er24Rechtstexte\Api\Client($domainConfig->getApiKey(), $domainConfig->getDomain());
-            $apiResponse = $client->testPushPing((int) $domainConfig->getClientId());
-            if($apiResponse->isSuccess() === false) {
+            $apiResponse = $client->testPushPing((int)$domainConfig->getClientId());
+            if ($apiResponse->isSuccess() === false) {
                 $pushError = true;
                 $errors = true;
             }
@@ -367,27 +369,27 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             $configErrorMessages[] = 'noclient_exists';
         }
 
-        if($domainConfig->getApiKey() === '') {
+        if ($domainConfig->getApiKey() === '') {
             $configErrorMessages[] = 'noapikey_exists';
         } else {
             $client = new \ERecht24\Er24Rechtstexte\Api\Client($domainConfig->getApiKey(), $domainConfig->getDomain());
             $apiResponse = $client->listClients();
-            if($apiResponse->isSuccess() === false) {
+            if ($apiResponse->isSuccess() === false) {
                 $erechtServerError = true;
             }
         }
 
-        $curlError = function_exists('curl_version') ? false: true;
+        $curlError = function_exists('curl_version') ? false : true;
 
         $debugInformations = 'PHP Version: ' . phpversion() . PHP_EOL;
-        $debugInformations .= 'TYPO3 Composer Mode: ' . (int) \TYPO3\CMS\Core\Core\Environment::isComposerMode() . PHP_EOL;
-        $debugInformations .= 'cURL Error: ' . (int) $curlError . PHP_EOL;
-        $debugInformations .= 'Push Error: ' . (int) $pushError . PHP_EOL;
-        $debugInformations .= 'API Connection Error: ' . (int) $erechtServerError . PHP_EOL;
-        $debugInformations .= 'Configuration Errors: ' . (int) $configError . PHP_EOL;
+        $debugInformations .= 'TYPO3 Composer Mode: ' . (int)\TYPO3\CMS\Core\Core\Environment::isComposerMode() . PHP_EOL;
+        $debugInformations .= 'cURL Error: ' . (int)$curlError . PHP_EOL;
+        $debugInformations .= 'Push Error: ' . (int)$pushError . PHP_EOL;
+        $debugInformations .= 'API Connection Error: ' . (int)$erechtServerError . PHP_EOL;
+        $debugInformations .= 'Configuration Errors: ' . (int)$configError . PHP_EOL;
 
-        if(count($configErrorMessages) > 0) {
-            $debugInformations .= 'Configuration Error Details: '.  PHP_EOL;
+        if (count($configErrorMessages) > 0) {
+            $debugInformations .= 'Configuration Error Details: ' . PHP_EOL;
             foreach ($configErrorMessages as $error) {
                 $debugInformations .= $error . PHP_EOL;
             }
@@ -419,10 +421,10 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
         $parseDown = new \Parsedown();
 
-        if($GLOBALS['BE_USER']->uc['lang'] === 'de') {
-            $documentation = (string) $parseDown->text(file_get_contents(ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Documentation/Documentation_de.md'));
+        if ($GLOBALS['BE_USER']->uc['lang'] === 'de') {
+            $documentation = (string)$parseDown->text(file_get_contents(ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Documentation/Documentation_de.md'));
         } else {
-            $documentation = (string) $parseDown->text(file_get_contents(ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Documentation/Documentation_en.md'));
+            $documentation = (string)$parseDown->text(file_get_contents(ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Documentation/Documentation_en.md'));
         }
 
 
@@ -436,7 +438,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             'curlError' => $curlError,
             'debugInformations' => $debugInformations,
             'documentation' => $documentation,
-            't3version' => VersionNumberUtility::convertVersionNumberToInteger( VersionNumberUtility::getNumericTypo3Version() )
+            't3version' => VersionNumberUtility::convertVersionNumberToInteger(VersionNumberUtility::getNumericTypo3Version())
         ]);
     }
 
@@ -488,7 +490,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     public function deleteAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig)
     {
 
-        if($domainConfig->getClientId() !== '' && $domainConfig->getApiKey() !== '') {
+        if ($domainConfig->getClientId() !== '' && $domainConfig->getApiKey() !== '') {
             $apiHandlerResult = $this->apiUtility->deleteDomainConfigClient($domainConfig, $domainConfig->getApiKey());
             self::handleApiHandlerResults($apiHandlerResult);
         }
