@@ -4,15 +4,11 @@ declare(strict_types=1);
 namespace ERecht24\Er24Rechtstexte\Controller;
 
 
-use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
-use TYPO3\CMS\Frontend\Typolink\LinkResultFactory;
 
 /***
  *
@@ -225,24 +221,13 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
     private function createEmailLink(string $email)
     {
-        $linkHref = 'mailto:' . $email;
-        $linkText = htmlspecialchars($email);
-        if (ApplicationType::fromRequest($this->request)->isFrontend()) {
-            /** @var TypoScriptFrontendController $frontend */
-            $frontend = $GLOBALS['TSFE'];
-            // passing HTML encoded link text
-            $frontend->cObj->typoLink($linkText, ['parameter' => $linkHref]);
-            $linkResult = $frontend->cObj->lastTypoLinkResult;
-            if ($linkResult) {
-                $escapeSpecialCharacters = false;
-                $linkHref = $linkResult->getUrl();
-                $linkText = (string)$linkResult->getLinkText();
-                $attributes = $linkResult->getAttributes();
-                unset($attributes['href']);
-            }
+        if (version_compare(VersionNumberUtility::getNumericTypo3Version(), "12.0.0", "<")) {
+            [$linkHref, $linkText] = $GLOBALS['TSFE']->cObj->getMailTo($email, '');
+            return "<a href='" . $linkHref . "'>" . $linkText . "</a>";
+        } else {
+            // TODO: implement for v12
+            // https://github.com/TYPO3/typo3/blob/main/typo3/sysext/frontend/Classes/ContentObject/ContentObjectRenderer.php#L4663
         }
-
-        return "<a href='" . $linkHref . "'>" . $linkText . "</a>";
     }
 
     /**
