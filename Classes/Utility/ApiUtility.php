@@ -22,9 +22,10 @@ class ApiUtility
             $errors[] = HelperUtility::getBestFittingApiErrorMessage($clientResult);
         } else {
             $successes[] = LocalizationUtility::translate('api-client-removed', 'er24_rechtstexte');
-            $domainConfig->setClientId('');
-            $domainConfig->setClientSecret('');
         }
+
+        $domainConfig->setClientId('');
+        $domainConfig->setClientSecret('');
 
         return [$errors, $successes];
 

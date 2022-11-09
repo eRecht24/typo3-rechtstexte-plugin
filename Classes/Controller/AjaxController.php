@@ -244,27 +244,27 @@ class AjaxController
             $response = $client->deleteClient($domainConfig->getClientId());
             if($response->isSuccess() === false) {
                 $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
+            }
+            $response = $client->addClient();
+            if($response->isSuccess() === false) {
+                $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
             } else {
-                $response = $client->addClient();
-                if($response->isSuccess() === false) {
-                    $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
+                $fixed[] = 'clientConfiguration';
+                $successes[] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('connection-established', $this->extensionName);
+                $domainConfig->setClientId($response->getData('client_id'));
+                $domainConfig->setClientSecret($response->getData('secret'));
+
+                $this->domainConfigRepository->update($domainConfig);
+                $this->persistenceManager->persistAll();
+
+                $response = $client->testPushPing($domainConfig->getClientId());
+                if($response->isSuccess() === true) {
+                    $fixed[] = 'push';
                 } else {
-                    $fixed[] = 'clientConfiguration';
-                    $successes[] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('connection-established', $this->extensionName);
-                    $domainConfig->setClientId($response->getData('client_id'));
-                    $domainConfig->setClientSecret($response->getData('secret'));
-
-                    $this->domainConfigRepository->update($domainConfig);
-                    $this->persistenceManager->persistAll();
-
-                    $response = $client->testPushPing($domainConfig->getClientId());
-                    if($response->isSuccess() === true) {
-                        $fixed[] = 'push';
-                    } else {
-                        $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
-                    }
+                    $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
                 }
             }
+
         } else {
             $clientResult = $client->addClient();
             if($clientResult->isSuccess() === false) {
