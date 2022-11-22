@@ -53,7 +53,7 @@ class ErechtResolver implements \Psr\Http\Server\MiddlewareInterface
         $persistenceManager = $objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);
         $apiUtility = new \ERecht24\Er24Rechtstexte\Utility\ApiUtility();
 
-        $apiHandlerResult = $apiUtility->importDocument($domainConfig, $type);
+        $apiHandlerResult = $apiUtility->importDocument($domainConfig, $type, 'success');
 
         if(count($apiHandlerResult[0]) > 0) {
             $message = 'Something went wrong: ' . implode(', ', $apiHandlerResult[0]);

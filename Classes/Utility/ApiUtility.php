@@ -36,7 +36,7 @@ class ApiUtility
      * @param string $documentType
      * @throws \Exception
      */
-    public function importDocument(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig, string $documentType) {
+    public function importDocument(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig, string $documentType, ?string $success_message = null ) {
 
         $errors = $successes = [];
 
@@ -50,7 +50,7 @@ class ApiUtility
             }
         } else {
             HelperUtility::assignDocumentToDomainConfig($document, $domainConfig, $documentType);
-            $successes[] = LocalizationUtility::translate($documentType . '_imported', 'er24_rechtstexte');
+            $successes[] = $success_message ?? LocalizationUtility::translate($documentType . '_imported', 'er24_rechtstexte');
         }
 
         return [$errors, $successes];
