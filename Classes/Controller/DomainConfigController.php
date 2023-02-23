@@ -172,7 +172,6 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             return $this->view->render();
         }
 
-
         $language = $this->settings['documentLanguage'];
 
         switch ($this->settings['documentType']) {
@@ -295,14 +294,6 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 
         $this->domainConfigRepository->add($newDomainConfig);
         $this->persistenceManager->persistAll();
-
-        if ($newDomainConfig->getSiteConfigName() !== '') {
-            /** @var \TYPO3\CMS\Core\Configuration\SiteConfiguration $siteConfiguration */
-            $siteConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\SiteConfiguration::class);
-            $configurationArray = $siteConfiguration->load($newDomainConfig->getSiteConfigName());
-            $configurationArray['eRecht24Config'] = $newDomainConfig->getUid();
-            $siteConfiguration->write($newDomainConfig->getSiteConfigName(), $configurationArray);
-        }
 
         $this->redirect('edit', null, null, ['domainConfig' => $newDomainConfig->getUid()]);
 
@@ -478,16 +469,6 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         if ($domainConfig->getClientId() !== '' && $domainConfig->getApiKey() !== '') {
             $apiHandlerResult = $this->apiUtility->deleteDomainConfigClient($domainConfig, $domainConfig->getApiKey());
             self::handleApiHandlerResults($apiHandlerResult);
-        }
-
-        // Remove from SiteConfig
-        if ($domainConfig->getSiteConfigName() !== '') {
-            // TODO: Take care of renamed site configs
-            /** @var \TYPO3\CMS\Core\Configuration\SiteConfiguration $siteConfiguration */
-            $siteConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\SiteConfiguration::class);
-            $configurationArray = $siteConfiguration->load($domainConfig->getSiteConfigName());
-            unset($configurationArray['eRecht24Config']);
-            $siteConfiguration->write($domainConfig->getSiteConfigName(), $configurationArray);
         }
 
         $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . ' ' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('config-was-deleted', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
