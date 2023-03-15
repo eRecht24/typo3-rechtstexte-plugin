@@ -32,12 +32,7 @@ call_user_func(
                     'labels' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_main.xlf',
                 ]
             );
-
             \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup('@import \'EXT:er24_rechtstexte/Configuration/TypoScript/setup.typoscript\'');
-
         }
-
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('er24_rechtstexte', 'Configuration/TypoScript', 'eRecht24 Rechtstexte Extension');
-
     }
 );
