@@ -12,12 +12,12 @@
 
 namespace ERecht24\Er24Rechtstexte\Utility;
 
-
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 class LogUtility
 {
     public static function writeErrorLog(string $message) {
 
-        $logFilePath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Resources/Private/Log/Error.log';
+        $logFilePath = ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Resources/Private/Log/Error.log';
 
         if(false === file_exists($logFilePath)) {
             $logWriter = fopen($logFilePath,'a+');
@@ -49,7 +49,7 @@ class LogUtility
     }
 
     public static function getErrorLog() {
-        $logFilePath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Resources/Private/Log/Error.log';
+        $logFilePath = ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Resources/Private/Log/Error.log';
         if(false === file_exists($logFilePath)) {
             $logWriter = fopen($logFilePath,'a+');
             fclose($logWriter);

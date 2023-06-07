@@ -1,9 +1,14 @@
 <?php
 namespace ERecht24\Er24Rechtstexte\Utility;
 
+use TYPO3\CMS\Core\Package\PackageManager;
+use TYPO3\CMS\Core\Package\Exception\InvalidPackageKeyException;
+use TYPO3\CMS\Core\Package\Exception\InvalidPackageManifestException;
+use TYPO3\CMS\Core\Package\Exception\InvalidPackagePathException;
+use TYPO3\CMS\Core\Package\Exception\InvalidPackageStateException;
+use TYPO3\CMS\Extensionmanager\Exception\ExtensionManagerException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use SplFileInfo;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extensionmanager\Service\ExtensionManagementService;
@@ -49,10 +54,10 @@ class UpdateUtility
 
 
     public function __construct() {
-        /** @var \TYPO3\CMS\Core\Package\PackageManager $packageManager */
-        $packageManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Package\PackageManager::class);
+        /** @var PackageManager $packageManager */
+        $packageManager = GeneralUtility::makeInstance(PackageManager::class);
         $this->currentVersion = $packageManager->getPackage('er24_rechtstexte')->getPackageMetaData()->getVersion();
-        $this->composeMode = \TYPO3\CMS\Core\Core\Environment::isComposerMode();
+        $this->composeMode = Environment::isComposerMode();
         self::isUpdateAvailable();
     }
 
@@ -82,11 +87,11 @@ class UpdateUtility
 
     /**
      * @return bool
-     * @throws \TYPO3\CMS\Core\Package\Exception\InvalidPackageKeyException
-     * @throws \TYPO3\CMS\Core\Package\Exception\InvalidPackageManifestException
-     * @throws \TYPO3\CMS\Core\Package\Exception\InvalidPackagePathException
-     * @throws \TYPO3\CMS\Core\Package\Exception\InvalidPackageStateException
-     * @throws \TYPO3\CMS\Extensionmanager\Exception\ExtensionManagerException
+     * @throws InvalidPackageKeyException
+     * @throws InvalidPackageManifestException
+     * @throws InvalidPackagePathException
+     * @throws InvalidPackageStateException
+     * @throws ExtensionManagerException
      */
     public function performSelfUpdate() {
 
@@ -96,9 +101,8 @@ class UpdateUtility
             throw new \Exception('The system is runnning in composer mode. This function should never have been called', 1607942004);
         }
 
-        $objectManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-        $this->managementService = $objectManager->get(ExtensionManagementService::class);
-        $this->fileHandlingUtility = $objectManager->get(FileHandlingUtility::class);
+        $this->managementService = GeneralUtiltiy::makeInstance(ExtensionManagementService::class);
+        $this->fileHandlingUtility = GeneralUtiltiy::makeInstance(FileHandlingUtility::class);
 
         $apiRes = $this->performApiRequest('zipball/'.$this->latestVersion);
 
@@ -107,7 +111,7 @@ class UpdateUtility
             return false;
         }
 
-        $tempFile = \TYPO3\CMS\Core\Utility\GeneralUtility::tempnam('erecht24update','.zip');
+        $tempFile = GeneralUtility::tempnam('erecht24update','.zip');
         $tempWriter = fopen($tempFile, 'w');
         fwrite($tempWriter,$apiRes);
         fclose($tempWriter);

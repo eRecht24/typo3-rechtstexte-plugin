@@ -1,9 +1,24 @@
 <?php
+
 namespace ERecht24\Er24Rechtstexte\Controller;
 
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use ERecht24\Er24Rechtstexte\Utility\ApiUtility;
+use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
+use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
+use ERecht24\Er24Rechtstexte\Api\LegalDocument;
+use TYPO3\CMS\Core\Http\JsonResponse;
+use TYPO3\CMS\Extbase\Reflection\ReflectionService;
+use TYPO3\CMS\Core\Cache\CacheManager;
+use ERecht24\Er24Rechtstexte\Api\Client;
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use ERecht24\Er24Rechtstexte\Utility\HelperUtility;
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Core\Http\Response;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class AjaxController
@@ -15,76 +30,69 @@ class AjaxController
     protected $extensionName = 'er24_rechtstexte';
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
+     * @var PersistenceManager
      */
     protected $persistenceManager = null;
 
     /**
-     * @var \ERecht24\Er24Rechtstexte\Utility\ApiUtility
+     * @var ApiUtility
      */
     protected $apiUtility = null;
 
     /**
-     * @var \ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository
+     * @var DomainConfigRepository
      */
     protected $domainConfigRepository = null;
 
     /**
-     * @param \ERecht24\Er24Rechtstexte\Utility\ApiUtility $apiUtility
+     * @param ApiUtility $apiUtility
      */
-    public function injectApiUtility(\ERecht24\Er24Rechtstexte\Utility\ApiUtility $apiUtility) {
+    public function injectApiUtility(ApiUtility $apiUtility)
+    {
         $this->apiUtility = $apiUtility;
     }
 
-    public function injectPersistenceManager(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager) {
+    public function injectPersistenceManager(PersistenceManager $persistenceManager)
+    {
         $this->persistenceManager = $persistenceManager;
     }
 
     /**
-     * @param \ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository $domainConfigRepository
+     * @param DomainConfigRepository $domainConfigRepository
      */
-    public function injectDomainConfigRepository(\ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository $domainConfigRepository) {
+    public function injectDomainConfigRepository(DomainConfigRepository $domainConfigRepository)
+    {
         $this->domainConfigRepository = $domainConfigRepository;
     }
 
-    public function __construct() {
-        $typo3Version = new \TYPO3\CMS\Core\Information\Typo3Version();
-        if(version_compare($typo3Version->getVersion(),'10.4', '<')) {
-            // TODO: This constructor is just a fallback for TYPO3 9 LTS
-            $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-            $this->persistenceManager = $objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);
-            $this->apiUtility = $objectManager->get(\ERecht24\Er24Rechtstexte\Utility\ApiUtility::class);
-            $this->domainConfigRepository = $objectManager->get(\ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository::class);
-        }
-    }
-
     /**
-     * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @return \Psr\Http\Message\ResponseInterface
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
      */
-    public function syncDocumentAction(ServerRequestInterface $request) : \Psr\Http\Message\ResponseInterface {
+    public function syncDocumentAction(ServerRequestInterface $request): ResponseInterface
+    {
 
-        $domainConfigId = (int) $request->getQueryParams()['domainConfigId'];
+        $domainConfigId = (int)$request->getQueryParams()['domainConfigId'];
 
-        /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig */
+        /** @var DomainConfig $domainConfig */
         $domainConfig = $this->domainConfigRepository->findByUid($domainConfigId);
 
         $errors = $successes = $response = [];
         $documentType = $request->getQueryParams()['documentType'];
 
-        if($domainConfig->getApiKey() === '') {
+        if ($domainConfig->getApiKey() === '') {
             $errors[] = LocalizationUtility::translate('no-api-key', $this->extensionName);
-        } else if(false === in_array($documentType, \ERecht24\Er24Rechtstexte\Api\LegalDocument::ALLOWED_DOCUMENT_TYPES)) {
-            $errors[] = LocalizationUtility::translate('unknown-document-requested', $this->extensionName). ' ' . $documentType;
-        }else {
-            $documentClient = new \ERecht24\Er24Rechtstexte\Api\LegalDocument($domainConfig->getApiKey(), $documentType, $domainConfig->getDomain());
+        } else if (false === in_array($documentType, LegalDocument::ALLOWED_DOCUMENT_TYPES)) {
+            $errors[] = LocalizationUtility::translate('unknown-document-requested', $this->extensionName) . ' ' . $documentType;
+        } else {
+            $documentClient = new LegalDocument($domainConfig->getApiKey(), $documentType, $domainConfig->getDomain());
             $document = $documentClient->importDocument();
 
-            if($document->isSuccess() === false) {
+            if ($document->isSuccess() === false) {
                 $errors[] = HelperUtility::getBestFittingApiErrorMessage($document);
-                if($document->getCode() === 400) {
+                if ($document->getCode() === 400) {
                     $domainConfig = HelperUtility::removeDocument($domainConfig, $documentType);
                 }
             } else {
@@ -99,7 +107,7 @@ class AjaxController
         $this->domainConfigRepository->update($domainConfig);
         $this->persistenceManager->persistAll();
 
-        return new \TYPO3\CMS\Core\Http\JsonResponse([
+        return new JsonResponse([
             'errors' => $errors,
             'successes' => $successes,
             'response' => $response
@@ -108,34 +116,35 @@ class AjaxController
     }
 
     /**
-     * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @return \Psr\Http\Message\ResponseInterface
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
      */
-    public function saveDomainConfigAction(ServerRequestInterface $request) : \Psr\Http\Message\ResponseInterface {
+    public function saveDomainConfigAction(ServerRequestInterface $request): ResponseInterface
+    {
 
         $errors = $successes = [];
 
-        $domainConfigId = (int) $request->getQueryParams()['domainConfigId'];
+        $domainConfigId = (int)$request->getQueryParams()['domainConfigId'];
 
-        /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig */
+        /** @var DomainConfig $domainConfig */
         $domainConfig = $this->domainConfigRepository->findByUid($domainConfigId);
 
-        $reflectionService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Reflection\ReflectionService::class);
+        $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
 
-        if(true === is_array($request->getQueryParams()['properties'])) {
+        if (true === is_array($request->getQueryParams()['properties'])) {
             foreach ($request->getQueryParams()['properties'] as $propertyName => $propertyValue) {
-                $setterName = 'set'.ucfirst($propertyName);
-                if(true === method_exists($domainConfig,$setterName)) {
-                    $methodReflection = $reflectionService->getClassSchema(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig::class)->getMethod($setterName);
+                $setterName = 'set' . ucfirst($propertyName);
+                if (true === method_exists($domainConfig, $setterName)) {
+                    $methodReflection = $reflectionService->getClassSchema(DomainConfig::class)->getMethod($setterName);
                     $propertyType = null;
                     foreach ($methodReflection->getParameters() as $parameter) {
                         $propertyType = $parameter->getType();
                         break;
                     }
-                    if($propertyType !== null) {
-                        if(true === settype($propertyValue, $propertyType)) {
+                    if ($propertyType !== null) {
+                        if (true === settype($propertyValue, $propertyType)) {
                             $domainConfig->$setterName($propertyValue);
                         } else {
                             // TODO: Handle setter not found
@@ -149,23 +158,21 @@ class AjaxController
             }
         }
 
-        if(count($errors) === 0) {
-            $successes[] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('auto-saved', $this->extensionName);
+        if (count($errors) === 0) {
+            $successes[] = LocalizationUtility::translate('auto-saved', $this->extensionName);
         }
 
 
-        if(true === isset($request->getQueryParams()['flushAnalyticsCache']) && (int) $request->getQueryParams()['flushAnalyticsCache'] === 1) {
-            /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
-            $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-            /** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
-            $cacheManager = $objectManager->get(\TYPO3\CMS\Core\Cache\CacheManager::class);
+        if (true === isset($request->getQueryParams()['flushAnalyticsCache']) && (int)$request->getQueryParams()['flushAnalyticsCache'] === 1) {
+            /** @var CacheManager $cacheManager */
+            $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
             $cacheManager->flushCachesByTag('er24_analytics_' . $domainConfig->getUid());
         }
 
         $this->domainConfigRepository->update($domainConfig);
         $this->persistenceManager->persistAll();
 
-        return new \TYPO3\CMS\Core\Http\JsonResponse([
+        return new JsonResponse([
             'errors' => $errors,
             'successes' => $successes
         ]);
@@ -173,17 +180,18 @@ class AjaxController
 
 
     /**
-     * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @return \Psr\Http\Message\ResponseInterface
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
      */
-    public function syncAllDocumentsAction(ServerRequestInterface $request) : \Psr\Http\Message\ResponseInterface {
+    public function syncAllDocumentsAction(ServerRequestInterface $request): ResponseInterface
+    {
 
-        $domainConfigId = (int) $request->getQueryParams()['domainConfigId'];
+        $domainConfigId = (int)$request->getQueryParams()['domainConfigId'];
         $newApiKey = $request->getQueryParams()['apiKey'];
 
-        /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfg */
+        /** @var DomainConfig $domainConfg */
         $domainConfg = $this->domainConfigRepository->findByUid($domainConfigId);
 
         $domainConfg->setApiKey($newApiKey);
@@ -195,8 +203,8 @@ class AjaxController
         $this->domainConfigRepository->update($domainConfg);
         $this->persistenceManager->persistAll();
 
-        if($domainConfg->getClientId() !== '') {
-            foreach (\ERecht24\Er24Rechtstexte\Api\LegalDocument::ALLOWED_DOCUMENT_TYPES as $documentType) {
+        if ($domainConfg->getClientId() !== '') {
+            foreach (LegalDocument::ALLOWED_DOCUMENT_TYPES as $documentType) {
                 $apiHandlerResult = $this->apiUtility->importDocument($domainConfg, $documentType);
                 $errors = array_merge($apiHandlerResult[0], $errors);
                 $successes = array_merge($apiHandlerResult[1], $successes);
@@ -206,51 +214,53 @@ class AjaxController
             $this->persistenceManager->persistAll();
         }
 
-        return new \TYPO3\CMS\Core\Http\JsonResponse([
+        return new JsonResponse([
             'errors' => $errors,
             'successes' => $successes
         ]);
     }
 
-    protected function handleError($errors) {
-        return new \TYPO3\CMS\Core\Http\JsonResponse(['errors' => $errors]);
+    protected function handleError($errors)
+    {
+        return new JsonResponse(['errors' => $errors]);
     }
 
     /**
-     * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
      */
-    public function refreshConnectionAction(ServerRequestInterface $request): \Psr\Http\Message\ResponseInterface {
+    public function refreshConnectionAction(ServerRequestInterface $request): ResponseInterface
+    {
 
         $errors = $successes = $fixed = [];
-        $domainConfigId = (int) $request->getQueryParams()['domainConfigId'];
+        $domainConfigId = (int)$request->getQueryParams()['domainConfigId'];
 
-        /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig */
+        /** @var DomainConfig $domainConfig */
         $domainConfig = $this->domainConfigRepository->findByUid($domainConfigId);
 
-        $client = new \ERecht24\Er24Rechtstexte\Api\Client($domainConfig->getApiKey(), $domainConfig->getDomain());
+        $client = new Client($domainConfig->getApiKey(), $domainConfig->getDomain());
 
         $response = $client->listClients();
-        if($response->isSuccess() === false) {
+        if ($response->isSuccess() === false) {
             $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
-            return new \TYPO3\CMS\Core\Http\JsonResponse([
+            return new JsonResponse([
                 'errors' => $errors,
             ]);
         } else {
             $fixed[] = 'apiConnection';
         }
 
-        if($domainConfig->getClientId() !== '') {
+        if ($domainConfig->getClientId() !== '') {
             $response = $client->deleteClient($domainConfig->getClientId());
-            if($response->isSuccess() === false) {
+            if ($response->isSuccess() === false) {
                 $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
             }
             $response = $client->addClient();
-            if($response->isSuccess() === false) {
+            if ($response->isSuccess() === false) {
                 $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
             } else {
                 $fixed[] = 'clientConfiguration';
-                $successes[] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('connection-established', $this->extensionName);
+                $successes[] = LocalizationUtility::translate('connection-established', $this->extensionName);
                 $domainConfig->setClientId($response->getData('client_id'));
                 $domainConfig->setClientSecret($response->getData('secret'));
 
@@ -258,7 +268,7 @@ class AjaxController
                 $this->persistenceManager->persistAll();
 
                 $response = $client->testPushPing($domainConfig->getClientId());
-                if($response->isSuccess() === true) {
+                if ($response->isSuccess() === true) {
                     $fixed[] = 'push';
                 } else {
                     $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
@@ -267,7 +277,7 @@ class AjaxController
 
         } else {
             $clientResult = $client->addClient();
-            if($clientResult->isSuccess() === false) {
+            if ($clientResult->isSuccess() === false) {
                 $errors[] = HelperUtility::getBestFittingApiErrorMessage($clientResult);
             } else {
                 $successes[] = LocalizationUtility::translate('connection-established', 'er24_rechtstexte_lts8');
@@ -278,7 +288,7 @@ class AjaxController
             }
         }
 
-        return new \TYPO3\CMS\Core\Http\JsonResponse([
+        return new JsonResponse([
             'errors' => $errors,
             'successes' => $successes,
             'fixed' => $fixed
@@ -287,27 +297,28 @@ class AjaxController
     }
 
     /**
-     * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
      * @deprecated
      */
-    public function changeSiteConfigAction(ServerRequestInterface $request): \Psr\Http\Message\ResponseInterface {
+    public function changeSiteConfigAction(ServerRequestInterface $request): ResponseInterface
+    {
 
         $newSiteConfig = [];
 
-        /** @var \TYPO3\CMS\Core\Site\SiteFinder $siteFinder */
-        $siteFinder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Site\SiteFinder::class);
+        /** @var SiteFinder $siteFinder */
+        $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
 
         $siteIdentifier = $request->getQueryParams()['siteconfig'];
 
         try {
             $newSiteConfig = $siteFinder->getSiteByIdentifier($siteIdentifier);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
         }
 
         $languageInformations = [];
 
-        /** @var \TYPO3\CMS\Core\Site\Entity\SiteLanguage $language */
+        /** @var SiteLanguage $language */
         foreach ($newSiteConfig->getAllLanguages() as $language) {
             $languageInformations[] = [
                 'languageId' => $language->getLanguageId(),
@@ -316,7 +327,7 @@ class AjaxController
             ];
         }
 
-        return new \TYPO3\CMS\Core\Http\JsonResponse($languageInformations);
+        return new JsonResponse($languageInformations);
     }
 
 }
