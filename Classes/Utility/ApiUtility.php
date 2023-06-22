@@ -2,20 +2,24 @@
 namespace ERecht24\Er24Rechtstexte\Utility;
 
 
+use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
+use ERecht24\Er24Rechtstexte\Api\Client;
+use ERecht24\Er24Rechtstexte\Api\LegalDocument;
+use TYPO3\CMS\Extbase\Persistence\Generic\Exception\TooDirtyException;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class ApiUtility
 {
 
     /**
-     * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
+     * @param DomainConfig $domainConfig
      * @param string $apiKey
      */
-    public function deleteDomainConfigClient(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig, string $apiKey) {
+    public function deleteDomainConfigClient(DomainConfig $domainConfig, string $apiKey) {
 
         $errors = $successes = [];
 
-        $client = new \ERecht24\Er24Rechtstexte\Api\Client($apiKey, $domainConfig->getDomain());
+        $client = new Client($apiKey, $domainConfig->getDomain());
         $clientResult = $client->deleteClient($domainConfig->getClientId());
 
         if($clientResult->isSuccess() === false) {
@@ -32,15 +36,15 @@ class ApiUtility
     }
 
     /**
-     * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
+     * @param DomainConfig $domainConfig
      * @param string $documentType
      * @throws \Exception
      */
-    public function importDocument(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig, string $documentType, ?string $success_message = null ) {
+    public function importDocument(DomainConfig $domainConfig, string $documentType, ?string $success_message = null ) {
 
         $errors = $successes = [];
 
-        $documentClient = new \ERecht24\Er24Rechtstexte\Api\LegalDocument($domainConfig->getApiKey(), $documentType, $domainConfig->getDomain());
+        $documentClient = new LegalDocument($domainConfig->getApiKey(), $documentType, $domainConfig->getDomain());
         $document = $documentClient->importDocument();
 
         if($document->isSuccess() === false) {
@@ -57,12 +61,12 @@ class ApiUtility
     }
 
     /**
-     * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
+     * @param DomainConfig $domainConfig
      * @param string $newApiKey
      * @return array
-     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception\TooDirtyException
+     * @throws TooDirtyException
      */
-    public function handleDomainConfigUpdate(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig, string $newApiKey = '') {
+    public function handleDomainConfigUpdate(DomainConfig $domainConfig, string $newApiKey = '') {
 
         $errors = $successes = [];
 
@@ -79,7 +83,7 @@ class ApiUtility
             // Api Key has been modified
             $oldApiKey = $domainConfig->_getCleanProperty('apiKey');
 
-            $client = new \ERecht24\Er24Rechtstexte\Api\Client($domainConfig->getApiKey(), $domainConfig->getDomain());
+            $client = new Client($domainConfig->getApiKey(), $domainConfig->getDomain());
             $apiResponse = $client->listClients();
 
             if($apiResponse->isSuccess() === false && $domainConfig->getApiKey() !== '') {
@@ -100,7 +104,7 @@ class ApiUtility
 
         if($domainConfig->getClientId() === '') {
 
-            $client = new \ERecht24\Er24Rechtstexte\Api\Client($domainConfig->getApiKey(), $domainConfig->getDomain());
+            $client = new Client($domainConfig->getApiKey(), $domainConfig->getDomain());
             $clientResult = $client->addClient();
 
             if($clientResult->isSuccess() === false) {

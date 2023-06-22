@@ -1,28 +1,36 @@
 <?php
+
 namespace ERecht24\Er24Rechtstexte\UserFunc;
+
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
+use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class FlexFormFunctions
 {
     /**
      * @param array $config
      */
-    public function filterDomainConfigs(array $config) {
+    public function filterDomainConfigs(array $config)
+    {
 
-        /** @var \TYPO3\CMS\Core\Site\SiteFinder $siteFinder */
-        $siteFinder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Site\SiteFinder::class);
+        /** @var SiteFinder $siteFinder */
+        $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
 
         try {
-            $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
             $siteConfig = $siteFinder->getSiteByPageId($config['flexParentDatabaseRow']['pid']);
-            $domainConfig = $objectManager->get(\ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository::class)
+            $domainConfig = GeneralUtility::makeInstance(DomainConfigRepository::class)
                 ->findOneByDomain((string)$siteConfig->getBase());
-            if($domainConfig instanceof \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig) {
+            if ($domainConfig instanceof DomainConfig) {
                 $config['items'] = [];
                 $config['items'][] = [
-                  \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('flex-auto-detect', 'er24_rechtstexte') . ': ' . $domainConfig->getDomain(), $domainConfig->getUid(), 'tcarecords-tx_er24rechtstexte_domain_model_domainconfig-default' // TODO
+                    LocalizationUtility::translate('flex-auto-detect', 'er24_rechtstexte') . ': ' . $domainConfig->getDomain(), $domainConfig->getUid(), 'tcarecords-tx_er24rechtstexte_domain_model_domainconfig-default' // TODO
                 ];
             }
-        } catch(\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         return $config;
 

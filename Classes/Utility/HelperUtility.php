@@ -2,6 +2,11 @@
 
 namespace ERecht24\Er24Rechtstexte\Utility;
 
+use ERecht24\Er24Rechtstexte\Api\ApiResponse;
+use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Cache\CacheManager;
+
 class HelperUtility
 {
 
@@ -18,12 +23,12 @@ class HelperUtility
     /**
      * Function provides best fitting api message
      *
-     * @param \ERecht24\Er24Rechtstexte\Api\ApiResponse|null $apiResponse
+     * @param ApiResponse|null $apiResponse
      * @param string $default
      * @return string
      */
     public static function getBestFittingApiErrorMessage(
-        ?\ERecht24\Er24Rechtstexte\Api\ApiResponse $apiResponse = null,
+        ?ApiResponse $apiResponse = null,
         string $default = ''
     ): string
     {
@@ -47,13 +52,13 @@ class HelperUtility
 
 
     /**
-     * @param \ERecht24\Er24Rechtstexte\Api\ApiResponse $apiResponse
-     * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
+     * @param ApiResponse $apiResponse
+     * @param DomainConfig $domainConfig
      * @param string $documentType
-     * @return \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig
+     * @return DomainConfig
      */
-    public static function assignDocumentToDomainConfig(\ERecht24\Er24Rechtstexte\Api\ApiResponse $apiResponse,
-                                                 \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig,
+    public static function assignDocumentToDomainConfig(ApiResponse $apiResponse,
+                                                 DomainConfig $domainConfig,
                                                  string $documentType) {
         $contentEn = $apiResponse->getData('html_en');
         $contentDe = $apiResponse->getData('html_de');
@@ -79,20 +84,19 @@ class HelperUtility
                 $domainConfig->setSocialEnTstamp($modified);
         }
 
-        $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-        /** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
-        $cacheManager = $objectManager->get(\TYPO3\CMS\Core\Cache\CacheManager::class);
+        /** @var CacheManager $cacheManager */
+        $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
         $cacheManager->flushCachesByTag('er24_document_' . $domainConfig->getUid());
 
         return $domainConfig;
     }
 
     /**
-     * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
+     * @param DomainConfig $domainConfig
      * @param string $documentType
-     * @return \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig
+     * @return DomainConfig
      */
-    public static function removeDocument(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig, string $documentType)
+    public static function removeDocument(DomainConfig $domainConfig, string $documentType)
     {
         switch($documentType) {
             case 'imprint':

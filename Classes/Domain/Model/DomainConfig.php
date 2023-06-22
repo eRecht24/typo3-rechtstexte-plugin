@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ERecht24\Er24Rechtstexte\Domain\Model;
 
-
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /***
  *
  * This file is part of the "eRecht24 Rechtstexte Extension" Extension for TYPO3 CMS.
@@ -17,7 +17,7 @@ namespace ERecht24\Er24Rechtstexte\Domain\Model;
 /**
  * DomainConfig
  */
-class DomainConfig extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class DomainConfig extends AbstractEntity
 {
 
     /**

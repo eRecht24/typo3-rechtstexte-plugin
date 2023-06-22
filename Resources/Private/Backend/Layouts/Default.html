@@ -1,21 +1,23 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:asset.css identifier="erecht24-backendmodule" href="{f:uri.resource(path: 'Css/BackendModule.css')}" />
 
-<f:be.container includeCssFiles="{0: '{f:uri.resource(path:\'Css/BackendModule.css\')}'}"
-    includeRequireJsModules="{0: 'TYPO3/CMS/Er24Rechtstexte/eRecht24Module'}">
-    <div class="module erecht-module">
-        <div id="module-docbody" class="module-body">
-            <div id="typo3-inner-docbody">
+<div class="module erecht-module">
+    <div id="module-docbody" class="module-body">
+        <div id="typo3-inner-docbody">
 
-                <f:flashMessages />
+            <f:flashMessages />
 
-                <div id="t3js-ui-block" class="ui-block">
-                    <core:icon identifier="spinner-circle" size="large"/>
-                    <h2 id="t3js-ui-block-detail"><f:translate key="module-loading" /></h2>
-                </div>
-
-                <f:render section="content" />
+            <div id="t3js-ui-block" class="ui-block">
+                <core:icon identifier="spinner-circle" size="large"/>
+                <h2 id="t3js-ui-block-detail"><f:translate key="module-loading" /></h2>
             </div>
+
+            <f:render section="content" />
         </div>
     </div>
-</f:be.container>
+</div>
+<f:be.pageRenderer includeCssFiles="{0: ''}"
+    includeRequireJsModules="{0: 'TYPO3/CMS/Er24Rechtstexte/eRecht24Module'}">
+
+</f:be.pageRenderer>
 </html>

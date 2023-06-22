@@ -29,7 +29,7 @@ page {
 }
 
 # Module configuration
-module.tx_er24rechtstexte_tools_er24rechtstextemain {
+module.tx_er24rechtstexte {
     persistence {
         storagePid = root
     }

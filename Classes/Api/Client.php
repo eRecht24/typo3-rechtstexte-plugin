@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace ERecht24\Er24Rechtstexte\Api;
 
+use TYPO3\CMS\Core\Information\Typo3Version;
 class Client extends BaseApi
 {
     /**
@@ -83,7 +84,7 @@ class Client extends BaseApi
     {
         $request_body  = [];
 
-        $typo3Version = new \TYPO3\CMS\Core\Information\Typo3Version();
+        $typo3Version = new Typo3Version();
 
         $request_body['push_method'] = 'GET';
         $request_body['push_uri']    = $this->domain . '/erecht24/v1/push';

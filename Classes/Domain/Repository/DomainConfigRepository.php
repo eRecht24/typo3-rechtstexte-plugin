@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ERecht24\Er24Rechtstexte\Domain\Repository;
 
-
+use TYPO3\CMS\Extbase\Persistence\Repository;
 /***
  *
  * This file is part of the "eRecht24 Rechtstexte Extension" Extension for TYPO3 CMS.
@@ -17,6 +17,6 @@ namespace ERecht24\Er24Rechtstexte\Domain\Repository;
 /**
  * The repository for DomainConfigs
  */
-class DomainConfigRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class DomainConfigRepository extends Repository
 {
 }

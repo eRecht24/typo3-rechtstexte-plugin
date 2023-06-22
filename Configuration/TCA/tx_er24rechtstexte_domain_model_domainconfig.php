@@ -5,7 +5,6 @@ return [
         'label' => 'domain',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'adminOnly' => true,
         'rootLevel' => true,
@@ -15,9 +14,6 @@ return [
         ],
         'searchFields' => 'domain,api_key,imprint_de,imprint_en,privacy_de,privacy_en,social_de,social_en,analytics_id,site_config_name',
         'iconfile' => 'EXT:er24_rechtstexte/Resources/Public/Icons/Extension.svg'
-    ],
-    'interface' => [
-        'showRecordFieldList' => 'hidden, domain, api_key, imprint_source, imprint_de, imprint_de_tstamp, imprint_en, imprint_en_tstamp, privacy_source, privacy_de, privacy_de_tstamp, privacy_en, privacy_en_tstamp, social_source, social_de, social_de_tstamp, social_en, social_en_tstamp, analytics_id, flag_embed_tracking, flag_user_centrics_embed, flag_opt_out_code, root_pid, site_config_name, site_language',
     ],
     'types' => [
         '1' => ['showitem' => 'hidden, domain, api_key, imprint_source, imprint_de, imprint_de_tstamp, imprint_en, imprint_en_tstamp, privacy_source, privacy_de, privacy_de_tstamp, privacy_en, privacy_en_tstamp, social_source, social_de, social_de_tstamp, social_en, social_en_tstamp, analytics_id, flag_embed_tracking, flag_user_centrics_embed, flag_opt_out_code, root_pid, site_config_name, site_language'],
@@ -309,7 +305,7 @@ return [
                 'type' => 'check',
                 'items' => [
                     '1' => [
-                        '0' => 'LLL:EXT:lang/locallang_core.xlf:labels.enabled'
+                        '0' => 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.enabled'
                     ]
                 ],
                 'default' => 0,
@@ -322,7 +318,7 @@ return [
                 'type' => 'check',
                 'items' => [
                     '1' => [
-                        '0' => 'LLL:EXT:lang/locallang_core.xlf:labels.enabled'
+                        '0' => 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.enabled'
                     ]
                 ],
                 'default' => 0,
@@ -335,7 +331,7 @@ return [
                 'type' => 'check',
                 'items' => [
                     '1' => [
-                        '0' => 'LLL:EXT:lang/locallang_core.xlf:labels.enabled'
+                        '0' => 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.enabled'
                     ]
                 ],
                 'default' => 0,

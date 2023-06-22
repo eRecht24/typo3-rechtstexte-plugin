@@ -1,72 +1,90 @@
 <?php
 
-
 namespace ERecht24\Er24Rechtstexte\Middleware;
 
+use Psr\Http\Server\MiddlewareInterface;
+use TYPO3\CMS\Core\Http\JsonResponse;
+use ERecht24\Er24Rechtstexte\Api\LegalDocument;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
+use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
+use ERecht24\Er24Rechtstexte\Utility\LogUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use ERecht24\Er24Rechtstexte\Utility\ApiUtility;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class ErechtResolver implements \Psr\Http\Server\MiddlewareInterface
+class ErechtResolver implements MiddlewareInterface
 {
+    const SECRET_IDENTIFIER = 'erecht24_secret';
+    const TYPE_IDENTIFIER = 'erecht24_type';
+
 
     /**
-     * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \Psr\Http\Server\RequestHandlerInterface $handler
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param ServerRequestInterface $request
+     * @param RequestHandlerInterface $handler
+     * @return ResponseInterface
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
-
-
-        if(false === strpos($request->getUri()->getPath(), '/erecht24/v1/push')) {
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        if (false === strpos($request->getUri()->getPath(), '/erecht24/v1/push')) {
             return $handler->handle($request);
         }
 
-        $secret = $request->getQueryParams()['erecht24_secret'];
-        $type = $request->getQueryParams()['erecht24_type'];
+        $secret = $request->getQueryParams()[self::SECRET_IDENTIFIER];
+        $type = $request->getQueryParams()[self::TYPE_IDENTIFIER];
 
-        if($type === 'ping') {
-            return new \TYPO3\CMS\Core\Http\JsonResponse(['message' => 'pong']);
+        if (is_null($secret)) {
+            $jsonStr = $request->getBody()->getContents();
+            $json = \GuzzleHttp\json_decode($jsonStr, true);
+            if (isset($json[self::SECRET_IDENTIFIER])) {
+                $secret = $json[self::SECRET_IDENTIFIER];
+            }
+            if (isset($json[self::TYPE_IDENTIFIER])) {
+                $type = $json[self::TYPE_IDENTIFIER];
+            }
         }
 
-        if(false === in_array($type,\ERecht24\Er24Rechtstexte\Api\LegalDocument::ALLOWED_DOCUMENT_TYPES)) {
-            return new \TYPO3\CMS\Core\Http\JsonResponse(['message' => 'Unknown Type'], 400);
+        if ($type === 'ping') {
+            return new JsonResponse(['message' => 'pong']);
         }
 
-        $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-        /** @var \ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository $domainConfigRepository */
-        $domainConfigRepository = $objectManager->get(\ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository::class);
-        /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig */
+        if (false === in_array($type, LegalDocument::ALLOWED_DOCUMENT_TYPES)) {
+            return new JsonResponse(['message' => 'Unknown Type'], 400);
+        }
+
+        /** @var DomainConfigRepository $domainConfigRepository */
+        $domainConfigRepository = GeneralUtility::makeInstance(DomainConfigRepository::class);
+        /** @var DomainConfig $domainConfig */
         $domainConfig = $domainConfigRepository->findOneByClientSecret($secret);
 
-        if($domainConfig === null) {
-            \ERecht24\Er24Rechtstexte\Utility\LogUtility::writeErrorLog('Push for unknown Client Secret requested' . $secret);
-            return new \TYPO3\CMS\Core\Http\JsonResponse(['message' => 'Client Secret is unknown to the system'],401);
+        if ($domainConfig === null) {
+            LogUtility::writeErrorLog('Push for unknown Client Secret requested' . $secret);
+            return new JsonResponse(['message' => 'Client Secret is unknown to the system'], 401);
         }
 
-        if($type === 'imprint' && $domainConfig->getImprintSource() === 0
+        if ($type === 'imprint' && $domainConfig->getImprintSource() === 0
             || $type === 'privacyPolicy' && $domainConfig->getPrivacySource() === 0
             || $type === 'privacySocialMedia' && $domainConfig->getSocialSource() === 0) {
-            return new \TYPO3\CMS\Core\Http\JsonResponse(['message' => 'Document ' . $type . ' is handled locally'],422);
+            return new JsonResponse(['message' => 'Document ' . $type . ' is handled locally'], 422);
         }
 
-        $persistenceManager = $objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager::class);
-        $apiUtility = new \ERecht24\Er24Rechtstexte\Utility\ApiUtility();
+        $persistenceManager = GeneralUtitlity::makeInstance(PersistenceManager::class);
+        $apiUtility = new ApiUtility();
 
         $apiHandlerResult = $apiUtility->importDocument($domainConfig, $type, 'success');
 
-        if(count($apiHandlerResult[0]) > 0) {
+        if (count($apiHandlerResult[0]) > 0) {
             $message = 'Something went wrong: ' . implode(', ', $apiHandlerResult[0]);
-            return new \TYPO3\CMS\Core\Http\JsonResponse(['message' => $message],400);
-        } else if(count($apiHandlerResult[1]) > 0) {
-
+            return new JsonResponse(['message' => $message], 400);
+        } else if (count($apiHandlerResult[1]) > 0) {
             $domainConfigRepository->update($domainConfig);
             $persistenceManager->persistAll();
 
-
-            return new \TYPO3\CMS\Core\Http\JsonResponse(['message' => 'Document ' . $type . ' has been stored']);
+            return new JsonResponse(['message' => 'Document ' . $type . ' has been stored']);
         } else {
-            return new \TYPO3\CMS\Core\Http\JsonResponse(['message' => 'Something unknown went wrong.'],400);
+            return new JsonResponse(['message' => 'Something unknown went wrong.'], 400);
         }
     }
 }

@@ -4,11 +4,33 @@ declare(strict_types=1);
 namespace ERecht24\Er24Rechtstexte\Controller;
 
 
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use ERecht24\Er24Rechtstexte\Utility\ApiUtility;
+use ERecht24\Er24Rechtstexte\Utility\UpdateUtility;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Site\Entity\Site;
+use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
+use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
+use ERecht24\Er24Rechtstexte\Api\Client;
+use TYPO3\CMS\Core\Core\Environment;
+use ERecht24\Er24Rechtstexte\Utility\HelperUtility;
+use ERecht24\Er24Rechtstexte\Utility\LogUtility;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Frontend\Typolink\EmailLinkBuilder;
 
 /***
  *
@@ -24,7 +46,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * DomainConfigController
  */
-class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class DomainConfigController extends ActionController
 {
 
     /**
@@ -35,40 +57,59 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     /**
      * domainConfigRepository
      *
-     * @var \ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository
+     * @var DomainConfigRepository
      */
     protected $domainConfigRepository = null;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
+     * @var PersistenceManager
      */
     protected $persistenceManager = null;
 
     /**
-     * @var \ERecht24\Er24Rechtstexte\Utility\ApiUtility
+     * @var ApiUtility
      */
     protected $apiUtility = null;
 
+    public function __construct(
+        protected readonly ModuleTemplateFactory $moduleTemplateFactory,
+    )
+    {
+    }
+
+    protected function defaultActionHandling()
+    {
+        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+        $this->registerDocheaderButtons($moduleTemplate);
+        $moduleTemplate->setContent($this->view->render());
+        return $this->htmlResponse($moduleTemplate->renderContent());
+    }
+
+    protected function registerDocheaderButtons(ModuleTemplate $moduleTemplate)
+    {
+
+    }
+
     /**
-     * @param \ERecht24\Er24Rechtstexte\Utility\ApiUtility $apiUtility
+     * @param ApiUtility $apiUtility
      */
-    public function injectApiUtility(\ERecht24\Er24Rechtstexte\Utility\ApiUtility $apiUtility)
+    public function injectApiUtility(ApiUtility $apiUtility)
     {
         $this->apiUtility = $apiUtility;
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager
+     * @param PersistenceManager $persistenceManager
      */
-    public function injectPersistenceManager(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager)
+    public function injectPersistenceManager(PersistenceManager $persistenceManager)
     {
         $this->persistenceManager = $persistenceManager;
     }
 
     /**
-     * @param \ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository $domainConfigRepository
+     * @param DomainConfigRepository $domainConfigRepository
      */
-    public function injectDomainConfigRepository(\ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository $domainConfigRepository)
+    public function injectDomainConfigRepository(DomainConfigRepository $domainConfigRepository)
     {
         $this->domainConfigRepository = $domainConfigRepository;
     }
@@ -78,13 +119,14 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function performUpdateAction()
     {
-        $updateUtility = new \ERecht24\Er24Rechtstexte\Utility\UpdateUtility();
+        $updateUtility = new UpdateUtility();
         if (true === $updateUtility->performSelfUpdate()) {
-            $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . LocalizationUtility::translate('update-success', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . LocalizationUtility::translate('update-success', $this->request->getControllerExtensionName()), '', AbstractMessage::OK);
         } else {
-            $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . LocalizationUtility::translate('update-failed', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+            $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . LocalizationUtility::translate('update-failed', $this->request->getControllerExtensionName()), '', AbstractMessage::WARNING);
         }
-        $this->redirect('list');
+
+        return (new ForwardResponse('list'));
     }
 
     /**
@@ -92,50 +134,46 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      *
      * @return void
      */
-    public function listAction()
+    public function listAction(): ResponseInterface
     {
-
         $jsRequiredLanguageKeys = [
             'attention',
             'delete-confirm',
             'abort'
         ];
 
-        $pageRenderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
 
         foreach ($jsRequiredLanguageKeys as $key) {
-            $label = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($key, 'er24_rechtstexte');
+            $label = LocalizationUtility::translate($key, 'er24_rechtstexte');
             $pageRenderer->addInlineLanguageLabel(str_replace('-', '_', $key), $label);
         }
 
-        $updateUtility = new \ERecht24\Er24Rechtstexte\Utility\UpdateUtility();
+        $updateUtility = new UpdateUtility();
 
-        /** @var \TYPO3\CMS\Core\Site\SiteFinder $siteFinder */
-        $siteFinder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Site\SiteFinder::class);
+        /** @var SiteFinder $siteFinder */
+        $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
 
         $allSiteConfigurations = $siteFinder->getAllSites();
         $domainConfigs = $this->domainConfigRepository->findAll();
 
         $domainsLeft = $configuredDomains = [];
 
-        /** @var \TYPO3\CMS\Core\Site\Entity\Site $siteConfig */
+        /** @var Site $siteConfig */
         foreach ($allSiteConfigurations as $index => $siteConfig) {
             $domainsLeft[(string)$siteConfig->getBase()] = $index;
         }
 
-        /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $config */
+        /** @var DomainConfig $config */
         foreach ($domainConfigs as $config) {
             $configuredDomains[$config->getDomain()] = $config->getDomain();
-//            $urlParts = parse_url($config->getDomain());
-//            if ($urlParts !== false) {
-//
-//            }
+
             if (true === isset($domainsLeft[$config->getDomain()])) {
                 unset($domainsLeft[$config->getDomain()]);
             }
         }
 
-        /** @var \TYPO3\CMS\Core\Site\Entity\Site $siteConfig */
+        /** @var Site $siteConfig */
         foreach ($allSiteConfigurations as $index => $siteConfig) {
             $match = false;
             foreach ($domainsLeft as $domain => $siteIdentifier) {
@@ -156,22 +194,23 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             'latestVersion' => $updateUtility->latestVersion,
             'composerMode' => $updateUtility->composeMode
         ]);
+
+        return $this->defaultActionHandling();
     }
 
     /**
      * action show
      * @return void
      */
-    public function showAction()
+    public function showAction(): ResponseInterface
     {
-        /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig */
+        /** @var DomainConfig $domainConfig */
         $domainConfig = $this->domainConfigRepository->findByUid($this->settings['configId']);
         if ($domainConfig === null) {
             // TODO
-            $this->addFlashMessage(LocalizationUtility::translate('configuration-not-found', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
-            return $this->view->render();
+            $this->addFlashMessage(LocalizationUtility::translate('configuration-not-found', $this->request->getControllerExtensionName()), '', AbstractMessage::WARNING);
+            return $this->htmlResponse($this->view->render());
         }
-
 
         $language = $this->settings['documentLanguage'];
 
@@ -214,8 +253,9 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 'outputText' => $outputText
             ]);
         } else {
-            $this->addFlashMessage(LocalizationUtility::translate('document-not-found', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+            $this->addFlashMessage(LocalizationUtility::translate('document-not-found', $this->request->getControllerExtensionName()), '', AbstractMessage::WARNING);
         }
+        return $this->htmlResponse();
 
     }
 
@@ -223,26 +263,33 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     {
         if (version_compare(VersionNumberUtility::getNumericTypo3Version(), "12.0.0", "<")) {
             [$linkHref, $linkText] = $GLOBALS['TSFE']->cObj->getMailTo($email, '');
-            return "<a href='" . $linkHref . "'>" . $linkText . "</a>";
+            return sprintf("<a href='%s'>%s</a>", $linkHref, $linkText);
         } else {
-            // TODO: implement for v12
-            // https://github.com/TYPO3/typo3/blob/main/typo3/sysext/frontend/Classes/ContentObject/ContentObjectRenderer.php#L4663
+            $typoScriptFrontendController = $this->request->getAttribute('frontend.controller');
+            $emailLinkBuilder = GeneralUtility::makeInstance(EmailLinkBuilder::class, $typoScriptFrontendController->cObj, $typoScriptFrontendController);
+            [$mailToUrl, $linkText, $attributes] = $emailLinkBuilder->processEmailLink($email, $email);
+            $linkAttributesString = "";
+            if (!empty($attributes)) {
+                foreach ($attributes as $attributeKey => $attributeValue) {
+                    $linkAttributesString .= " " . $attributeKey . '="' . $attributeValue . '"';
+                }
+            }
+            return sprintf("<a href=\"%s\"%s>%s</a>", $mailToUrl, $linkAttributesString, $linkText);
         }
     }
 
     /**
-     * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig|null $newDomainConfig
+     * @param DomainConfig|null $newDomainConfig
      * @param string $siteconfigIdentifier
      */
-    public function newAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $newDomainConfig = null, string $siteconfigIdentifier = '')
+    public function newAction(DomainConfig $newDomainConfig = null, string $siteconfigIdentifier = ''): ResponseInterface
     {
-
-        /** @var \TYPO3\CMS\Core\Site\SiteFinder $siteFinder */
-        $siteFinder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Site\SiteFinder::class);
-
+        /** @var SiteFinder $siteFinder */
+        $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
+        $siteConfig = null;
 
         if ($newDomainConfig === null) {
-            $newDomainConfig = new \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig();
+            $newDomainConfig = new DomainConfig();
             $newDomainConfig->setSiteConfigName($siteconfigIdentifier);
         }
 
@@ -251,7 +298,6 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 $siteConfig = $siteFinder->getSiteByIdentifier($newDomainConfig->getSiteConfigName());
                 $newDomainConfig->setDomain((string)$siteConfig->getBase());
             } catch (\Exception $e) {
-                $siteConfig = $language = null;
             }
         }
 
@@ -259,7 +305,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $allDomainConfigs = $this->domainConfigRepository->findAll();
 
         // Remove already used Siteconfigs
-        /** @var \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig */
+        /** @var DomainConfig $domainConfig */
         foreach ($allDomainConfigs as $domainConfig) {
             if (true === array_key_exists($domainConfig->getSiteConfigName(), $allSites)) {
                 unset($allSites[$domainConfig->getSiteConfigName()]);
@@ -271,21 +317,21 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             'siteConfig' => $siteConfig,
             'allSiteConfigurations' => $allSites
         ]);
+
+        return $this->defaultActionHandling();
     }
 
     /**
      * action create
      *
-     * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $newDomainConfig
+     * @param DomainConfig $newDomainConfig
      * @return void
      */
-    public function createAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $newDomainConfig)
+    public function createAction(DomainConfig $newDomainConfig)
     {
-
-        $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . ' ' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('config-was-created', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . ' ' . LocalizationUtility::translate('config-was-created', $this->request->getControllerExtensionName()), '', AbstractMessage::OK);
 
         $now = time();
-
         $newDomainConfig->setSocialEnTstamp($now);
         $newDomainConfig->setSocialDeTstamp($now);
         $newDomainConfig->setImprintEnTstamp($now);
@@ -296,28 +342,19 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->domainConfigRepository->add($newDomainConfig);
         $this->persistenceManager->persistAll();
 
-        if ($newDomainConfig->getSiteConfigName() !== '') {
-            /** @var \TYPO3\CMS\Core\Configuration\SiteConfiguration $siteConfiguration */
-            $siteConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\SiteConfiguration::class);
-            $configurationArray = $siteConfiguration->load($newDomainConfig->getSiteConfigName());
-            $configurationArray['eRecht24Config'] = $newDomainConfig->getUid();
-            $siteConfiguration->write($newDomainConfig->getSiteConfigName(), $configurationArray);
-        }
-
-        $this->redirect('edit', null, null, ['domainConfig' => $newDomainConfig->getUid()]);
-
+        return (new ForwardResponse('edit'))
+            ->withArguments(['domainConfig' => $newDomainConfig->getUid()]);
     }
 
     /**
      * action edit
      *
-     * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("domainConfig")
+     * @param DomainConfig $domainConfig
      * @return void
      */
-    public function editAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig)
+    #[IgnoreValidation(['value' => 'domainConfig'])]
+    public function editAction(DomainConfig $domainConfig): ResponseInterface
     {
-
         $jsRequiredLanguageKeys = [
             'connection_error_detected',
             'message-prefix',
@@ -329,20 +366,18 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             'error'
         ];
 
-        $pageRenderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
 
         foreach ($jsRequiredLanguageKeys as $key) {
-            $label = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($key, 'er24_rechtstexte');
+            $label = LocalizationUtility::translate($key, 'er24_rechtstexte');
             $pageRenderer->addInlineLanguageLabel(str_replace('-', '_', $key), $label);
         }
 
         $errors = $pushError = $configError = $erechtServerError = $curlError = false;
         $configErrorMessages = [];
 
-        $updateUtility = new \ERecht24\Er24Rechtstexte\Utility\UpdateUtility();
-
         if ($domainConfig->getClientId() !== '') {
-            $client = new \ERecht24\Er24Rechtstexte\Api\Client($domainConfig->getApiKey(), $domainConfig->getDomain());
+            $client = new Client($domainConfig->getApiKey(), $domainConfig->getDomain());
             $apiResponse = $client->testPushPing((int)$domainConfig->getClientId());
             if ($apiResponse->isSuccess() === false) {
                 $pushError = true;
@@ -357,7 +392,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         if ($domainConfig->getApiKey() === '') {
             $configErrorMessages[] = 'noapikey_exists';
         } else {
-            $client = new \ERecht24\Er24Rechtstexte\Api\Client($domainConfig->getApiKey(), $domainConfig->getDomain());
+            $client = new Client($domainConfig->getApiKey(), $domainConfig->getDomain());
             $apiResponse = $client->listClients();
             if ($apiResponse->isSuccess() === false) {
                 $erechtServerError = true;
@@ -367,7 +402,7 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $curlError = function_exists('curl_version') ? false : true;
 
         $debugInformations = 'PHP Version: ' . phpversion() . PHP_EOL;
-        $debugInformations .= 'TYPO3 Composer Mode: ' . (int)\TYPO3\CMS\Core\Core\Environment::isComposerMode() . PHP_EOL;
+        $debugInformations .= 'TYPO3 Composer Mode: ' . (int)Environment::isComposerMode() . PHP_EOL;
         $debugInformations .= 'cURL Error: ' . (int)$curlError . PHP_EOL;
         $debugInformations .= 'Push Error: ' . (int)$pushError . PHP_EOL;
         $debugInformations .= 'API Connection Error: ' . (int)$erechtServerError . PHP_EOL;
@@ -381,22 +416,20 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         }
 
         $debugInformations .= PHP_EOL;
-
         $debugInformations .= 'API Key: ' . substr($domainConfig->getApiKey(), 0, 30) . '...' . PHP_EOL;
         $debugInformations .= 'Client ID: ' . $domainConfig->getClientId() . PHP_EOL;
         $debugInformations .= 'Client Secret: ' . substr($domainConfig->getClientSecret(), 0, 30) . '...' . PHP_EOL;
-        $debugInformations .= 'API Host: ' . \ERecht24\Er24Rechtstexte\Utility\HelperUtility::API_HOST_URL . PHP_EOL;
+        $debugInformations .= 'API Host: ' . HelperUtility::API_HOST_URL . PHP_EOL;
         $debugInformations .= 'API Push URI: ' . $domainConfig->getDomain() . 'erecht24/v1/push' . PHP_EOL;
         $debugInformations .= PHP_EOL;
         $debugInformations .= 'Error Log:' . PHP_EOL;
-        $debugInformations .= \ERecht24\Er24Rechtstexte\Utility\LogUtility::getErrorLog();
+        $debugInformations .= LogUtility::getErrorLog();
         $debugInformations .= PHP_EOL;
         $debugInformations .= 'Extension informations:' . PHP_EOL;
 
 
         /** @var PackageManager $packageManager */
         $packageManager = GeneralUtility::makeInstance(PackageManager::class);
-
         foreach ($packageManager->getActivePackages() as $extension) {
             $debugInformations .= $extension->getPackageKey() . ' (' . $extension->getPackageMetaData()->getVersion() . ')' . PHP_EOL;
         }
@@ -405,13 +438,11 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         require_once(ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Resources/Private/Vendor/Erusev/Parsedown/Parsedown.php');
 
         $parseDown = new \Parsedown();
-
-        if ($GLOBALS['BE_USER']->uc['lang'] === 'de') {
+        if (isset($GLOBALS['BE_USER']->uc['lang']) && $GLOBALS['BE_USER']->uc['lang'] === 'de') {
             $documentation = (string)$parseDown->text(file_get_contents(ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Documentation/Documentation_de.md'));
         } else {
             $documentation = (string)$parseDown->text(file_get_contents(ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Documentation/Documentation_en.md'));
         }
-
 
         $this->view->assignMultiple([
             'domainConfig' => $domainConfig,
@@ -425,73 +456,73 @@ class DomainConfigController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             'documentation' => $documentation,
             't3version' => VersionNumberUtility::convertVersionNumberToInteger(VersionNumberUtility::getNumericTypo3Version())
         ]);
+
+        return $this->defaultActionHandling();
     }
 
     /**
      * action update
      *
-     * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
-     * @return void
+     * @param DomainConfig $domainConfig
+     * @return ForwardResponse
      */
-    public function updateAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig)
+    public function updateAction(DomainConfig $domainConfig)
     {
-
         $apiHandlerResult = $this->apiUtility->handleDomainConfigUpdate($domainConfig, $domainConfig->getApiKey());
         self::handleApiHandlerResults($apiHandlerResult);
 
-        if ($domainConfig->getImprintSource() === null) $domainConfig->setImprintSource(0);
-        if ($domainConfig->getSocialSource() === null) $domainConfig->setSocialSource(0);
-        if ($domainConfig->getPrivacySource() === null) $domainConfig->setPrivacySource(0);
+        if ($domainConfig->getImprintSource() === null) {
+            $domainConfig->setImprintSource(0);
+        }
+        if ($domainConfig->getSocialSource() === null) {
+            $domainConfig->setSocialSource(0);
+        }
+        if ($domainConfig->getPrivacySource() === null) {
+            $domainConfig->setPrivacySource(0);
+        }
 
         $this->domainConfigRepository->update($domainConfig);
         $this->persistenceManager->persistAll();
 
-        /** @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager */
-        $cacheManager = $this->objectManager->get(\TYPO3\CMS\Core\Cache\CacheManager::class);
+        /** @var CacheManager $cacheManager */
+        $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
         $cacheManager->flushCachesByTag('er24_document_' . $domainConfig->getUid());
 
-        $this->redirect('edit', null, null, ['domainConfig' => $domainConfig->getUid()]);
+        return (new ForwardResponse('edit'))
+            ->withArguments(['domainConfig' => $domainConfig->getUid()]);
     }
 
     protected function handleApiHandlerResults($apiHandlerResult)
     {
         if (count($apiHandlerResult[0]) > 0) {
             foreach ($apiHandlerResult[0] as $error) {
-                $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . ' ' . $error, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+                $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . ' ' . $error, '', AbstractMessage::WARNING);
             }
         }
         if (count($apiHandlerResult[1]) > 0) {
             foreach ($apiHandlerResult[1] as $success) {
-                $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . ' ' . $success, '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+                $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . ' ' . $success, '', AbstractMessage::OK);
             }
         }
     }
 
     /**
      * action delete
-     * @param \ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig
-     * @return void
+     * @param DomainConfig $domainConfig
+     * @return ForwardResponse
      */
-    public function deleteAction(\ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig $domainConfig)
+    public function deleteAction(DomainConfig $domainConfig)
     {
-
         if ($domainConfig->getClientId() !== '' && $domainConfig->getApiKey() !== '') {
             $apiHandlerResult = $this->apiUtility->deleteDomainConfigClient($domainConfig, $domainConfig->getApiKey());
             self::handleApiHandlerResults($apiHandlerResult);
         }
 
-        // Remove from SiteConfig
-        if ($domainConfig->getSiteConfigName() !== '') {
-            // TODO: Take care of renamed site configs
-            /** @var \TYPO3\CMS\Core\Configuration\SiteConfiguration $siteConfiguration */
-            $siteConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\SiteConfiguration::class);
-            $configurationArray = $siteConfiguration->load($domainConfig->getSiteConfigName());
-            unset($configurationArray['eRecht24Config']);
-            $siteConfiguration->write($domainConfig->getSiteConfigName(), $configurationArray);
-        }
-
-        $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->extensionName) . ' ' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('config-was-deleted', $this->extensionName), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . ' ' . LocalizationUtility::translate('config-was-deleted', $this->request->getControllerExtensionName()), '', AbstractMessage::OK);
         $this->domainConfigRepository->remove($domainConfig);
-        $this->redirect('list');
+        $persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
+        $persistenceManager->persistAll();
+
+        return new ForwardResponse('list');
     }
 }
