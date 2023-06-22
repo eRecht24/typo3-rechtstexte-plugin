@@ -2,7 +2,7 @@
 defined('TYPO3') || die('Access denied.');
 
 call_user_func(
-    function()
+    function($extKey = "er24_rechtstexte")
     {
         $typo3Version = new \TYPO3\CMS\Core\Information\Typo3Version();
 
@@ -36,6 +36,18 @@ call_user_func(
                     show = *
                 }
            }'
+        );
+
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript(
+            $extKey,
+            'constants',
+            "@import 'EXT:er24_rechtstexte/Configuration/TypoScript/constants.typoscript'"
+        );
+
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript(
+            $extKey,
+            'setup',
+            "@import 'EXT:er24_rechtstexte/Configuration/TypoScript/setup.typoscript'"
         );
 
         if(version_compare($typo3Version->getVersion(),'12.1', '<')) {
