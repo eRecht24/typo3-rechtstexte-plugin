@@ -259,7 +259,7 @@ class DomainConfigController extends ActionController
 
     }
 
-    private function createEmailLink(string $email)
+    private function createEmailLink(string $email): string
     {
         if (version_compare(VersionNumberUtility::getNumericTypo3Version(), "12.0.0", "<")) {
             [$linkHref, $linkText] = $GLOBALS['TSFE']->cObj->getMailTo($email, '');
