@@ -32,7 +32,8 @@ class HelperUtility
         string $default = ''
     ): string
     {
-        if ($GLOBALS['BE_USER']->uc['lang'] === 'de'
+        if (isset($GLOBALS['BE_USER']->uc['lang'])
+            && $GLOBALS['BE_USER']->uc['lang'] === 'de'
             && $apiResponse
             && $apiResponse->getData('message_de')) {
             $error_message = $apiResponse->getData('message_de');
