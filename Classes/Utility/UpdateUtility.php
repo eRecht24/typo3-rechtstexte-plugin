@@ -64,7 +64,8 @@ class UpdateUtility
     /**
      * @return bool
      */
-    public function isUpdateAvailable() {
+    public function isUpdateAvailable(): bool
+    {
 
         $apiRes = self::performApiRequest('tags');
 
