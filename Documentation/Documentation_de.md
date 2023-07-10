@@ -74,7 +74,7 @@ Google Analytics Tracking Code integrieren
 
 1. Sofern Sie noch keine Google Analytics Tracking ID für Ihre Seite haben, erstellen Sie mit Ihrem Google Account einen Tracking-Code für Ihre Website ([Hier finden Sie die Anleitung](https://support.google.com/analytics/answer/1008015?hl=de)).
 2. Wechseln Sie hier in das eRecht24 Rechtstexte Plugin, klicken Sie auf den Reiter _Google Analytics_.
-3. Kopieren Sie anschließend die ID des Tracking-Codes (Beispiel: UA-1234567-1) in das Feld _Google Analytics ID_.
+3. Kopieren Sie anschließend die ID des Tracking-Codes (Beispiel: G-XXXXXXX) in das Feld _Google Analytics ID_.
 4. Wenn der Google Analytics Tracking Code durch das eRecht24 Rechtstexte Plugin eingefügt werden soll, aktivieren Sie die Option _Trackingcode einbinden_.
 5. Speichern Sie die Einstellung.
 

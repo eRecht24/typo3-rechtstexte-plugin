@@ -417,7 +417,7 @@
 				<source>You can also generate the complete Google Analytics tracking code including a code snippet for setting the opt-out cookie with this plugin.</source>
 			</trans-unit>
 			<trans-unit id="analytics-hint">
-				<source>Enter your Google Analytics Tracking ID here in the format UA-12345687-1</source>
+				<source>Enter your Google Analytics Tracking ID here in the format G-XXXXXXX.</source>
 			</trans-unit>
 			<trans-unit id="usercentrics-hint">
 				<source>If you use the Usercentrics Consent Management Platform on your website, you should activate this option.

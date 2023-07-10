@@ -399,7 +399,7 @@
 				</target>
 			</trans-unit>
 			<trans-unit id="analytics-hint">
-				<target>Geben Sie hier Ihre Google Analytics Tracking ID im Format G-XXXXXXX oder UA-12345687-1 ein.
+				<target>Geben Sie hier Ihre Google Analytics Tracking ID im Format G-XXXXXXX ein.
 				</target>
 			</trans-unit>
 			<trans-unit id="usercentrics-hint">
