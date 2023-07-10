@@ -25,6 +25,7 @@ If you want to use the mail bot spam protection, you have to put the following c
 ```typoscript
 config.spamProtectEmailAddresses = ascii
 ```
+[For further details check the TYPO3 documentation.](https://docs.typo3.org/m/typo3/reference-typoscript/main/en-us/Setup/Config/Index.html#spamprotectemailaddresses)
 
 ## Contribute
 **Pull Requests** are welcome! Please don't forget to add an issue and connect it to your pull requests. This is very helpful to understand what kind of issue the PR is going to solve.
