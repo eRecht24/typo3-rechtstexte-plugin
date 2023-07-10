@@ -64,21 +64,21 @@ deploy:rsync:
   only:
     - tags
 
-"Trigger tests for tags":
-  stage: test
-  trigger:
-    project: erecht24/rechtstexte-plugin/typo3-rechtstexte-testing
-    strategy: depend
-  variables:
-    COMPOSER_VERSION: $CI_COMMIT_REF_NAME
-  only:
-    - tags
-
-"Trigger tests for branches":
-  extends: "Trigger tests for tags"
-  variables:
-    COMPOSER_VERSION: dev-$CI_COMMIT_REF_NAME
-  only:
-    - branches
-  except:
-    - tags
+#"Trigger tests for tags":
+#  stage: test
+#  trigger:
+#    project: erecht24/rechtstexte-plugin/typo3-rechtstexte-testing
+#    strategy: depend
+#  variables:
+#    COMPOSER_VERSION: $CI_COMMIT_REF_NAME
+#  only:
+#    - tags
+#
+#"Trigger tests for branches":
+#  extends: "Trigger tests for tags"
+#  variables:
+#    COMPOSER_VERSION: dev-$CI_COMMIT_REF_NAME
+#  only:
+#    - branches
+#  except:
+#    - tags
