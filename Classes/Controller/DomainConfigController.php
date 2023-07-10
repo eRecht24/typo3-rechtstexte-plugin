@@ -447,11 +447,11 @@ class DomainConfigController extends ActionController
         $this->view->assignMultiple([
             'domainConfig' => $domainConfig,
             'errors' => $errors,
-            'pushError' => $pushError,
-            'erechtServerError' => $erechtServerError,
-            'configError' => $configError,
+            'pushError' => $pushError ? 1 : 0,
+            'erechtServerError' => $erechtServerError ? 1 : 0,
+            'configError' => $configError ? 1 : 0,
             'configErrorMessages' => $configErrorMessages,
-            'curlError' => $curlError,
+            'curlError' => $curlError ? 1 : 0,
             'debugInformations' => $debugInformations,
             'documentation' => $documentation,
             't3version' => VersionNumberUtility::convertVersionNumberToInteger(VersionNumberUtility::getNumericTypo3Version())

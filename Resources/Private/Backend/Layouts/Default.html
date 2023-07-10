@@ -1,5 +1,4 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:asset.css identifier="erecht24-backendmodule" href="{f:uri.resource(path: 'Css/BackendModule.css')}" />
 
 <div class="module erecht-module">
     <div id="module-docbody" class="module-body">
@@ -16,7 +15,7 @@
         </div>
     </div>
 </div>
-<f:be.pageRenderer includeCssFiles="{0: ''}"
+<f:be.pageRenderer includeCssFiles="{0: '{f:uri.resource(path: \'Css/BackendModule.css\')}'}"
     includeRequireJsModules="{0: 'TYPO3/CMS/Er24Rechtstexte/eRecht24Module'}">
 
 </f:be.pageRenderer>

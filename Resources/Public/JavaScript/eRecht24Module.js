@@ -5,7 +5,6 @@ define(['jquery',
     'TYPO3/CMS/Backend/Notification'
   ], function ($, AjaxRequest, Severity, Modal, Notification) {
 
-
     var eRecht24Module = {
       languagePossibleUrls: [],
       domainConfigId: null,
@@ -251,103 +250,11 @@ define(['jquery',
       });
     };
 
-    // eRecht24Module.initImprintForm = function () {
-    //
-    //   eRecht24Module.currentImprintSource = $('.tab-imprint').data('source');
-    //   processCurrentDataSource();
-    //
-    //   $('#syncImprint').click(function () {
-    //     eRecht24Module.showLoader();
-    //     new AjaxRequest(TYPO3.settings.ajaxUrls.er24_syncImprint)
-    //       .withQueryArguments(
-    //         {
-    //           domainConfigId: eRecht24Module.domainConfigId,
-    //         }
-    //       )
-    //       .get().then(async function (response) {
-    //
-    //         resolved = await response.resolve();
-    //
-    //         eRecht24Module.handleResultMessages(resolved);
-    //
-    //         if (resolved.response) {
-    //           var response = resolved.response;
-    //           if (response.imprintDe && response.imprintEn && response.modified) {
-    //             $('#imprintDe').val(response.imprintDe);
-    //             $('#imprintEn').val(response.imprintEn);
-    //             $('#imprintDeTstamp').val(response.modified);
-    //             $('#imprintEnTstamp').val(response.modified);
-    //           }
-    //         }
-    //
-    //         eRecht24Module.hideLoader();
-    //       }
-    //     )
-    //   })
-    //
-    //   $('#imprintSource').change(function () {
-    //
-    //     eRecht24Module.showLoader();
-    //
-    //     if ($(this).is(':checked')) {
-    //       eRecht24Module.currentImprintSource = 1;
-    //     } else {
-    //       eRecht24Module.currentImprintSource = 0;
-    //     }
-    //
-    //     new AjaxRequest(TYPO3.settings.ajaxUrls.er24_saveDomainConfig)
-    //
-    //       .withQueryArguments(
-    //         {
-    //           domainConfigId: eRecht24Module.domainConfigId,
-    //           properties: {
-    //             imprintSource: eRecht24Module.currentImprintSource
-    //           }
-    //         }
-    //       )
-    //       .get().then(async function (response) {
-    //
-    //         resolved = await response.resolve();
-    //
-    //         eRecht24Module.handleResultMessages(resolved);
-    //
-    //         processCurrentDataSource();
-    //
-    //         eRecht24Module.hideLoader();
-    //       }, function (e) {
-    //         // @todo Error Handling
-    //         eRecht24Module.hideLoader();
-    //       }
-    //     )
-    //   });
-    //
-    //
-    //   $('#imprintRestoreRemote').click(function () {
-    //     $('#imprintDeLocal').val($('#imprintDe').val());
-    //     $('#imprintEnLocal').val($('#imprintEn').val());
-    //   });
-    //
-    //   function processCurrentDataSource() {
-    //     if (eRecht24Module.currentImprintSource == 0) {
-    //       $('.tab-imprint').find('.remote-content').hide();
-    //       $('.tab-imprint').find('.local-content').show();
-    //     } else {
-    //       $('.tab-imprint').find('.remote-content').show();
-    //       $('.tab-imprint').find('.local-content').hide();
-    //     }
-    //   }
-    //
-    // }
-
     if ($('#configCreateForm').length > 0) {
-
-      //eRecht24Module.getLanguagePossibleUrls();
       eRecht24Module.hideLoader();
 
       $('#siteConfig').change(function () {
         eRecht24Module.showLoader();
-
-        //$('#language option').not(':first').remove();
 
         var $selectedOption = $(this).find('option:selected');
 
@@ -358,37 +265,10 @@ define(['jquery',
         }
 
         eRecht24Module.hideLoader();
-
-        // new AjaxRequest(TYPO3.settings.ajaxUrls.er24_changeSiteConfig)
-        //   .withQueryArguments(
-        //     {
-        //       siteconfig: $('#siteConfig').val(),
-        //       siteLanguage: $('#language').val()
-        //     }
-        //   )
-        //   .get().then(async function (response) {
-        //     resolved = await response.resolve();
-        //     eRecht24Module.languagePossibleUrls = resolved;
-        //     for (language of eRecht24Module.languagePossibleUrls) {
-        //       $('#language').append('<option value="' + language.languageId + '">' + language.name + '</option>')
-        //     }
-        //     eRecht24Module.hideLoader();
-        //   }
-        // )
       });
-
-      // $('#language').change(function () {
-      //   for (language of eRecht24Module.languagePossibleUrls) {
-      //     if (parseInt(language.languageId) === parseInt($(this).val())) {
-      //       $('#domain').val(language.domain);
-      //       break;
-      //     }
-      //   }
-      // });
     }
 
     if ($('#domainConfigEditForm').length > 0) {
-
       eRecht24Module.showLoader();
       eRecht24Module.domainConfigId = parseInt($('#domainConfigId').val());
       eRecht24Module.trackingEnabled = $('#flagEmbedTracking').is(':checked');

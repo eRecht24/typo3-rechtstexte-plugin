@@ -1,10 +1,9 @@
 <?php
-defined('TYPO3_MODE') || die('Access denied.');
+defined('TYPO3') || die('Access denied.');
 
 call_user_func(
     function()
     {
-
         $vendorPrefix = '';
         $backendController = [
             \ERecht24\Er24Rechtstexte\Controller\DomainConfigController::class => 'list, new, create, edit, update, delete, performUpdate',
