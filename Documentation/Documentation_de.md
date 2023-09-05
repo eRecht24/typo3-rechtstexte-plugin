@@ -7,7 +7,7 @@ Zugriff auf die Einstellungen des eRecht24 Rechtstexte Plugins
 Hinterlegen des API-Schlüssels
 ------------------------------
 
-Dieses Plugin bietet [eRecht24 Premium Nutzern](https://www.e-recht24.de/mitglieder/) die Möglichkeit die Rechtstexte aus dem eRecht24 Projekt Manager direkt in WordPress zu übertragen. Damit die dafür notwendige Kommunikation zwischen beiden Seiten stattfinden kann, ist die Hinterlegung eines API-Schlüssels notwendig.
+Dieses Plugin bietet [eRecht24 Premium Nutzern](https://www.e-recht24.de/mitglieder/) die Möglichkeit die Rechtstexte aus dem eRecht24 Projekt Manager direkt in TYPO3 zu übertragen. Damit die dafür notwendige Kommunikation zwischen beiden Seiten stattfinden kann, ist die Hinterlegung eines API-Schlüssels notwendig.
 
 Dafür gehen Sie wie folgt vor:
 
