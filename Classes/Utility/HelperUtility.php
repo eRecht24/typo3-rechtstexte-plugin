@@ -12,7 +12,7 @@ class HelperUtility
 
     const PLUGIN_NAME = 'er24_rechtstexte';
 
-    const PLUGIN_VERSION = '2.0.1';
+    const PLUGIN_VERSION = '2.0.2';
 
     const PLUGIN_TEXT_DOMAIN = 'erecht24';
 
