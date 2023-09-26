@@ -28,7 +28,7 @@ class ErechtResolver implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if (false === strpos($request->getUri()->getPath(), '/erecht24/v1/push')) {
+        if (!str_contains($request->getUri()->getPath(), '/erecht24/v1/push')) {
             return $handler->handle($request);
         }
 
@@ -70,7 +70,7 @@ class ErechtResolver implements MiddlewareInterface
             return new JsonResponse(['message' => 'Document ' . $type . ' is handled locally'], 422);
         }
 
-        $persistenceManager = GeneralUtitlity::makeInstance(PersistenceManager::class);
+        $persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
         $apiUtility = new ApiUtility();
 
         $apiHandlerResult = $apiUtility->importDocument($domainConfig, $type, 'success');
