@@ -242,6 +242,8 @@ class DomainConfigController extends ActionController
                 $mailRegex = "/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+.[a-zA-Z])/";
                 preg_match_all($mailRegex, $outputText, $matches);
 
+                $matches[0] = array_unique($matches[0]);
+
                 foreach ($matches[0] as $match) {
                     $outputText = str_replace($match, $this->createEmailLink($match), $outputText);
                 }
