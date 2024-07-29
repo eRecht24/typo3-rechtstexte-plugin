@@ -422,7 +422,7 @@ class DomainConfigController extends ActionController
         $debugInformations .= 'Client ID: ' . $domainConfig->getClientId() . PHP_EOL;
         $debugInformations .= 'Client Secret: ' . substr($domainConfig->getClientSecret(), 0, 30) . '...' . PHP_EOL;
         $debugInformations .= 'API Host: ' . HelperUtility::API_HOST_URL . PHP_EOL;
-        $debugInformations .= 'API Push URI: ' . $domainConfig->getDomain() . 'erecht24/v1/push' . PHP_EOL;
+        $debugInformations .= 'API Push URI: ' . $domainConfig->getDomain() . '/erecht24/v1/push' . PHP_EOL;
         $debugInformations .= PHP_EOL;
         $debugInformations .= 'Error Log:' . PHP_EOL;
         $debugInformations .= LogUtility::getErrorLog();
