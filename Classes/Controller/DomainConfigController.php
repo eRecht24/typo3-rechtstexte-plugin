@@ -242,6 +242,9 @@ class DomainConfigController extends ActionController
                 $mailRegex = "/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+.[a-zA-Z])/";
                 preg_match_all($mailRegex, $outputText, $matches);
 
+                if(is_array($matches[0]))
+                  $matches[0] = array_unique($matches[0]);
+
                 foreach ($matches[0] as $match) {
                     $outputText = str_replace($match, $this->createEmailLink($match), $outputText);
                 }
@@ -420,7 +423,7 @@ class DomainConfigController extends ActionController
         $debugInformations .= 'Client ID: ' . $domainConfig->getClientId() . PHP_EOL;
         $debugInformations .= 'Client Secret: ' . substr($domainConfig->getClientSecret(), 0, 30) . '...' . PHP_EOL;
         $debugInformations .= 'API Host: ' . HelperUtility::API_HOST_URL . PHP_EOL;
-        $debugInformations .= 'API Push URI: ' . $domainConfig->getDomain() . 'erecht24/v1/push' . PHP_EOL;
+        $debugInformations .= 'API Push URI: ' . $domainConfig->getDomain() . '/erecht24/v1/push' . PHP_EOL;
         $debugInformations .= PHP_EOL;
         $debugInformations .= 'Error Log:' . PHP_EOL;
         $debugInformations .= LogUtility::getErrorLog();
