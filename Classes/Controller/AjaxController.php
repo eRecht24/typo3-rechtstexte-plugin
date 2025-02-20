@@ -2,28 +2,27 @@
 
 namespace ERecht24\Er24Rechtstexte\Controller;
 
-use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use ERecht24\Er24Rechtstexte\Utility\ApiUtility;
+use ERecht24\Er24Rechtstexte\Api\Client;
+use ERecht24\Er24Rechtstexte\Api\LegalDocument;
+use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
 use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use ERecht24\Er24Rechtstexte\Utility\ApiUtility;
+use ERecht24\Er24Rechtstexte\Utility\HelperUtility;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Http\JsonResponse;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
-use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
-use ERecht24\Er24Rechtstexte\Api\LegalDocument;
-use TYPO3\CMS\Core\Http\JsonResponse;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Reflection\ReflectionService;
-use TYPO3\CMS\Core\Cache\CacheManager;
-use ERecht24\Er24Rechtstexte\Api\Client;
-use TYPO3\CMS\Core\Site\SiteFinder;
-use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
-use ERecht24\Er24Rechtstexte\Utility\HelperUtility;
-use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class AjaxController
 {
-
     /**
      * @var string
      */
@@ -32,42 +31,26 @@ class AjaxController
     /**
      * @var PersistenceManager
      */
-    protected $persistenceManager = null;
+    protected $persistenceManager;
 
     /**
      * @var ApiUtility
      */
-    protected $apiUtility = null;
+    protected $apiUtility;
 
     /**
      * @var DomainConfigRepository
      */
-    protected $domainConfigRepository = null;
+    protected $domainConfigRepository;
 
-    /**
-     * @param ApiUtility $apiUtility
-     */
-    public function injectApiUtility(ApiUtility $apiUtility)
+    public function __construct(ApiUtility $apiUtility, PersistenceManager $persistenceManager, DomainConfigRepository $domainConfigRepository)
     {
         $this->apiUtility = $apiUtility;
-    }
-
-    public function injectPersistenceManager(PersistenceManager $persistenceManager)
-    {
         $this->persistenceManager = $persistenceManager;
-    }
-
-    /**
-     * @param DomainConfigRepository $domainConfigRepository
-     */
-    public function injectDomainConfigRepository(DomainConfigRepository $domainConfigRepository)
-    {
         $this->domainConfigRepository = $domainConfigRepository;
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
      * @throws IllegalObjectTypeException
      * @throws UnknownObjectException
      */
@@ -78,13 +61,14 @@ class AjaxController
 
         /** @var DomainConfig $domainConfig */
         $domainConfig = $this->domainConfigRepository->findByUid($domainConfigId);
-
-        $errors = $successes = $response = [];
+        $errors = [];
+        $successes = [];
+        $response = [];
         $documentType = $request->getQueryParams()['documentType'];
 
         if ($domainConfig->getApiKey() === '') {
             $errors[] = LocalizationUtility::translate('no-api-key', $this->extensionName);
-        } else if (false === in_array($documentType, LegalDocument::ALLOWED_DOCUMENT_TYPES)) {
+        } elseif (in_array($documentType, LegalDocument::ALLOWED_DOCUMENT_TYPES) === false) {
             $errors[] = LocalizationUtility::translate('unknown-document-requested', $this->extensionName) . ' ' . $documentType;
         } else {
             $documentClient = new LegalDocument($domainConfig->getApiKey(), $documentType, $domainConfig->getDomain());
@@ -97,7 +81,7 @@ class AjaxController
                 }
             } else {
                 $domainConfig = HelperUtility::assignDocumentToDomainConfig($document, $domainConfig, $documentType);
-                $successes[] = LocalizationUtility::translate($documentType . '_imported', 'er24_rechtstexte');
+                $successes[] = LocalizationUtility::translate($documentType . '_imported', 'Er24Rechtstexte');
                 $response['html_de'] = $document->getData('html_de');
                 $response['html_en'] = $document->getData('html_en');
                 $response['modified'] = $document->getData('modified');
@@ -110,22 +94,20 @@ class AjaxController
         return new JsonResponse([
             'errors' => $errors,
             'successes' => $successes,
-            'response' => $response
+            'response' => $response,
         ]);
 
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
      * @throws IllegalObjectTypeException
      * @throws UnknownObjectException
      */
     public function saveDomainConfigAction(ServerRequestInterface $request): ResponseInterface
     {
 
-        $errors = $successes = [];
-
+        $errors = [];
+        $successes = [];
         $domainConfigId = (int)$request->getQueryParams()['domainConfigId'];
 
         /** @var DomainConfig $domainConfig */
@@ -133,18 +115,19 @@ class AjaxController
 
         $reflectionService = GeneralUtility::makeInstance(ReflectionService::class);
 
-        if (true === is_array($request->getQueryParams()['properties'])) {
+        if (is_array($request->getQueryParams()['properties'])) {
             foreach ($request->getQueryParams()['properties'] as $propertyName => $propertyValue) {
                 $setterName = 'set' . ucfirst($propertyName);
-                if (true === method_exists($domainConfig, $setterName)) {
+                if (method_exists($domainConfig, $setterName)) {
                     $methodReflection = $reflectionService->getClassSchema(DomainConfig::class)->getMethod($setterName);
                     $propertyType = null;
                     foreach ($methodReflection->getParameters() as $parameter) {
                         $propertyType = $parameter->getType();
                         break;
                     }
+
                     if ($propertyType !== null) {
-                        if (true === settype($propertyValue, $propertyType)) {
+                        if (settype($propertyValue, $propertyType)) {
                             $domainConfig->$setterName($propertyValue);
                         } else {
                             // TODO: Handle setter not found
@@ -158,12 +141,11 @@ class AjaxController
             }
         }
 
-        if (count($errors) === 0) {
+        if ($errors === []) {
             $successes[] = LocalizationUtility::translate('auto-saved', $this->extensionName);
         }
 
-
-        if (true === isset($request->getQueryParams()['flushAnalyticsCache']) && (int)$request->getQueryParams()['flushAnalyticsCache'] === 1) {
+        if (isset($request->getQueryParams()['flushAnalyticsCache']) && (int)$request->getQueryParams()['flushAnalyticsCache'] === 1) {
             /** @var CacheManager $cacheManager */
             $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
             $cacheManager->flushCachesByTag('er24_analytics_' . $domainConfig->getUid());
@@ -174,14 +156,11 @@ class AjaxController
 
         return new JsonResponse([
             'errors' => $errors,
-            'successes' => $successes
+            'successes' => $successes,
         ]);
     }
 
-
     /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
      * @throws IllegalObjectTypeException
      * @throws UnknownObjectException
      */
@@ -195,6 +174,7 @@ class AjaxController
         $domainConfg = $this->domainConfigRepository->findByUid($domainConfigId);
 
         $domainConfg->setApiKey($newApiKey);
+
         $apiHandlerResult = $this->apiUtility->handleDomainConfigUpdate($domainConfg, $newApiKey);
 
         $errors = $apiHandlerResult[0];
@@ -216,7 +196,7 @@ class AjaxController
 
         return new JsonResponse([
             'errors' => $errors,
-            'successes' => $successes
+            'successes' => $successes,
         ]);
     }
 
@@ -225,14 +205,12 @@ class AjaxController
         return new JsonResponse(['errors' => $errors]);
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     */
     public function refreshConnectionAction(ServerRequestInterface $request): ResponseInterface
     {
 
-        $errors = $successes = $fixed = [];
+        $errors = [];
+        $successes = [];
+        $fixed = [];
         $domainConfigId = (int)$request->getQueryParams()['domainConfigId'];
 
         /** @var DomainConfig $domainConfig */
@@ -246,15 +224,16 @@ class AjaxController
             return new JsonResponse([
                 'errors' => $errors,
             ]);
-        } else {
-            $fixed[] = 'apiConnection';
         }
+
+        $fixed[] = 'apiConnection';
 
         if ($domainConfig->getClientId() !== '') {
             $response = $client->deleteClient($domainConfig->getClientId());
             if ($response->isSuccess() === false) {
                 $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
             }
+
             $response = $client->addClient();
             if ($response->isSuccess() === false) {
                 $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
@@ -268,7 +247,7 @@ class AjaxController
                 $this->persistenceManager->persistAll();
 
                 $response = $client->testPushPing($domainConfig->getClientId());
-                if ($response->isSuccess() === true) {
+                if ($response->isSuccess()) {
                     $fixed[] = 'push';
                 } else {
                     $errors[] = HelperUtility::getBestFittingApiErrorMessage($response);
@@ -280,7 +259,7 @@ class AjaxController
             if ($clientResult->isSuccess() === false) {
                 $errors[] = HelperUtility::getBestFittingApiErrorMessage($clientResult);
             } else {
-                $successes[] = LocalizationUtility::translate('connection-established', 'er24_rechtstexte_lts8');
+                $successes[] = LocalizationUtility::translate('connection-established', 'Er24RechtstexteLts8');
                 $domainConfig->setClientId($clientResult->getData('client_id'));
                 $domainConfig->setClientSecret($clientResult->getData('secret'));
                 $this->domainConfigRepository->update($domainConfig);
@@ -291,14 +270,12 @@ class AjaxController
         return new JsonResponse([
             'errors' => $errors,
             'successes' => $successes,
-            'fixed' => $fixed
+            'fixed' => $fixed,
         ]);
 
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
      * @deprecated
      */
     public function changeSiteConfigAction(ServerRequestInterface $request): ResponseInterface
@@ -313,7 +290,7 @@ class AjaxController
 
         try {
             $newSiteConfig = $siteFinder->getSiteByIdentifier($siteIdentifier);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
         }
 
         $languageInformations = [];
@@ -323,7 +300,7 @@ class AjaxController
             $languageInformations[] = [
                 'languageId' => $language->getLanguageId(),
                 'name' => $language->getTitle(),
-                'domain' => $language->getBase()->getScheme() . '://' . $language->getBase()->getHost() . '/'
+                'domain' => $language->getBase()->getScheme() . '://' . $language->getBase()->getHost() . '/',
             ];
         }
 

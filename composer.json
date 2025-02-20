@@ -3,9 +3,8 @@
 	"type": "typo3-cms-extension",
 	"description": "This extension allows the easy integration of imprint and privacy policy of eRecht24.",
 	"authors": [],
-	"version": "2.0.2",
 	"require": {
-		"typo3/cms-core": "11.5.0 - 12.4.99"
+		"typo3/cms-core": "^13.4"
 	},
 	"autoload": {
 		"psr-4": {

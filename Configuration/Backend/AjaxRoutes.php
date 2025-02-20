@@ -1,24 +1,26 @@
 <?php
 
+use ERecht24\Er24Rechtstexte\Controller\AjaxController;
+
 return [
     'er24_changeSiteConfig' => [
         'path' => '/erecht24/changeSiteConfig',
-        'target' => \ERecht24\Er24Rechtstexte\Controller\AjaxController::class . '::changeSiteConfigAction',
+        'target' => AjaxController::class . '::changeSiteConfigAction',
     ],
     'er24_syncAllDocuments' => [
         'path' => '/erecht24/syncAllDocuments',
-        'target' => \ERecht24\Er24Rechtstexte\Controller\AjaxController::class . '::syncAllDocumentsAction',
+        'target' => AjaxController::class . '::syncAllDocumentsAction',
     ],
     'er24_syncDocument' => [
         'path' => '/erecht24/syncDocument',
-        'target' => \ERecht24\Er24Rechtstexte\Controller\AjaxController::class . '::syncDocumentAction',
+        'target' => AjaxController::class . '::syncDocumentAction',
     ],
     'er24_saveDomainConfig' => [
         'path' => '/erecht24/saveDomainConfig',
-        'target' => \ERecht24\Er24Rechtstexte\Controller\AjaxController::class . '::saveDomainConfigAction',
+        'target' => AjaxController::class . '::saveDomainConfigAction',
     ],
     'er24_refreshConfig' => [
         'path' => '/erecht24/refreshConfig',
-        'target' => \ERecht24\Er24Rechtstexte\Controller\AjaxController::class . '::refreshConnectionAction',
+        'target' => AjaxController::class . '::refreshConnectionAction',
     ],
 ];

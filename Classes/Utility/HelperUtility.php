@@ -4,42 +4,36 @@ namespace ERecht24\Er24Rechtstexte\Utility;
 
 use ERecht24\Er24Rechtstexte\Api\ApiResponse;
 use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class HelperUtility
 {
+    public const PLUGIN_NAME = 'er24_rechtstexte';
 
-    const PLUGIN_NAME = 'er24_rechtstexte';
+    public const PLUGIN_VERSION = '2.0.3';
 
-    const PLUGIN_VERSION = '2.0.3';
+    public const PLUGIN_TEXT_DOMAIN = 'erecht24';
 
-    const PLUGIN_TEXT_DOMAIN = 'erecht24';
+    public const API_HOST_URL = 'https://api.e-recht24.de';
 
-    const API_HOST_URL = 'https://api.e-recht24.de';
-
-    const REST_NAMESPACE = 'erecht24/v1';
+    public const REST_NAMESPACE = 'erecht24/v1';
 
     /**
      * Function provides best fitting api message
-     *
-     * @param ApiResponse|null $apiResponse
-     * @param string $default
-     * @return string
      */
     public static function getBestFittingApiErrorMessage(
         ?ApiResponse $apiResponse = null,
         string $default = ''
-    ): string
-    {
+    ): string {
         if (isset($GLOBALS['BE_USER']->uc['lang'])
             && $GLOBALS['BE_USER']->uc['lang'] === 'de'
-            && $apiResponse
+            && $apiResponse instanceof ApiResponse
             && $apiResponse->getData('message_de')) {
             $error_message = $apiResponse->getData('message_de');
-        } elseif ($apiResponse && $apiResponse->getData('message')) {
+        } elseif ($apiResponse instanceof ApiResponse && $apiResponse->getData('message')) {
             $error_message = $apiResponse->getData('message');
-        } elseif ($default) {
+        } elseif ($default !== '' && $default !== '0') {
             $error_message = $default;
         } else {
             // @todo
@@ -51,21 +45,16 @@ class HelperUtility
         return $error_message;
     }
 
-
-    /**
-     * @param ApiResponse $apiResponse
-     * @param DomainConfig $domainConfig
-     * @param string $documentType
-     * @return DomainConfig
-     */
-    public static function assignDocumentToDomainConfig(ApiResponse $apiResponse,
-                                                 DomainConfig $domainConfig,
-                                                 string $documentType) {
+    public static function assignDocumentToDomainConfig(
+        ApiResponse $apiResponse,
+        DomainConfig $domainConfig,
+        string $documentType
+    ): DomainConfig {
         $contentEn = $apiResponse->getData('html_en');
         $contentDe = $apiResponse->getData('html_de');
-        $modified =  strtotime($apiResponse->getData('modified'));
+        $modified =  strtotime((string)$apiResponse->getData('modified'));
 
-        switch($documentType) {
+        switch ($documentType) {
             case 'imprint':
                 $domainConfig->setImprintDe($contentDe);
                 $domainConfig->setImprintEn($contentEn);
@@ -92,14 +81,9 @@ class HelperUtility
         return $domainConfig;
     }
 
-    /**
-     * @param DomainConfig $domainConfig
-     * @param string $documentType
-     * @return DomainConfig
-     */
-    public static function removeDocument(DomainConfig $domainConfig, string $documentType)
+    public static function removeDocument(DomainConfig $domainConfig, string $documentType): DomainConfig
     {
-        switch($documentType) {
+        switch ($documentType) {
             case 'imprint':
                 $domainConfig->setImprintDe('');
                 $domainConfig->setImprintEn('');
@@ -112,8 +96,8 @@ class HelperUtility
                 $domainConfig->setSocialDe('');
                 $domainConfig->setSocialEn('');
         }
+
         return $domainConfig;
     }
-
 
 }

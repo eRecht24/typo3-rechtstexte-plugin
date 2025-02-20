@@ -2,11 +2,11 @@
 
 namespace ERecht24\Er24Rechtstexte\UserFunc;
 
-use TYPO3\CMS\Core\Site\SiteFinder;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
 use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AnalyticsHeaderData
 {
@@ -19,7 +19,7 @@ class AnalyticsHeaderData
         try {
             $siteConfig = $siteFinder->getSiteByPageId($GLOBALS['TSFE']->id);
             /** @var DomainConfig $domainConfig */
-            $domainConfig = GeneralUtility::makeInstance(DomainConfigRepository::class)->findOneByDomain((string)$siteConfig->getBase());
+            $domainConfig = GeneralUtility::makeInstance(DomainConfigRepository::class)->findOneBy(['domain' => (string)$siteConfig->getBase()]);
             $analytics4Tracking = false;
 
             if ($domainConfig !== null) {
@@ -27,7 +27,7 @@ class AnalyticsHeaderData
                 $GLOBALS['TSFE']->addCacheTags(['er24_analytics_' . $domainConfig->getUid()]);
 
                 if ($domainConfig->getFlagEmbedTracking() === true && $domainConfig->getAnalyticsId() !== '') {
-                    if (substr($domainConfig->getAnalyticsId(), 0, 2) === 'G-') {
+                    if (str_starts_with($domainConfig->getAnalyticsId(), 'G-')) {
                         $analytics4Tracking = true;
                     }
 
@@ -67,8 +67,8 @@ function gaOptout() {
     gtag(\'config\', "' . $domainConfig->getAnalyticsId() . '"';
                     }
 
-                    if (false === $analytics4Tracking) {
-                        $embedCode .= ', { \'anonymize_ip\': true }';
+                    if ($analytics4Tracking === false) {
+                        $embedCode .= ", { 'anonymize_ip': true }";
                     }
 
                     $embedCode .= ');</script>';
@@ -76,7 +76,9 @@ function gaOptout() {
                     return $embedCode;
                 }
             }
-        } catch (\Exception $e) {
+        } catch (\Exception) {
         }
+
+        return null;
     }
 }

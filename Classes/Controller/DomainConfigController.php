@@ -1,34 +1,33 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ERecht24\Er24Rechtstexte\Controller;
 
-
-use TYPO3\CMS\Backend\Template\ModuleTemplate;
-use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
-use TYPO3\CMS\Extbase\Http\ForwardResponse;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
-use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use ERecht24\Er24Rechtstexte\Utility\ApiUtility;
-use ERecht24\Er24Rechtstexte\Utility\UpdateUtility;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
-use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Site\SiteFinder;
-use TYPO3\CMS\Core\Site\Entity\Site;
-use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
-use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
 use ERecht24\Er24Rechtstexte\Api\Client;
-use TYPO3\CMS\Core\Core\Environment;
+use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
+use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
+use ERecht24\Er24Rechtstexte\Utility\ApiUtility;
 use ERecht24\Er24Rechtstexte\Utility\HelperUtility;
 use ERecht24\Er24Rechtstexte\Utility\LogUtility;
+use ERecht24\Er24Rechtstexte\Utility\UpdateUtility;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Package\PackageManager;
+use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Site\Entity\Site;
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Frontend\Typolink\EmailLinkBuilder;
 
@@ -48,7 +47,6 @@ use TYPO3\CMS\Frontend\Typolink\EmailLinkBuilder;
  */
 class DomainConfigController extends ActionController
 {
-
     /**
      * @var string
      */
@@ -59,22 +57,23 @@ class DomainConfigController extends ActionController
      *
      * @var DomainConfigRepository
      */
-    protected $domainConfigRepository = null;
+    protected $domainConfigRepository;
 
     /**
      * @var PersistenceManager
      */
-    protected $persistenceManager = null;
+    protected $persistenceManager;
 
     /**
      * @var ApiUtility
      */
-    protected $apiUtility = null;
+    protected $apiUtility;
 
-    public function __construct(
-        protected readonly ModuleTemplateFactory $moduleTemplateFactory,
-    )
+    public function __construct(protected readonly ModuleTemplateFactory $moduleTemplateFactory, ApiUtility $apiUtility, PersistenceManager $persistenceManager, DomainConfigRepository $domainConfigRepository)
     {
+        $this->apiUtility = $apiUtility;
+        $this->persistenceManager = $persistenceManager;
+        $this->domainConfigRepository = $domainConfigRepository;
     }
 
     protected function defaultActionHandling()
@@ -85,67 +84,38 @@ class DomainConfigController extends ActionController
         return $this->htmlResponse($moduleTemplate->renderContent());
     }
 
-    protected function registerDocheaderButtons(ModuleTemplate $moduleTemplate)
-    {
-
-    }
-
-    /**
-     * @param ApiUtility $apiUtility
-     */
-    public function injectApiUtility(ApiUtility $apiUtility)
-    {
-        $this->apiUtility = $apiUtility;
-    }
-
-    /**
-     * @param PersistenceManager $persistenceManager
-     */
-    public function injectPersistenceManager(PersistenceManager $persistenceManager)
-    {
-        $this->persistenceManager = $persistenceManager;
-    }
-
-    /**
-     * @param DomainConfigRepository $domainConfigRepository
-     */
-    public function injectDomainConfigRepository(DomainConfigRepository $domainConfigRepository)
-    {
-        $this->domainConfigRepository = $domainConfigRepository;
-    }
+    protected function registerDocheaderButtons(ModuleTemplate $moduleTemplate) {}
 
     /**
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
-    public function performUpdateAction()
+    public function performUpdateAction(): ResponseInterface
     {
         $updateUtility = new UpdateUtility();
-        if (true === $updateUtility->performSelfUpdate()) {
-            $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . LocalizationUtility::translate('update-success', $this->request->getControllerExtensionName()), '', AbstractMessage::OK);
+        if ($updateUtility->performSelfUpdate() === true) {
+            $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . LocalizationUtility::translate('update-success', $this->request->getControllerExtensionName()), '', ContextualFeedbackSeverity::OK);
         } else {
-            $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . LocalizationUtility::translate('update-failed', $this->request->getControllerExtensionName()), '', AbstractMessage::WARNING);
+            $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . LocalizationUtility::translate('update-failed', $this->request->getControllerExtensionName()), '', ContextualFeedbackSeverity::WARNING);
         }
 
-        return (new ForwardResponse('list'));
+        return new ForwardResponse('list');
     }
 
     /**
      * action list
-     *
-     * @return void
      */
     public function listAction(): ResponseInterface
     {
         $jsRequiredLanguageKeys = [
             'attention',
             'delete-confirm',
-            'abort'
+            'abort',
         ];
 
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
 
         foreach ($jsRequiredLanguageKeys as $key) {
-            $label = LocalizationUtility::translate($key, 'er24_rechtstexte');
+            $label = LocalizationUtility::translate($key, 'Er24Rechtstexte');
             $pageRenderer->addInlineLanguageLabel(str_replace('-', '_', $key), $label);
         }
 
@@ -156,8 +126,8 @@ class DomainConfigController extends ActionController
 
         $allSiteConfigurations = $siteFinder->getAllSites();
         $domainConfigs = $this->domainConfigRepository->findAll();
-
-        $domainsLeft = $configuredDomains = [];
+        $domainsLeft = [];
+        $configuredDomains = [];
 
         /** @var Site $siteConfig */
         foreach ($allSiteConfigurations as $index => $siteConfig) {
@@ -168,7 +138,7 @@ class DomainConfigController extends ActionController
         foreach ($domainConfigs as $config) {
             $configuredDomains[$config->getDomain()] = $config->getDomain();
 
-            if (true === isset($domainsLeft[$config->getDomain()])) {
+            if (isset($domainsLeft[$config->getDomain()])) {
                 unset($domainsLeft[$config->getDomain()]);
             }
         }
@@ -176,11 +146,12 @@ class DomainConfigController extends ActionController
         /** @var Site $siteConfig */
         foreach ($allSiteConfigurations as $index => $siteConfig) {
             $match = false;
-            foreach ($domainsLeft as $domain => $siteIdentifier) {
+            foreach ($domainsLeft as $siteIdentifier) {
                 if ($index === $siteIdentifier) {
                     $match = true;
                 }
             }
+
             if ($match === false) {
                 unset($allSiteConfigurations[$index]);
             }
@@ -192,7 +163,7 @@ class DomainConfigController extends ActionController
             'configuredDomains' => $configuredDomains,
             'updateAvailable' => $updateUtility->updateAvailable,
             'latestVersion' => $updateUtility->latestVersion,
-            'composerMode' => $updateUtility->composeMode
+            'composerMode' => $updateUtility->composeMode,
         ]);
 
         return $this->defaultActionHandling();
@@ -200,7 +171,6 @@ class DomainConfigController extends ActionController
 
     /**
      * action show
-     * @return void
      */
     public function showAction(): ResponseInterface
     {
@@ -208,7 +178,7 @@ class DomainConfigController extends ActionController
         $domainConfig = $this->domainConfigRepository->findByUid($this->settings['configId']);
         if ($domainConfig === null) {
             // TODO
-            $this->addFlashMessage(LocalizationUtility::translate('configuration-not-found', $this->request->getControllerExtensionName()), '', AbstractMessage::WARNING);
+            $this->addFlashMessage(LocalizationUtility::translate('configuration-not-found', $this->request->getControllerExtensionName()), '', ContextualFeedbackSeverity::WARNING);
             return $this->htmlResponse($this->view->render());
         }
 
@@ -225,25 +195,26 @@ class DomainConfigController extends ActionController
                 $source = $domainConfig->getSocialSource() === 0 ? 'Local' : '';
         }
 
-        $getterFunctionName = 'get' . ucfirst($this->settings['documentType']) . $language . $source;
+        $getterFunctionName = 'get' . ucfirst((string)$this->settings['documentType']) . $language . $source;
 
         if (method_exists($domainConfig, $getterFunctionName)) {
             $outputText = $domainConfig->$getterFunctionName();
 
-            if (true === (bool)$this->settings['removeHeadline'] && strpos($outputText, '</h1>') !== false) {
-                $outputText = substr($outputText, strpos($outputText, '</h1>') + 5);
+            if ((bool)$this->settings['removeHeadline'] && str_contains((string)$outputText, '</h1>')) {
+                $outputText = substr((string)$outputText, strpos((string)$outputText, '</h1>') + 5);
             }
 
             // check if outputText isn't empty
-            if (strlen(trim($outputText)) > 0) {
+            if (strlen(trim((string)$outputText)) > 0) {
                 // replace emails with TYPO3 spambot safe links
                 // try to get it working with not normalized domain names
                 // please use idn syntax: https://de.wikipedia.org/wiki/Internationalisierter_Domainname
-                $mailRegex = "/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+.[a-zA-Z])/";
-                preg_match_all($mailRegex, $outputText, $matches);
+                $mailRegex = '/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+.[a-zA-Z])/';
+                preg_match_all($mailRegex, (string)$outputText, $matches);
 
-                if(is_array($matches[0]))
-                  $matches[0] = array_unique($matches[0]);
+                if (is_array($matches[0])) {
+                    $matches[0] = array_unique($matches[0]);
+                }
 
                 foreach ($matches[0] as $match) {
                     $outputText = str_replace($match, $this->createEmailLink($match), $outputText);
@@ -253,45 +224,44 @@ class DomainConfigController extends ActionController
             $GLOBALS['TSFE']->addCacheTags(['er24_document_' . $domainConfig->getUid()]);
 
             $this->view->assignMultiple([
-                'outputText' => $outputText
+                'outputText' => $outputText,
             ]);
         } else {
-            $this->addFlashMessage(LocalizationUtility::translate('document-not-found', $this->request->getControllerExtensionName()), '', AbstractMessage::WARNING);
+            $this->addFlashMessage(LocalizationUtility::translate('document-not-found', $this->request->getControllerExtensionName()), '', ContextualFeedbackSeverity::WARNING);
         }
+
         return $this->htmlResponse();
 
     }
 
     private function createEmailLink(string $email): string
     {
-        if (version_compare(VersionNumberUtility::getNumericTypo3Version(), "12.0.0", "<")) {
+        if (version_compare(VersionNumberUtility::getNumericTypo3Version(), '12.0.0', '<')) {
             [$linkHref, $linkText] = $GLOBALS['TSFE']->cObj->getMailTo($email, '');
             return sprintf("<a href='%s'>%s</a>", $linkHref, $linkText);
-        } else {
-            $typoScriptFrontendController = $this->request->getAttribute('frontend.controller');
-            $emailLinkBuilder = GeneralUtility::makeInstance(EmailLinkBuilder::class, $typoScriptFrontendController->cObj, $typoScriptFrontendController);
-            [$mailToUrl, $linkText, $attributes] = $emailLinkBuilder->processEmailLink($email, $email);
-            $linkAttributesString = "";
-            if (!empty($attributes)) {
-                foreach ($attributes as $attributeKey => $attributeValue) {
-                    $linkAttributesString .= " " . $attributeKey . '="' . $attributeValue . '"';
-                }
-            }
-            return sprintf("<a href=\"%s\"%s>%s</a>", $mailToUrl, $linkAttributesString, $linkText);
         }
+
+        $typoScriptFrontendController = $this->request->getAttribute('frontend.controller');
+        $emailLinkBuilder = GeneralUtility::makeInstance(EmailLinkBuilder::class, $typoScriptFrontendController->cObj, $typoScriptFrontendController);
+        [$mailToUrl, $linkText, $attributes] = $emailLinkBuilder->processEmailLink($email, $email);
+        $linkAttributesString = '';
+        if (!empty($attributes)) {
+            foreach ($attributes as $attributeKey => $attributeValue) {
+                $linkAttributesString .= ' ' . $attributeKey . '="' . $attributeValue . '"';
+            }
+        }
+
+        return sprintf('<a href="%s"%s>%s</a>', $mailToUrl, $linkAttributesString, $linkText);
+
     }
 
-    /**
-     * @param DomainConfig|null $newDomainConfig
-     * @param string $siteconfigIdentifier
-     */
-    public function newAction(DomainConfig $newDomainConfig = null, string $siteconfigIdentifier = ''): ResponseInterface
+    public function newAction(?DomainConfig $newDomainConfig = null, string $siteconfigIdentifier = ''): ResponseInterface
     {
         /** @var SiteFinder $siteFinder */
         $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
         $siteConfig = null;
 
-        if ($newDomainConfig === null) {
+        if (!$newDomainConfig instanceof DomainConfig) {
             $newDomainConfig = new DomainConfig();
             $newDomainConfig->setSiteConfigName($siteconfigIdentifier);
         }
@@ -300,7 +270,7 @@ class DomainConfigController extends ActionController
             try {
                 $siteConfig = $siteFinder->getSiteByIdentifier($newDomainConfig->getSiteConfigName());
                 $newDomainConfig->setDomain((string)$siteConfig->getBase());
-            } catch (\Exception $e) {
+            } catch (\Exception) {
             }
         }
 
@@ -310,7 +280,7 @@ class DomainConfigController extends ActionController
         // Remove already used Siteconfigs
         /** @var DomainConfig $domainConfig */
         foreach ($allDomainConfigs as $domainConfig) {
-            if (true === array_key_exists($domainConfig->getSiteConfigName(), $allSites)) {
+            if (array_key_exists($domainConfig->getSiteConfigName(), $allSites)) {
                 unset($allSites[$domainConfig->getSiteConfigName()]);
             }
         }
@@ -318,7 +288,7 @@ class DomainConfigController extends ActionController
         $this->view->assignMultiple([
             'newDomainConfig' => $newDomainConfig,
             'siteConfig' => $siteConfig,
-            'allSiteConfigurations' => $allSites
+            'allSiteConfigurations' => $allSites,
         ]);
 
         return $this->defaultActionHandling();
@@ -326,13 +296,10 @@ class DomainConfigController extends ActionController
 
     /**
      * action create
-     *
-     * @param DomainConfig $newDomainConfig
-     * @return void
      */
-    public function createAction(DomainConfig $newDomainConfig)
+    public function createAction(DomainConfig $newDomainConfig): ResponseInterface
     {
-        $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . ' ' . LocalizationUtility::translate('config-was-created', $this->request->getControllerExtensionName()), '', AbstractMessage::OK);
+        $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . ' ' . LocalizationUtility::translate('config-was-created', $this->request->getControllerExtensionName()), '', ContextualFeedbackSeverity::OK);
 
         $now = time();
         $newDomainConfig->setSocialEnTstamp($now);
@@ -351,9 +318,6 @@ class DomainConfigController extends ActionController
 
     /**
      * action edit
-     *
-     * @param DomainConfig $domainConfig
-     * @return void
      */
     #[IgnoreValidation(['value' => 'domainConfig'])]
     public function editAction(DomainConfig $domainConfig): ResponseInterface
@@ -366,17 +330,21 @@ class DomainConfigController extends ActionController
             'delete',
             'abort',
             'debug-was-copied',
-            'error'
+            'error',
         ];
 
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
 
         foreach ($jsRequiredLanguageKeys as $key) {
-            $label = LocalizationUtility::translate($key, 'er24_rechtstexte');
+            $label = LocalizationUtility::translate($key, 'Er24Rechtstexte');
             $pageRenderer->addInlineLanguageLabel(str_replace('-', '_', $key), $label);
         }
 
-        $errors = $pushError = $configError = $erechtServerError = $curlError = false;
+        $errors = false;
+        $pushError = false;
+        $configError = false;
+        $erechtServerError = false;
+        $curlError = false;
         $configErrorMessages = [];
 
         if ($domainConfig->getClientId() !== '') {
@@ -388,7 +356,9 @@ class DomainConfigController extends ActionController
             }
 
         } else {
-            $errors = $configError = $pushError = true;
+            $errors = true;
+            $configError = true;
+            $pushError = true;
             $configErrorMessages[] = 'noclient_exists';
         }
 
@@ -402,16 +372,16 @@ class DomainConfigController extends ActionController
             }
         }
 
-        $curlError = function_exists('curl_version') ? false : true;
+        $curlError = !function_exists('curl_version');
 
-        $debugInformations = 'PHP Version: ' . phpversion() . PHP_EOL;
+        $debugInformations = 'PHP Version: ' . PHP_VERSION . PHP_EOL;
         $debugInformations .= 'TYPO3 Composer Mode: ' . (int)Environment::isComposerMode() . PHP_EOL;
         $debugInformations .= 'cURL Error: ' . (int)$curlError . PHP_EOL;
         $debugInformations .= 'Push Error: ' . (int)$pushError . PHP_EOL;
         $debugInformations .= 'API Connection Error: ' . (int)$erechtServerError . PHP_EOL;
         $debugInformations .= 'Configuration Errors: ' . (int)$configError . PHP_EOL;
 
-        if (count($configErrorMessages) > 0) {
+        if ($configErrorMessages !== []) {
             $debugInformations .= 'Configuration Error Details: ' . PHP_EOL;
             foreach ($configErrorMessages as $error) {
                 $debugInformations .= $error . PHP_EOL;
@@ -429,7 +399,6 @@ class DomainConfigController extends ActionController
         $debugInformations .= LogUtility::getErrorLog();
         $debugInformations .= PHP_EOL;
         $debugInformations .= 'Extension informations:' . PHP_EOL;
-
 
         /** @var PackageManager $packageManager */
         $packageManager = GeneralUtility::makeInstance(PackageManager::class);
@@ -457,7 +426,7 @@ class DomainConfigController extends ActionController
             'curlError' => $curlError ? 1 : 0,
             'debugInformations' => $debugInformations,
             'documentation' => $documentation,
-            't3version' => VersionNumberUtility::convertVersionNumberToInteger(VersionNumberUtility::getNumericTypo3Version())
+            't3version' => VersionNumberUtility::convertVersionNumberToInteger(VersionNumberUtility::getNumericTypo3Version()),
         ]);
 
         return $this->defaultActionHandling();
@@ -465,11 +434,8 @@ class DomainConfigController extends ActionController
 
     /**
      * action update
-     *
-     * @param DomainConfig $domainConfig
-     * @return ForwardResponse
      */
-    public function updateAction(DomainConfig $domainConfig)
+    public function updateAction(DomainConfig $domainConfig): ResponseInterface
     {
         $apiHandlerResult = $this->apiUtility->handleDomainConfigUpdate($domainConfig, $domainConfig->getApiKey());
         self::handleApiHandlerResults($apiHandlerResult);
@@ -499,29 +465,28 @@ class DomainConfigController extends ActionController
     {
         if (count($apiHandlerResult[0]) > 0) {
             foreach ($apiHandlerResult[0] as $error) {
-                $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . ' ' . $error, '', AbstractMessage::WARNING);
+                $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . ' ' . $error, '', ContextualFeedbackSeverity::WARNING);
             }
         }
+
         if (count($apiHandlerResult[1]) > 0) {
             foreach ($apiHandlerResult[1] as $success) {
-                $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . ' ' . $success, '', AbstractMessage::OK);
+                $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . ' ' . $success, '', ContextualFeedbackSeverity::OK);
             }
         }
     }
 
     /**
      * action delete
-     * @param DomainConfig $domainConfig
-     * @return ForwardResponse
      */
-    public function deleteAction(DomainConfig $domainConfig)
+    public function deleteAction(DomainConfig $domainConfig): ResponseInterface
     {
         if ($domainConfig->getClientId() !== '' && $domainConfig->getApiKey() !== '') {
             $apiHandlerResult = $this->apiUtility->deleteDomainConfigClient($domainConfig, $domainConfig->getApiKey());
             self::handleApiHandlerResults($apiHandlerResult);
         }
 
-        $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . ' ' . LocalizationUtility::translate('config-was-deleted', $this->request->getControllerExtensionName()), '', AbstractMessage::OK);
+        $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . ' ' . LocalizationUtility::translate('config-was-deleted', $this->request->getControllerExtensionName()), '', ContextualFeedbackSeverity::OK);
         $this->domainConfigRepository->remove($domainConfig);
         $persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
         $persistenceManager->persistAll();

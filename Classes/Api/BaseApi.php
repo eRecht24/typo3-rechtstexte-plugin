@@ -1,4 +1,5 @@
 <?php
+
 namespace ERecht24\Er24Rechtstexte\Api;
 
 use ERecht24\Er24Rechtstexte\Utility\HelperUtility;
@@ -18,10 +19,8 @@ class BaseApi
 
     /**
      * BaseApi constructor.
-     * @param string $apiKey
-     * @param string $domain
      */
-    public function __construct( string $apiKey, string $domain)
+    public function __construct(string $apiKey, string $domain)
     {
         $this->apiKey = $apiKey;
         $this->domain = $domain;
@@ -29,26 +28,24 @@ class BaseApi
 
     /**
      * Function provides api url
-     * @param string $path
-     * @return string
      */
-    public function getApiUrl ( string $path = ''): string
+    public function getApiUrl(string $path = ''): string
     {
-        return ($path)
+        return ($path !== '' && $path !== '0')
             ? HelperUtility::API_HOST_URL . '/' . $path
             : '';
     }
 
     /**
      * Function provides api key
-     * @return string
      */
     public function getApiKey(): string
     {
         return $this->apiKey;
     }
 
-    protected function performRequest($uri, $method, $requestData = null) {
+    protected function performRequest($uri, $method, $requestData = null)
+    {
 
         $ch = curl_init($uri);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -56,10 +53,10 @@ class BaseApi
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Content-Type: application/json; charset=utf-8',
-            'eRecht24:' . (string) $this->getApiKey()
+            'eRecht24:' . $this->getApiKey(),
         ]);
 
-        if($requestData !== null) {
+        if ($requestData !== null) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, $requestData);
         }
 
@@ -69,7 +66,7 @@ class BaseApi
             'response' => [
                 'code' => curl_getinfo($ch, CURLINFO_HTTP_CODE),
             ],
-            'body' => $res
+            'body' => $res,
         ];
 
     }
@@ -77,48 +74,35 @@ class BaseApi
     /**
      * Function evaluates response and returns ordered data
      * @param $response
-     * @return ApiResponse
      */
-    public function handleResponse($response) : ApiResponse {
-
+    public function handleResponse($response): ApiResponse
+    {
         $responseCode = $response['response']['code'] ?? 500;
-        switch($responseCode) {
-            case 200: // ok
-                return $this->handleSuccess($response);
-
-            case 400: // unsuccessful
-            case 401: // unauthorized
-            case 403: // invalid parameter
-                return $this->handleError($response, $responseCode);
-
-            case 404: // wrong url
-                return $this->handle404();
-
-            default:
-                return $this->handleError($response, $responseCode);
-        }
+        return match ($responseCode) {
+            200           => $this->handleSuccess($response),              // ok
+            400, 401, 403 => $this->handleError($response, $responseCode), // unsuccessful, unauthorized, invalid parameter
+            404           => $this->handle404(),                           // wrong url
+            default       => $this->handleError($response, $responseCode), // fallback
+        };
     }
 
     /**
-     * Function  provides success data
-     * @param array $response
-     * @return ApiResponse
+     * Function provides success data
      */
-    protected function handleSuccess(array $response): ApiResponse {
+    protected function handleSuccess(array $response): ApiResponse
+    {
         return new ApiResponse(
             200,
             true,
-            json_decode($response['body'], true)
+            json_decode((string)$response['body'], true)
         );
     }
 
     /**
      * Function provides error data
-     * @param array $response
-     * @param int $code
-     * @return ApiResponse
      */
-    protected function handleError(array $response, int $code) : ApiResponse {
+    protected function handleError(array $response, int $code): ApiResponse
+    {
         return new ApiResponse(
             $code,
             false,
@@ -128,15 +112,14 @@ class BaseApi
 
     /**
      * Function provides data for 404 responses
-     * @return ApiResponse
      */
-    protected function handle404() : ApiResponse
+    protected function handle404(): ApiResponse
     {
         return new ApiResponse(
             404,
             false,
             [
-                "message" => __('Wrong api url! Please contact admin.', HelperUtility::PLUGIN_TEXT_DOMAIN)
+                'message' => __('Wrong api url! Please contact admin.', HelperUtility::PLUGIN_TEXT_DOMAIN),
             ]
         );
     }
@@ -144,18 +127,16 @@ class BaseApi
     /**
      * Function provides data for no response
      * @param $response
-     * @return ApiResponse
      */
     protected function handleNoResponse(
         $response
-    ): ApiResponse
-    {
+    ): ApiResponse {
         return new ApiResponse(
             404,
             false,
             [
-                "message" => __('No Response received. Please contact the admin.', HelperUtility::PLUGIN_TEXT_DOMAIN),
-                "originResponse" => $response
+                'message' => __('No Response received. Please contact the admin.', HelperUtility::PLUGIN_TEXT_DOMAIN),
+                'originResponse' => $response,
             ]
         );
     }

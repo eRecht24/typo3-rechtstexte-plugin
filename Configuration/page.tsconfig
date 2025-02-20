@@ -1,0 +1,16 @@
+mod {
+    wizards.newContentElement.wizardItems.plugins {
+        elements {
+            main {
+                iconIdentifier = ext-er24-rechtstexte-plugin-main
+                title = LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24_rechtstexte_main.name
+                description = LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24_rechtstexte_main.description
+                tt_content_defValues {
+                    CType = list
+                    list_type = er24rechtstexte_main
+                }
+            }
+        }
+        show = *
+    }
+}
