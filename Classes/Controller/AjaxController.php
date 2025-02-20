@@ -298,6 +298,7 @@ class AjaxController
         /** @var SiteLanguage $language */
         foreach ($newSiteConfig->getAllLanguages() as $language) {
             $languageInformations[] = [
+                // @extensionScannerIgnoreLine
                 'languageId' => $language->getLanguageId(),
                 'name' => $language->getTitle(),
                 'domain' => $language->getBase()->getScheme() . '://' . $language->getBase()->getHost() . '/',

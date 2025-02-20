@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\Package\Exception\InvalidPackageManifestException;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackagePathException;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackageStateException;
 use TYPO3\CMS\Core\Package\PackageManager;
+use TYPO3\CMS\Core\Service\DependencyOrderingService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extensionmanager\Exception\ExtensionManagerException;
 use TYPO3\CMS\Extensionmanager\Service\ExtensionManagementService;
@@ -53,7 +54,7 @@ class UpdateUtility
     public function __construct()
     {
         /** @var PackageManager $packageManager */
-        $packageManager = GeneralUtility::makeInstance(PackageManager::class);
+        $packageManager = GeneralUtility::makeInstance(PackageManager::class, new DependencyOrderingService());
         $this->currentVersion = $packageManager->getPackage('er24_rechtstexte')->getPackageMetaData()->getVersion();
         $this->composeMode = Environment::isComposerMode();
         self::isUpdateAvailable();

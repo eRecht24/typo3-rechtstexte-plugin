@@ -15,15 +15,16 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Cache\CacheTag;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Service\DependencyOrderingService;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -80,8 +81,7 @@ class DomainConfigController extends ActionController
     {
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->registerDocheaderButtons($moduleTemplate);
-        $moduleTemplate->setContent($this->view->render());
-        return $this->htmlResponse($moduleTemplate->renderContent());
+        return $moduleTemplate->renderResponse();
     }
 
     protected function registerDocheaderButtons(ModuleTemplate $moduleTemplate) {}
@@ -221,7 +221,10 @@ class DomainConfigController extends ActionController
                 }
             }
 
-            $GLOBALS['TSFE']->addCacheTags(['er24_document_' . $domainConfig->getUid()]);
+            // @extensionScannerIgnoreLine
+            $this->request->getAttribute('frontend.cache.collector')->addCacheTags(
+                new CacheTag('er24_document_' . $domainConfig->getUid())
+            );
 
             $this->view->assignMultiple([
                 'outputText' => $outputText,
@@ -236,11 +239,6 @@ class DomainConfigController extends ActionController
 
     private function createEmailLink(string $email): string
     {
-        if (version_compare(VersionNumberUtility::getNumericTypo3Version(), '12.0.0', '<')) {
-            [$linkHref, $linkText] = $GLOBALS['TSFE']->cObj->getMailTo($email, '');
-            return sprintf("<a href='%s'>%s</a>", $linkHref, $linkText);
-        }
-
         $typoScriptFrontendController = $this->request->getAttribute('frontend.controller');
         $emailLinkBuilder = GeneralUtility::makeInstance(EmailLinkBuilder::class, $typoScriptFrontendController->cObj, $typoScriptFrontendController);
         [$mailToUrl, $linkText, $attributes] = $emailLinkBuilder->processEmailLink($email, $email);
@@ -401,7 +399,7 @@ class DomainConfigController extends ActionController
         $debugInformations .= 'Extension informations:' . PHP_EOL;
 
         /** @var PackageManager $packageManager */
-        $packageManager = GeneralUtility::makeInstance(PackageManager::class);
+        $packageManager = GeneralUtility::makeInstance(PackageManager::class, new DependencyOrderingService());
         foreach ($packageManager->getActivePackages() as $extension) {
             $debugInformations .= $extension->getPackageKey() . ' (' . $extension->getPackageMetaData()->getVersion() . ')' . PHP_EOL;
         }
@@ -426,7 +424,6 @@ class DomainConfigController extends ActionController
             'curlError' => $curlError ? 1 : 0,
             'debugInformations' => $debugInformations,
             'documentation' => $documentation,
-            't3version' => VersionNumberUtility::convertVersionNumberToInteger(VersionNumberUtility::getNumericTypo3Version()),
         ]);
 
         return $this->defaultActionHandling();

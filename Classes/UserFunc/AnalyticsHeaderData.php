@@ -4,7 +4,7 @@ namespace ERecht24\Er24Rechtstexte\UserFunc;
 
 use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
 use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Core\Cache\CacheTag;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -17,14 +17,16 @@ class AnalyticsHeaderData
         $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
 
         try {
-            $siteConfig = $siteFinder->getSiteByPageId($GLOBALS['TSFE']->id);
+            $siteConfig = $siteFinder->getSiteByPageId($GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.page.information')->getId());
             /** @var DomainConfig $domainConfig */
             $domainConfig = GeneralUtility::makeInstance(DomainConfigRepository::class)->findOneBy(['domain' => (string)$siteConfig->getBase()]);
             $analytics4Tracking = false;
 
             if ($domainConfig !== null) {
-                /** @var TypoScriptFrontendController $TSFE */
-                $GLOBALS['TSFE']->addCacheTags(['er24_analytics_' . $domainConfig->getUid()]);
+                // @extensionScannerIgnoreLine
+                $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.cache.collector')->addCacheTags(
+                    new CacheTag('er24_analytics_' . $domainConfig->getUid())
+                );
 
                 if ($domainConfig->getFlagEmbedTracking() === true && $domainConfig->getAnalyticsId() !== '') {
                     if (str_starts_with($domainConfig->getAnalyticsId(), 'G-')) {
