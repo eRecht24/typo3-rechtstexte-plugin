@@ -10,6 +10,7 @@ use TYPO3\CMS\Core\Package\Exception\InvalidPackageStateException;
 use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Service\DependencyOrderingService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extensionmanager\Exception\ExtensionManagerException;
 use TYPO3\CMS\Extensionmanager\Service\ExtensionManagementService;
 use TYPO3\CMS\Extensionmanager\Utility\FileHandlingUtility;
@@ -53,9 +54,7 @@ class UpdateUtility
 
     public function __construct()
     {
-        /** @var PackageManager $packageManager */
-        $packageManager = GeneralUtility::makeInstance(PackageManager::class, new DependencyOrderingService());
-        $this->currentVersion = $packageManager->getPackage('er24_rechtstexte')->getPackageMetaData()->getVersion();
+        $this->currentVersion = ExtensionManagementUtility::getExtensionVersion('er24_rechtstexte');
         $this->composeMode = Environment::isComposerMode();
         self::isUpdateAvailable();
     }
@@ -100,8 +99,8 @@ class UpdateUtility
             throw new \Exception('The system is runnning in composer mode. This function should never have been called', 1607942004);
         }
 
-        $this->managementService = GeneralUtiltiy::makeInstance(ExtensionManagementService::class);
-        $this->fileHandlingUtility = GeneralUtiltiy::makeInstance(FileHandlingUtility::class);
+        $this->managementService = GeneralUtility::makeInstance(ExtensionManagementService::class);
+        $this->fileHandlingUtility = GeneralUtility::makeInstance(FileHandlingUtility::class);
 
         $apiRes = $this->performApiRequest('zipball/' . $this->latestVersion);
 

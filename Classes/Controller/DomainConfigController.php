@@ -77,13 +77,6 @@ class DomainConfigController extends ActionController
         $this->domainConfigRepository = $domainConfigRepository;
     }
 
-    protected function defaultActionHandling()
-    {
-        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $this->registerDocheaderButtons($moduleTemplate);
-        return $moduleTemplate->renderResponse();
-    }
-
     protected function registerDocheaderButtons(ModuleTemplate $moduleTemplate) {}
 
     /**
@@ -157,7 +150,9 @@ class DomainConfigController extends ActionController
             }
         }
 
-        $this->view->assignMultiple([
+        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+
+        $moduleTemplate->assignMultiple([
             'domainConfigs' => $domainConfigs,
             'allSiteConfigurations' => $allSiteConfigurations,
             'configuredDomains' => $configuredDomains,
@@ -166,7 +161,8 @@ class DomainConfigController extends ActionController
             'composerMode' => $updateUtility->composeMode,
         ]);
 
-        return $this->defaultActionHandling();
+        $this->registerDocheaderButtons($moduleTemplate);
+        return $moduleTemplate->renderResponse('DomainConfig/List');
     }
 
     /**
@@ -283,13 +279,16 @@ class DomainConfigController extends ActionController
             }
         }
 
-        $this->view->assignMultiple([
+        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+
+        $moduleTemplate->assignMultiple([
             'newDomainConfig' => $newDomainConfig,
             'siteConfig' => $siteConfig,
             'allSiteConfigurations' => $allSites,
         ]);
 
-        return $this->defaultActionHandling();
+        $this->registerDocheaderButtons($moduleTemplate);
+        return $moduleTemplate->renderResponse('DomainConfig/New');
     }
 
     /**
@@ -414,7 +413,9 @@ class DomainConfigController extends ActionController
             $documentation = (string)$parseDown->text(file_get_contents(ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Documentation/Documentation_en.md'));
         }
 
-        $this->view->assignMultiple([
+        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+
+        $moduleTemplate->assignMultiple([
             'domainConfig' => $domainConfig,
             'errors' => $errors,
             'pushError' => $pushError ? 1 : 0,
@@ -426,7 +427,8 @@ class DomainConfigController extends ActionController
             'documentation' => $documentation,
         ]);
 
-        return $this->defaultActionHandling();
+        $this->registerDocheaderButtons($moduleTemplate);
+        return $moduleTemplate->renderResponse('DomainConfig/Edit');
     }
 
     /**
