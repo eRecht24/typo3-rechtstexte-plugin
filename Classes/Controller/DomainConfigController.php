@@ -17,9 +17,7 @@ use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\CacheTag;
 use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Service\DependencyOrderingService;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
@@ -397,10 +395,8 @@ class DomainConfigController extends ActionController
         $debugInformations .= PHP_EOL;
         $debugInformations .= 'Extension informations:' . PHP_EOL;
 
-        /** @var PackageManager $packageManager */
-        $packageManager = GeneralUtility::makeInstance(PackageManager::class, new DependencyOrderingService());
-        foreach ($packageManager->getActivePackages() as $extension) {
-            $debugInformations .= $extension->getPackageKey() . ' (' . $extension->getPackageMetaData()->getVersion() . ')' . PHP_EOL;
+        foreach (ExtensionManagementUtility::getLoadedExtensionListArray() as $extension) {
+            $debugInformations .= $extension . ' (' . ExtensionManagementUtility::getExtensionVersion($extension) . ')' . PHP_EOL;
         }
 
         // The Docs //

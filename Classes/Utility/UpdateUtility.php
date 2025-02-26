@@ -7,8 +7,6 @@ use TYPO3\CMS\Core\Package\Exception\InvalidPackageKeyException;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackageManifestException;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackagePathException;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackageStateException;
-use TYPO3\CMS\Core\Package\PackageManager;
-use TYPO3\CMS\Core\Service\DependencyOrderingService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extensionmanager\Exception\ExtensionManagerException;
