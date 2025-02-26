@@ -134,15 +134,25 @@ const eRecht24Module = {
 
     function processCurrentDataSource() {
       const tab = document.querySelector(`.tab-${partType}`);
+
       if (tab) {
-        const remoteContent = tab.querySelector('.remote-content');
-        const localContent = tab.querySelector('.local-content');
+        const remoteContent = tab.querySelectorAll('.remote-content');
+        const localContent = tab.querySelectorAll('.local-content');
+
         if (eRecht24Module.currentSources[partType] == 0) {
-          remoteContent.style.display = 'none';
-          localContent.style.display = 'block';
+          remoteContent.forEach(element => {
+            element.style.display = 'none';
+          });
+          localContent.forEach(element => {
+            element.style.display = 'block';
+          });
         } else {
-          remoteContent.style.display = 'block';
-          localContent.style.display = 'none';
+          remoteContent.forEach(element => {
+            element.style.display = 'block';
+          });
+          localContent.forEach(element => {
+            element.style.display = 'none';
+          });
         }
       }
     }
