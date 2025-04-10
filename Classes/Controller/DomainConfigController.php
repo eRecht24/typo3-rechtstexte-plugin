@@ -239,7 +239,7 @@ class DomainConfigController extends ActionController
                 // replace emails with TYPO3 spambot safe links
                 // try to get it working with not normalized domain names
                 // please use idn syntax: https://de.wikipedia.org/wiki/Internationalisierter_Domainname
-                $mailRegex = "/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+.[a-zA-Z])/";
+                $mailRegex = "/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+\.[a-zA-Z]+)/";
                 preg_match_all($mailRegex, $outputText, $matches);
 
                 if(is_array($matches[0]))
