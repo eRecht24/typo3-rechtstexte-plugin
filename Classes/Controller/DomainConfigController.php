@@ -132,7 +132,7 @@ class DomainConfigController extends ActionController
     /**
      * action list
      *
-     * @return void
+     * @return ResponseInterface
      */
     public function listAction(): ResponseInterface
     {
@@ -200,7 +200,7 @@ class DomainConfigController extends ActionController
 
     /**
      * action show
-     * @return void
+     * @return ResponseInterface
      */
     public function showAction(): ResponseInterface
     {
@@ -353,7 +353,7 @@ class DomainConfigController extends ActionController
      * action edit
      *
      * @param DomainConfig $domainConfig
-     * @return void
+     * @return ResponseInterface
      */
     #[IgnoreValidation(['value' => 'domainConfig'])]
     public function editAction(DomainConfig $domainConfig): ResponseInterface
