@@ -4,30 +4,31 @@ declare(strict_types=1);
 namespace ERecht24\Er24Rechtstexte\Controller;
 
 
-use TYPO3\CMS\Backend\Template\ModuleTemplate;
-use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
-use TYPO3\CMS\Extbase\Http\ForwardResponse;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
-use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use ERecht24\Er24Rechtstexte\Utility\ApiUtility;
-use ERecht24\Er24Rechtstexte\Utility\UpdateUtility;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
-use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Site\SiteFinder;
-use TYPO3\CMS\Core\Site\Entity\Site;
-use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
-use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
 use ERecht24\Er24Rechtstexte\Api\Client;
-use TYPO3\CMS\Core\Core\Environment;
+use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
+use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
+use ERecht24\Er24Rechtstexte\Utility\ApiUtility;
 use ERecht24\Er24Rechtstexte\Utility\HelperUtility;
 use ERecht24\Er24Rechtstexte\Utility\LogUtility;
+use ERecht24\Er24Rechtstexte\Utility\UpdateUtility;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Package\PackageManager;
+use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Site\Entity\Site;
+use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
+use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Frontend\Typolink\EmailLinkBuilder;
@@ -115,7 +116,7 @@ class DomainConfigController extends ActionController
     }
 
     /**
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     * @throws StopActionException
      */
     public function performUpdateAction()
     {
@@ -132,7 +133,7 @@ class DomainConfigController extends ActionController
     /**
      * action list
      *
-     * @return void
+     * @return ResponseInterface
      */
     public function listAction(): ResponseInterface
     {
@@ -200,7 +201,7 @@ class DomainConfigController extends ActionController
 
     /**
      * action show
-     * @return void
+     * @return ResponseInterface
      */
     public function showAction(): ResponseInterface
     {
@@ -239,11 +240,11 @@ class DomainConfigController extends ActionController
                 // replace emails with TYPO3 spambot safe links
                 // try to get it working with not normalized domain names
                 // please use idn syntax: https://de.wikipedia.org/wiki/Internationalisierter_Domainname
-                $mailRegex = "/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+.[a-zA-Z])/";
+                $mailRegex = "/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+\.[a-zA-Z]+)/";
                 preg_match_all($mailRegex, $outputText, $matches);
 
-                if(is_array($matches[0]))
-                  $matches[0] = array_unique($matches[0]);
+                if (is_array($matches[0]))
+                    $matches[0] = array_unique($matches[0]);
 
                 foreach ($matches[0] as $match) {
                     $outputText = str_replace($match, $this->createEmailLink($match), $outputText);
@@ -353,7 +354,7 @@ class DomainConfigController extends ActionController
      * action edit
      *
      * @param DomainConfig $domainConfig
-     * @return void
+     * @return ResponseInterface
      */
     #[IgnoreValidation(['value' => 'domainConfig'])]
     public function editAction(DomainConfig $domainConfig): ResponseInterface
