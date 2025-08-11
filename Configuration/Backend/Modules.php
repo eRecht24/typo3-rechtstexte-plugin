@@ -1,4 +1,7 @@
 <?php
+
+use ERecht24\Er24Rechtstexte\Controller\DomainConfigController;
+
 return [
     'tools_Er24Rechtstexte' => [
         'parent' => 'tools',
@@ -10,8 +13,8 @@ return [
         'labels' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_main.xlf',
         'extensionName' => 'Er24Rechtstexte',
         'controllerActions' => [
-            \ERecht24\Er24Rechtstexte\Controller\DomainConfigController::class => [
-                'list', 'new', 'create', 'edit', 'update', 'delete', 'performUpdate'
+            DomainConfigController::class => [
+                'list', 'new', 'create', 'edit', 'update', 'delete', 'performUpdate',
             ],
         ],
     ],

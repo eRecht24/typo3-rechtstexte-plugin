@@ -1,26 +1,24 @@
 <?php
+
 namespace ERecht24\Er24Rechtstexte\Utility;
 
-use TYPO3\CMS\Core\Package\PackageManager;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackageKeyException;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackageManifestException;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackagePathException;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackageStateException;
-use TYPO3\CMS\Extensionmanager\Exception\ExtensionManagerException;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Extensionmanager\Exception\ExtensionManagerException;
 use TYPO3\CMS\Extensionmanager\Service\ExtensionManagementService;
 use TYPO3\CMS\Extensionmanager\Utility\FileHandlingUtility;
 
 class UpdateUtility
 {
-
     /**
      * @var string
      */
-    const REPOSITORY_URL = 'https://api.github.com/repos/eRecht24/typo3-rechtstexte-plugin/';
+    public const REPOSITORY_URL = 'https://api.github.com/repos/eRecht24/typo3-rechtstexte-plugin/';
 
     /**
      * @var int|string
@@ -45,44 +43,40 @@ class UpdateUtility
     /**
      * @var ExtensionManagementService
      */
-    protected $managementService = null;
+    protected $managementService;
 
     /**
      * @var FileHandlingUtility
      */
-    protected $fileHandlingUtility = null;
+    protected $fileHandlingUtility;
 
-
-    public function __construct() {
-        /** @var PackageManager $packageManager */
-        $packageManager = GeneralUtility::makeInstance(PackageManager::class);
-        $this->currentVersion = $packageManager->getPackage('er24_rechtstexte')->getPackageMetaData()->getVersion();
+    public function __construct()
+    {
+        $this->currentVersion = ExtensionManagementUtility::getExtensionVersion('er24_rechtstexte');
         $this->composeMode = Environment::isComposerMode();
         self::isUpdateAvailable();
     }
 
-    /**
-     * @return bool
-     */
     public function isUpdateAvailable(): bool
     {
 
         $apiRes = self::performApiRequest('tags');
 
-        if($apiRes === false) {
+        if ($apiRes === false) {
             LogUtility::writeErrorLog('API Verbindung zu GIT Repository fehlgeschlagen ' . $this->latestVersion);
             return false;
         }
 
         $tags = json_decode($apiRes, true);
         $latest = $this->currentVersion;
-        foreach($tags as $tag) {
-            if(version_compare($latest, $tag['name'], '<')) {
+        foreach ($tags as $tag) {
+            if (version_compare($latest, $tag['name'], '<')) {
                 $latest = $tag['name'];
                 $this->updateAvailable = true;
                 $this->latestVersion = $tag['name'];
             }
         }
+
         return true;
     }
 
@@ -94,27 +88,28 @@ class UpdateUtility
      * @throws InvalidPackageStateException
      * @throws ExtensionManagerException
      */
-    public function performSelfUpdate() {
+    public function performSelfUpdate()
+    {
 
         $extensionKey = 'er24_rechtstexte';
 
-        if($this->composeMode === true) {
+        if ($this->composeMode === true) {
             throw new \Exception('The system is runnning in composer mode. This function should never have been called', 1607942004);
         }
 
-        $this->managementService = GeneralUtiltiy::makeInstance(ExtensionManagementService::class);
-        $this->fileHandlingUtility = GeneralUtiltiy::makeInstance(FileHandlingUtility::class);
+        $this->managementService = GeneralUtility::makeInstance(ExtensionManagementService::class);
+        $this->fileHandlingUtility = GeneralUtility::makeInstance(FileHandlingUtility::class);
 
-        $apiRes = $this->performApiRequest('zipball/'.$this->latestVersion);
+        $apiRes = $this->performApiRequest('zipball/' . $this->latestVersion);
 
-        if($apiRes === false) {
+        if ($apiRes === false) {
             LogUtility::writeErrorLog('Selfupdate fehlgeschlagen: cURL Error bei Download von Tag ' . $this->latestVersion);
             return false;
         }
 
-        $tempFile = GeneralUtility::tempnam('erecht24update','.zip');
+        $tempFile = GeneralUtility::tempnam('erecht24update', '.zip');
         $tempWriter = fopen($tempFile, 'w');
-        fwrite($tempWriter,$apiRes);
+        fwrite($tempWriter, $apiRes);
         fclose($tempWriter);
 
         $prePathNewVersion = Environment::getVarPath() . '/transient/erecht24update' . substr(sha1('er24_rechtstexte' . microtime()), 0, 7) . '/';
@@ -137,16 +132,16 @@ class UpdateUtility
 
         $source = realpath($updatePackagePath . '/');
 
-        if (is_dir($source) === true) {
-            $iterator = new RecursiveDirectoryIterator($source);
+        if (is_dir($source)) {
+            $iterator = new \RecursiveDirectoryIterator($source);
             // skip dot files while iterating
-            $iterator->setFlags(RecursiveDirectoryIterator::SKIP_DOTS);
-            $files = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
+            $iterator->setFlags(\RecursiveDirectoryIterator::SKIP_DOTS);
+            $files = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::SELF_FIRST);
             foreach ($files as $file) {
                 $file = realpath($file);
-                if (is_dir($file) === true) {
+                if (is_dir($file)) {
                     $extensionUpdateZip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
-                } else if (is_file($file) === true) {
+                } elseif (is_file($file)) {
                     $extensionUpdateZip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
                 }
             }
@@ -168,7 +163,8 @@ class UpdateUtility
      * @param $requestUrl
      * @return bool|string
      */
-    protected function performApiRequest($requestUrl) {
+    protected function performApiRequest($requestUrl)
+    {
         $ch = curl_init(self::REPOSITORY_URL . $requestUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
@@ -177,6 +173,7 @@ class UpdateUtility
         if (curl_getinfo($ch, CURLINFO_RESPONSE_CODE) !== 200) {
             return false;
         }
+
         return $res;
     }
 

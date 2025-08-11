@@ -383,9 +383,6 @@
 			<trans-unit id="client-creation-failed">
 				<source>No client could be created for the configuration.</source>
 			</trans-unit>
-			<trans-unit id="plugin-title">
-				<source>Insert eRecht24 site notice or privacy policy on this page.</source>
-			</trans-unit>
 			<trans-unit id="connection_error_detected">
 				<source>Errors were detected when checking the API connection. Please check the Plugin status</source>
 			</trans-unit>

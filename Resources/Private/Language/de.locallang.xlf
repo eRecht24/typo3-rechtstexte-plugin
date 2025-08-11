@@ -363,9 +363,6 @@
 			<trans-unit id="client-creation-failed">
 				<target>Es konnte kein Client für die Konfiguration erstellt werden.</target>
 			</trans-unit>
-			<trans-unit id="plugin-title">
-				<target>eRecht24 Impressum oder Datenschutzerklärung auf dieser Seite einfügen.</target>
-			</trans-unit>
 			<trans-unit id="connection_error_detected">
 				<target>Bei der Prüfung der API Verbindung wurden Fehler festgestellt. Bitte überprüfen Sie den	Pluginstatus.</target>
 			</trans-unit>

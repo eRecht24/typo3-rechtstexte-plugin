@@ -1,4 +1,5 @@
 <?php
+
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig',
@@ -13,7 +14,7 @@ return [
             'disabled' => 'hidden',
         ],
         'searchFields' => 'domain,api_key,imprint_de,imprint_en,privacy_de,privacy_en,social_de,social_en,analytics_id,site_config_name',
-        'iconfile' => 'EXT:er24_rechtstexte/Resources/Public/Icons/Extension.svg'
+        'iconfile' => 'EXT:er24_rechtstexte/Resources/Public/Icons/Extension.svg',
     ],
     'types' => [
         '1' => ['showitem' => 'hidden, domain, api_key, imprint_source, imprint_de, imprint_de_tstamp, imprint_en, imprint_en_tstamp, privacy_source, privacy_de, privacy_de_tstamp, privacy_en, privacy_en_tstamp, social_source, social_de, social_de_tstamp, social_en, social_en_tstamp, analytics_id, flag_embed_tracking, flag_user_centrics_embed, flag_opt_out_code, root_pid, site_config_name, site_language'],
@@ -35,10 +36,9 @@ return [
                 'renderType' => 'checkboxToggle',
                 'items' => [
                     [
-                        0 => '',
-                        1 => '',
-                        'invertStateDisplay' => true
-                    ]
+                        'label' => '',
+                        'invertStateDisplay' => true,
+                    ],
                 ],
             ],
         ],
@@ -49,7 +49,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
+                'eval' => 'trim',
             ],
         ],
         'api_key' => [
@@ -58,7 +58,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
+                'eval' => 'trim',
             ],
         ],
         'imprint_source' => [
@@ -68,11 +68,11 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['-- Label --', 0],
+                    ['label' => '-- Label --', 'value' => 0],
                 ],
                 'size' => 1,
                 'maxitems' => 1,
-                'eval' => ''
+                'eval' => '',
             ],
         ],
         'imprint_de' => [
@@ -82,8 +82,8 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'imprint_de_local' => [
             'exclude' => true,
@@ -92,18 +92,16 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'imprint_de_tstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.imprint_de_tstamp',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'size' => 10,
-                'eval' => 'datetime',
-                'default' => time()
+                'default' => time(),
             ],
         ],
         'imprint_en' => [
@@ -113,8 +111,8 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'imprint_en_local' => [
             'exclude' => true,
@@ -123,18 +121,16 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'imprint_en_tstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.imprint_en_tstamp',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'size' => 10,
-                'eval' => 'datetime',
-                'default' => time()
+                'default' => time(),
             ],
         ],
         'privacy_source' => [
@@ -144,11 +140,11 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['-- Label --', 0],
+                    ['label' => '-- Label --', 'value' => 0],
                 ],
                 'size' => 1,
                 'maxitems' => 1,
-                'eval' => ''
+                'eval' => '',
             ],
         ],
         'privacy_de' => [
@@ -158,8 +154,8 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'privacy_de_local' => [
             'exclude' => true,
@@ -168,18 +164,16 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'privacy_de_tstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'size' => 10,
-                'eval' => 'datetime',
-                'default' => time()
+                'default' => time(),
             ],
         ],
         'privacy_en' => [
@@ -189,8 +183,8 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'privacy_en_local' => [
             'exclude' => true,
@@ -199,18 +193,16 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'privacy_en_tstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.privacy_en_tstamp',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'size' => 10,
-                'eval' => 'datetime',
-                'default' => time()
+                'default' => time(),
             ],
         ],
         'social_source' => [
@@ -220,11 +212,11 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['-- Label --', 0],
+                    ['label' => '-- Label --', 'value' => 0],
                 ],
                 'size' => 1,
                 'maxitems' => 1,
-                'eval' => ''
+                'eval' => '',
             ],
         ],
         'social_de' => [
@@ -234,8 +226,8 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'social_de_local' => [
             'exclude' => true,
@@ -244,18 +236,16 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'social_de_tstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'size' => 10,
-                'eval' => 'datetime',
-                'default' => time()
+                'default' => time(),
             ],
         ],
         'social_en' => [
@@ -265,8 +255,8 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'social_en_local' => [
             'exclude' => true,
@@ -275,18 +265,16 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'social_en_tstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.social_en_tstamp',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'size' => 10,
-                'eval' => 'datetime',
-                'default' => time()
+                'default' => time(),
             ],
         ],
         'analytics_id' => [
@@ -295,7 +283,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
+                'eval' => 'trim',
             ],
         ],
         'flag_embed_tracking' => [
@@ -305,11 +293,11 @@ return [
                 'type' => 'check',
                 'items' => [
                     '1' => [
-                        '0' => 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.enabled'
-                    ]
+                        'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.enabled',
+                    ],
                 ],
                 'default' => 0,
-            ]
+            ],
         ],
         'flag_user_centrics_embed' => [
             'exclude' => true,
@@ -318,11 +306,11 @@ return [
                 'type' => 'check',
                 'items' => [
                     '1' => [
-                        '0' => 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.enabled'
-                    ]
+                        'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.enabled',
+                    ],
                 ],
                 'default' => 0,
-            ]
+            ],
         ],
         'flag_opt_out_code' => [
             'exclude' => true,
@@ -331,20 +319,19 @@ return [
                 'type' => 'check',
                 'items' => [
                     '1' => [
-                        '0' => 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.enabled'
-                    ]
+                        'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.enabled',
+                    ],
                 ],
                 'default' => 0,
-            ]
+            ],
         ],
         'root_pid' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.root_pid',
             'config' => [
-                'type' => 'input',
+                'type' => 'number',
                 'size' => 4,
-                'eval' => 'int'
-            ]
+            ],
         ],
         'site_config_name' => [
             'exclude' => true,
@@ -352,25 +339,25 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
+                'eval' => 'trim',
             ],
         ],
         'site_language' => [
             'label' => 'Site Config Language',
             'config' => [
                 'type' => 'input',
-                'size' => 3
-            ]
+                'size' => 3,
+            ],
         ],
         'client_id' => [
             'config' => [
-                'type' => 'passthrough'
-            ]
+                'type' => 'passthrough',
+            ],
         ],
         'client_secret' => [
             'config' => [
-                'type' => 'passthrough'
-            ]
+                'type' => 'passthrough',
+            ],
         ],
     ],
 ];

@@ -1,15 +1,17 @@
 <?php
+
 declare(strict_types=1);
+
 namespace ERecht24\Er24Rechtstexte\Api;
 
 use TYPO3\CMS\Core\Information\Typo3Version;
+
 class Client extends BaseApi
 {
     /**
      * Function provides a list of all clients
-     * @return ApiResponse
      */
-    public function listClients() : ApiResponse
+    public function listClients(): ApiResponse
     {
         // Api Request
         $response = $this->handleResponse(
@@ -23,9 +25,8 @@ class Client extends BaseApi
 
     /**
      * Function adds a client remotely
-     * @return ApiResponse
      */
-    public function addClient() : ApiResponse
+    public function addClient(): ApiResponse
     {
 
         // Api Request
@@ -42,10 +43,9 @@ class Client extends BaseApi
 
     /**
      * Function deletes client remotely
-     * @param int $clientId
-     * @return ApiResponse
      */
-    public function deleteClient(int $clientId) : ApiResponse {
+    public function deleteClient(int $clientId): ApiResponse
+    {
 
         // Api Request
         $response = $this->handleResponse(
@@ -59,10 +59,8 @@ class Client extends BaseApi
 
     /**
      * Function executes test push
-     * @param int $clientId
-     * @return ApiResponse
      */
-    public function testPushPing(int $clientId) : ApiResponse
+    public function testPushPing(int $clientId): ApiResponse
     {
 
         // Api Request
@@ -77,10 +75,8 @@ class Client extends BaseApi
 
     /**
      * Function provides request body for add client method
-     *
-     * @return string
      */
-    private function createRequestBody() : string
+    private function createRequestBody(): string
     {
         $request_body  = [];
 
