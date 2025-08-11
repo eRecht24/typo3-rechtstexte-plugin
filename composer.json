@@ -5,7 +5,9 @@
 	"authors": [],
 	"version": "2.0.4",
 	"require": {
-		"typo3/cms-core": "^11|^12|^13"
+		"typo3/cms-core": "^12|^13",
+		"ext-zip": "*",
+		"ext-curl": "*"
 	},
 	"autoload": {
 		"psr-4": {
@@ -19,5 +21,18 @@
 		"typo3/cms": {
 			"extension-key": "er24_rechtstexte"
 		}
+	},
+	"config": {
+		"allow-plugins": {
+			"typo3/cms-composer-installers": true,
+			"typo3/class-alias-loader": true
+		}
+	},
+	"require-dev": {
+		"typo3/cms-backend": "^12",
+		"typo3/cms-frontend": "^12",
+		"typo3/cms-extbase": "^12",
+		"typo3/cms-core": "^12",
+		"typo3/cms-extensionmanager": "^12.4"
 	}
 }

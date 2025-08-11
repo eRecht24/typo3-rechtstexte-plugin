@@ -415,9 +415,7 @@ class DomainConfigController extends ActionController
             $documentation = (string)$parseDown->text(file_get_contents(ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Documentation/Documentation_en.md'));
         }
 
-        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-
-        $moduleTemplate->assignMultiple([
+        $this->view->assignMultiple([
             'domainConfig' => $domainConfig,
             'errors' => $errors,
             'pushError' => $pushError ? 1 : 0,
@@ -429,8 +427,7 @@ class DomainConfigController extends ActionController
             'documentation' => $documentation,
         ]);
 
-        $this->registerDocheaderButtons($moduleTemplate);
-        return $moduleTemplate->renderResponse('DomainConfig/Edit');
+        return $this->defaultActionHandling();
     }
 
     /**

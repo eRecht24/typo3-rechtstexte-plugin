@@ -4,7 +4,6 @@ namespace ERecht24\Er24Rechtstexte\UserFunc;
 
 use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
 use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
-use TYPO3\CMS\Core\Cache\CacheTag;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -24,9 +23,7 @@ class AnalyticsHeaderData
 
             if ($domainConfig !== null) {
                 // @extensionScannerIgnoreLine
-                $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.cache.collector')->addCacheTags(
-                    new CacheTag('er24_analytics_' . $domainConfig->getUid())
-                );
+                $GLOBALS['TSFE']->addCacheTags(['er24_analytics_' . $domainConfig->getUid()]);
 
                 if ($domainConfig->getFlagEmbedTracking() === true && $domainConfig->getAnalyticsId() !== '') {
                     if (str_starts_with($domainConfig->getAnalyticsId(), 'G-')) {

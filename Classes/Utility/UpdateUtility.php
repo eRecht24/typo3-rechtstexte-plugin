@@ -2,6 +2,7 @@
 
 namespace ERecht24\Er24Rechtstexte\Utility;
 
+use FilesystemIterator;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackageKeyException;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackageManifestException;
@@ -135,7 +136,7 @@ class UpdateUtility
         if (is_dir($source)) {
             $iterator = new \RecursiveDirectoryIterator($source);
             // skip dot files while iterating
-            $iterator->setFlags(\RecursiveDirectoryIterator::SKIP_DOTS);
+            $iterator->setFlags(FilesystemIterator::SKIP_DOTS);
             $files = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::SELF_FIRST);
             foreach ($files as $file) {
                 $file = realpath($file);
