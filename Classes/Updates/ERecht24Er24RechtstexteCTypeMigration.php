@@ -7,17 +7,20 @@ namespace ERecht24\Er24Rechtstexte\Updates;
 use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\AbstractListTypeToCTypeUpdate;
 
+/**
+ * Migration script for "eRecht24 Rechtstexte" plugin
+ */
 #[UpgradeWizard('erecht24Er24RechtstexteCTypeMigration')]
 final class ERecht24Er24RechtstexteCTypeMigration extends AbstractListTypeToCTypeUpdate
 {
     public function getTitle(): string
     {
-        return 'Migrate "ERecht24 Er24Rechtstexte" plugins to content elements.';
+        return 'Migrate "eRecht24 Rechtstexte" plugin to content elements.';
     }
 
     public function getDescription(): string
     {
-        return 'The "ERecht24 Er24Rechtstexte" plugins are now registered as content element. Update migrates existing records and backend user permissions.';
+        return 'The "eRecht24 Rechtstexte Plugin" is now registered as content element. Update migrates existing records and backend user permissions.';
     }
 
     /**
