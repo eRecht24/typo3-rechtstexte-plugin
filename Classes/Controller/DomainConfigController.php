@@ -17,17 +17,22 @@ use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
+use TYPO3\CMS\Core\Package\Exception\InvalidPackageKeyException;
+use TYPO3\CMS\Core\Package\Exception\InvalidPackageManifestException;
+use TYPO3\CMS\Core\Package\Exception\InvalidPackagePathException;
+use TYPO3\CMS\Core\Package\Exception\InvalidPackageStateException;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Extensionmanager\Exception\ExtensionManagerException;
 use TYPO3\CMS\Frontend\Typolink\EmailLinkBuilder;
 
 /***
@@ -78,7 +83,11 @@ class DomainConfigController extends ActionController
     protected function registerDocheaderButtons(ModuleTemplate $moduleTemplate) {}
 
     /**
-     * @throws StopActionException
+     * @throws InvalidPackageKeyException
+     * @throws ExtensionManagerException
+     * @throws InvalidPackageStateException
+     * @throws InvalidPackageManifestException
+     * @throws InvalidPackagePathException
      */
     public function performUpdateAction(): ResponseInterface
     {
@@ -415,7 +424,8 @@ class DomainConfigController extends ActionController
             $documentation = (string)$parseDown->text(file_get_contents(ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Documentation/Documentation_en.md'));
         }
 
-        $this->view->assignMultiple([
+        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+        $moduleTemplate->assignMultiple([
             'domainConfig' => $domainConfig,
             'errors' => $errors,
             'pushError' => $pushError ? 1 : 0,
@@ -427,7 +437,9 @@ class DomainConfigController extends ActionController
             'documentation' => $documentation,
         ]);
 
-        return $this->defaultActionHandling();
+        $this->registerDocheaderButtons($moduleTemplate);
+        return $moduleTemplate->renderResponse('DomainConfig/Edit');
+
     }
 
     /**

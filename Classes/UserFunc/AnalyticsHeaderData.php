@@ -16,7 +16,8 @@ class AnalyticsHeaderData
         $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
 
         try {
-            $siteConfig = $siteFinder->getSiteByPageId($GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.page.information')->getId());
+            $siteConfig = $siteFinder->getSiteByPageId((int)$GLOBALS['TYPO3_REQUEST']?->getAttribute('frontend.page.information')?->getId()) ??
+                $siteFinder->getSiteByPageId($GLOBALS['TSFE']->id);
             /** @var DomainConfig $domainConfig */
             $domainConfig = GeneralUtility::makeInstance(DomainConfigRepository::class)->findOneBy(['domain' => (string)$siteConfig->getBase()]);
             $analytics4Tracking = false;
