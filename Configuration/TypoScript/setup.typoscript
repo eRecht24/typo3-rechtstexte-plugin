@@ -42,3 +42,10 @@ module.tx_er24rechtstexte {
         layoutRootPaths.1 = {$module.tx_er24rechtstexte_main.view.layoutRootPath}
     }
 }
+
+tt_content.list.20.er24rechtstexte_main = USER
+tt_content.list.20.er24rechtstexte_main {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+    extensionName = Er24Rechtstexte
+    pluginName = Main
+}

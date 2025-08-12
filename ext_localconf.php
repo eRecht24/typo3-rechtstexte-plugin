@@ -31,4 +31,14 @@ defined('TYPO3') || die();
         'setup',
         "@import 'EXT:er24_rechtstexte/Configuration/TypoScript/setup.typoscript'"
     );
+
+    ExtensionManagementUtility::addPlugin(
+        [
+            'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24_rechtstexte_main.name',
+            'er24rechtstexte_main',
+            'ext-er24-rechtstexte-plugin-main'
+        ],
+        'CType',
+        'er24_rechtstexte'
+    );
 })();

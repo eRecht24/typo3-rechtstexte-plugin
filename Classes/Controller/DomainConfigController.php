@@ -228,9 +228,12 @@ class DomainConfigController extends ActionController
             }
 
             // @extensionScannerIgnoreLine
-            $this->request->getAttribute('frontend.cache.collector')->addCacheTags(
-                new CacheTag('er24_document_' . $domainConfig->getUid())
-            );
+            $cacheCollector = $this->request->getAttribute('frontend.cache.collector');
+            if ($cacheCollector !== null) {
+                $cacheCollector->addCacheTags(
+                    new CacheTag('er24_document_' . $domainConfig->getUid())
+                );
+            }
 
             $this->view->assignMultiple([
                 'outputText' => $outputText,
