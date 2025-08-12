@@ -29,23 +29,23 @@ class DomainConfig extends AbstractEntity
     protected string $clientSecret = '';
     protected string $imprintDe = '';
     protected string $imprintDeLocal = '';
-    protected string $imprintEnLocal = '';
+    protected ?string $imprintEnLocal = null;
     protected int $imprintDeTstamp = 0;
-    protected string $imprintEn = '';
+    protected ?string $imprintEn = null;
     protected int $imprintEnTstamp = 0;
     protected int $privacySource = 1;
     protected string $privacyDe = '';
     protected string $privacyDeLocal = '';
     protected int $privacyDeTstamp = 0;
-    protected string $privacyEn = '';
-    protected string $privacyEnLocal = '';
+    protected ?string $privacyEn = null;
+    protected ?string $privacyEnLocal = null;
     protected int $privacyEnTstamp = 0;
     protected int $socialSource = 1;
     protected string $socialDe = '';
     protected string $socialDeLocal = '';
     protected int $socialDeTstamp = 0;
-    protected string $socialEn = '';
-    protected string $socialEnLocal = '';
+    protected ?string $socialEn = null;
+    protected ?string $socialEnLocal = null;
     protected int $socialEnTstamp = 0;
     protected string $analyticsId = '';
     protected bool $flagEmbedTracking = false;
@@ -104,12 +104,12 @@ class DomainConfig extends AbstractEntity
         $this->imprintDeTstamp = $imprintDeTstamp;
     }
 
-    public function getImprintEn(): string
+    public function getImprintEn(): ?string
     {
         return $this->imprintEn;
     }
 
-    public function setImprintEn(string $imprintEn): void
+    public function setImprintEn(?string $imprintEn): void
     {
         $this->imprintEn = $imprintEn;
     }
@@ -154,12 +154,12 @@ class DomainConfig extends AbstractEntity
         $this->privacyDeTstamp = $privacyDeTstamp;
     }
 
-    public function getPrivacyEn(): string
+    public function getPrivacyEn(): ?string
     {
         return $this->privacyEn;
     }
 
-    public function setPrivacyEn(string $privacyEn): void
+    public function setPrivacyEn(?string $privacyEn): void
     {
         $this->privacyEn = $privacyEn;
     }
@@ -204,12 +204,12 @@ class DomainConfig extends AbstractEntity
         $this->socialDeTstamp = $socialDeTstamp;
     }
 
-    public function getSocialEn(): string
+    public function getSocialEn(): ?string
     {
         return $this->socialEn;
     }
 
-    public function setSocialEn(string $socialEn): void
+    public function setSocialEn(?string $socialEn): void
     {
         $this->socialEn = $socialEn;
     }
@@ -339,12 +339,12 @@ class DomainConfig extends AbstractEntity
         $this->imprintDeLocal = $imprintDeLocal;
     }
 
-    public function getImprintEnLocal(): string
+    public function getImprintEnLocal(): ?string
     {
         return $this->imprintEnLocal;
     }
 
-    public function setImprintEnLocal(string $imprintEnLocal): void
+    public function setImprintEnLocal(?string $imprintEnLocal): void
     {
         $this->imprintEnLocal = $imprintEnLocal;
     }
@@ -359,12 +359,12 @@ class DomainConfig extends AbstractEntity
         $this->socialDeLocal = $socialDeLocal;
     }
 
-    public function getSocialEnLocal(): string
+    public function getSocialEnLocal(): ?string
     {
         return $this->socialEnLocal;
     }
 
-    public function setSocialEnLocal(string $socialEnLocal): void
+    public function setSocialEnLocal(?string $socialEnLocal): void
     {
         $this->socialEnLocal = $socialEnLocal;
     }
@@ -374,7 +374,7 @@ class DomainConfig extends AbstractEntity
         return $this->privacyEnLocal;
     }
 
-    public function setPrivacyEnLocal(string $privacyEnLocal): void
+    public function setPrivacyEnLocal(?string $privacyEnLocal): void
     {
         $this->privacyEnLocal = $privacyEnLocal;
     }
