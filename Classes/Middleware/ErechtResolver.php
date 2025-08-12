@@ -15,7 +15,6 @@ use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
-use function GuzzleHttp\json_decode;
 
 class ErechtResolver implements MiddlewareInterface
 {
@@ -23,6 +22,9 @@ class ErechtResolver implements MiddlewareInterface
 
     public const TYPE_IDENTIFIER = 'erecht24_type';
 
+    /**
+     * @throws \JsonException
+     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (!str_contains($request->getUri()->getPath(), '/erecht24/v1/push')) {
@@ -34,7 +36,7 @@ class ErechtResolver implements MiddlewareInterface
 
         if (is_null($secret)) {
             $jsonStr = $request->getBody()->getContents();
-            $json = json_decode($jsonStr, true);
+            $json = json_decode($jsonStr, true, flags: JSON_THROW_ON_ERROR);
             if (isset($json[self::SECRET_IDENTIFIER])) {
                 $secret = $json[self::SECRET_IDENTIFIER];
             }
