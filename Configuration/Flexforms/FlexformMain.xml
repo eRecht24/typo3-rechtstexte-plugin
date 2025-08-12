@@ -2,88 +2,78 @@
 	<sheets>
 		<sDEF>
 			<ROOT>
-				<TCEforms>
-					<sheetTitle>Function</sheetTitle>
-				</TCEforms>
+				<sheetTitle>Function</sheetTitle>
 				<type>array</type>
 				<el>
                     <settings.configId>
-                        <TCEforms>
-                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.configselect</label>
-                            <config>
-                                <type>select</type>
-                                <renderType>selectSingle</renderType>
-                                <items>
-                                    <numIndex index="0" type="array">
-                                        <numIndex index="0">LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.pleaseselect</numIndex>
-                                        <numIndex index="1"></numIndex>
-                                    </numIndex>
-                                </items>
-                                <eval>required</eval>
-                                <foreign_table>tx_er24rechtstexte_domain_model_domainconfig</foreign_table>
-                                <itemsProcFunc>ERecht24\Er24Rechtstexte\UserFunc\FlexFormFunctions->filterDomainConfigs</itemsProcFunc>
-                            </config>
-                        </TCEforms>
+                        <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.configselect</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items>
+                                <numIndex index="0" type="array">
+                                    <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.pleaseselect</label>
+                                    <value></value>
+                                </numIndex>
+                            </items>
+                            <eval>required</eval>
+                            <foreign_table>tx_er24rechtstexte_domain_model_domainconfig</foreign_table>
+                            <itemsProcFunc>ERecht24\Er24Rechtstexte\UserFunc\FlexFormFunctions->filterDomainConfigs</itemsProcFunc>
+                        </config>
                     </settings.configId>
                     <settings.documentType>
-                        <TCEforms>
-                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.documenttype</label>
-                            <config>
-                                <type>select</type>
-                                <renderType>selectSingle</renderType>
-                                <items>
-                                    <numIndex index="0" type="array">
-                                        <numIndex index="0">LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.pleaseselect</numIndex>
-                                        <numIndex index="1"></numIndex>
-                                    </numIndex>
-                                    <numIndex index="1" type="array">
-                                        <numIndex index="0">Impressum</numIndex>
-                                        <numIndex index="1">imprint</numIndex>
-                                    </numIndex>
-                                    <numIndex index="2" type="array">
-                                        <numIndex index="0">Datenschutzerklärung</numIndex>
-                                        <numIndex index="1">privacy</numIndex>
-                                    </numIndex>
-                                    <numIndex index="3" type="array">
-                                        <numIndex index="0">Datenschutz für Social-Media-Profile</numIndex>
-                                        <numIndex index="1">social</numIndex>
-                                    </numIndex>
-                                </items>
-                                <eval>required</eval>
-                            </config>
-                        </TCEforms>
+                        <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.documenttype</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items>
+                                <numIndex index="0" type="array">
+                                    <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.pleaseselect</label>
+                                    <value></value>
+                                </numIndex>
+                                <numIndex index="1" type="array">
+                                    <label>Impressum</label>
+                                    <value>imprint</value>
+                                </numIndex>
+                                <numIndex index="2" type="array">
+                                    <label>Datenschutzerklärung</label>
+                                    <value>privacy</value>
+                                </numIndex>
+                                <numIndex index="3" type="array">
+                                    <label>Datenschutz für Social-Media-Profile</label>
+                                    <value>social</value>
+                                </numIndex>
+                            </items>
+                            <eval>required</eval>
+                        </config>
                     </settings.documentType>
                     <settings.documentLanguage>
-                        <TCEforms>
-                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.documentlang</label>
-                            <config>
-                                <type>select</type>
-                                <renderType>selectSingle</renderType>
-                                <items>
-                                    <numIndex index="0" type="array">
-                                        <numIndex index="0">LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.pleaseselect</numIndex>
-                                        <numIndex index="1"></numIndex>
-                                    </numIndex>
-                                    <numIndex index="1" type="array">
-                                        <numIndex index="0">Deutsch</numIndex>
-                                        <numIndex index="1">De</numIndex>
-                                    </numIndex>
-                                    <numIndex index="2" type="array">
-                                        <numIndex index="0">English</numIndex>
-                                        <numIndex index="1">En</numIndex>
-                                    </numIndex>
-                                </items>
-                                <eval>required</eval>
-                            </config>
-                        </TCEforms>
+                        <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.documentlang</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items>
+                                <numIndex index="0" type="array">
+                                    <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.pleaseselect</label>
+                                    <value></value>
+                                </numIndex>
+                                <numIndex index="1" type="array">
+                                    <label>Deutsch</label>
+                                    <value>De</value>
+                                </numIndex>
+                                <numIndex index="2" type="array">
+                                    <label>English</label>
+                                    <value>En</value>
+                                </numIndex>
+                            </items>
+                            <eval>required</eval>
+                        </config>
                     </settings.documentLanguage>
                     <settings.removeHeadline>
-                        <TCEforms>
-                            <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.removeheadline</label>
-                            <config>
-                                <type>check</type>
-                            </config>
-                        </TCEforms>
+                        <label>LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang.xlf:flex.removeheadline</label>
+                        <config>
+                            <type>check</type>
+                        </config>
                     </settings.removeHeadline>
 				</el>
 			</ROOT>

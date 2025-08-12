@@ -2,29 +2,28 @@
 
 namespace ERecht24\Er24Rechtstexte\Middleware;
 
-use Psr\Http\Server\MiddlewareInterface;
-use TYPO3\CMS\Core\Http\JsonResponse;
 use ERecht24\Er24Rechtstexte\Api\LegalDocument;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
 use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
-use ERecht24\Er24Rechtstexte\Utility\LogUtility;
-use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
 use ERecht24\Er24Rechtstexte\Utility\ApiUtility;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
+use ERecht24\Er24Rechtstexte\Utility\LogUtility;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use TYPO3\CMS\Core\Http\JsonResponse;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+
 
 class ErechtResolver implements MiddlewareInterface
 {
-    const SECRET_IDENTIFIER = 'erecht24_secret';
-    const TYPE_IDENTIFIER = 'erecht24_type';
+    public const SECRET_IDENTIFIER = 'erecht24_secret';
 
+    public const TYPE_IDENTIFIER = 'erecht24_type';
 
     /**
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     * @return ResponseInterface
+     * @throws \JsonException
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -37,10 +36,11 @@ class ErechtResolver implements MiddlewareInterface
 
         if (is_null($secret)) {
             $jsonStr = $request->getBody()->getContents();
-            $json = \GuzzleHttp\json_decode($jsonStr, true);
+            $json = json_decode($jsonStr, true, flags: JSON_THROW_ON_ERROR);
             if (isset($json[self::SECRET_IDENTIFIER])) {
                 $secret = $json[self::SECRET_IDENTIFIER];
             }
+
             if (isset($json[self::TYPE_IDENTIFIER])) {
                 $type = $json[self::TYPE_IDENTIFIER];
             }
@@ -50,14 +50,14 @@ class ErechtResolver implements MiddlewareInterface
             return new JsonResponse(['message' => 'pong']);
         }
 
-        if (false === in_array($type, LegalDocument::ALLOWED_DOCUMENT_TYPES)) {
+        if (in_array($type, LegalDocument::ALLOWED_DOCUMENT_TYPES) === false) {
             return new JsonResponse(['message' => 'Unknown Type'], 400);
         }
 
         /** @var DomainConfigRepository $domainConfigRepository */
         $domainConfigRepository = GeneralUtility::makeInstance(DomainConfigRepository::class);
         /** @var DomainConfig $domainConfig */
-        $domainConfig = $domainConfigRepository->findOneByClientSecret($secret);
+        $domainConfig = $domainConfigRepository->findOneBy(['clientSecret' => $secret]);
 
         if ($domainConfig === null) {
             LogUtility::writeErrorLog('Push for unknown Client Secret requested' . $secret);
@@ -78,13 +78,16 @@ class ErechtResolver implements MiddlewareInterface
         if (count($apiHandlerResult[0]) > 0) {
             $message = 'Something went wrong: ' . implode(', ', $apiHandlerResult[0]);
             return new JsonResponse(['message' => $message], 400);
-        } else if (count($apiHandlerResult[1]) > 0) {
+        }
+
+        if (count($apiHandlerResult[1]) > 0) {
             $domainConfigRepository->update($domainConfig);
             $persistenceManager->persistAll();
 
             return new JsonResponse(['message' => 'Document ' . $type . ' has been stored']);
-        } else {
-            return new JsonResponse(['message' => 'Something unknown went wrong.'], 400);
         }
+
+        return new JsonResponse(['message' => 'Something unknown went wrong.'], 400);
+
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /***
  *
  * This file is part of the "eRecht24 Rechtstexte Extension" Extension for TYPO3 CMS.
@@ -13,14 +14,16 @@
 namespace ERecht24\Er24Rechtstexte\Utility;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
 class LogUtility
 {
-    public static function writeErrorLog(string $message) {
+    public static function writeErrorLog(string $message): void
+    {
 
         $logFilePath = ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Resources/Private/Log/Error.log';
 
-        if(false === file_exists($logFilePath)) {
-            $logWriter = fopen($logFilePath,'a+');
+        if (file_exists($logFilePath) === false) {
+            $logWriter = fopen($logFilePath, 'a+');
             fclose($logWriter);
         }
 
@@ -35,12 +38,10 @@ class LogUtility
         $content = file_get_contents($logFilePath);
         $lines = explode(PHP_EOL, $content);
 
-        foreach($lines as $index => $line) {
+        foreach ($lines as $index => $line) {
             $timeStamp = substr($line, 0, 10);
-            if(false !== ($lineTstamp = strtotime($timeStamp))) {
-                if($lineTstamp < $keepLinesUntil) {
-                    unset($lines[$index]);
-                }
+            if (false !== ($lineTstamp = strtotime($timeStamp)) && $lineTstamp < $keepLinesUntil) {
+                unset($lines[$index]);
             }
         }
 
@@ -48,12 +49,14 @@ class LogUtility
 
     }
 
-    public static function getErrorLog() {
+    public static function getErrorLog()
+    {
         $logFilePath = ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Resources/Private/Log/Error.log';
-        if(false === file_exists($logFilePath)) {
-            $logWriter = fopen($logFilePath,'a+');
+        if (file_exists($logFilePath) === false) {
+            $logWriter = fopen($logFilePath, 'a+');
             fclose($logWriter);
         }
+
         return file_get_contents($logFilePath);
     }
 }
