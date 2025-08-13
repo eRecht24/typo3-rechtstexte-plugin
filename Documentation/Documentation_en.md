@@ -15,7 +15,14 @@ To do this, proceed as follows:
 2. There, click the Settings icon (gear icon) next to the project name.
 3. Click the _Create new API key_ button.
 4. Copy the API key to the clipboard.
-5. In the TYPO3 backend, switch to the eRecht24 legal texts plugin and add the API key to the corresponding field under the _API key_ tab. Enter the URL of your website under the _Domain_ tab and select the respective _Site Configuration_. Click _Create configuration_ to apply the setting.
+5. In the TYPO3 backend, switch to the eRecht24 legal texts plugin.
+6. add the API key to the corresponding field under the _API key_ tab.
+7. Enter the URL of your website under the _Domain_ tab and select the respective _Site Configuration_.
+8. Click _Create configuration_ to apply the setting.
+9. If you want to use the legal text plugin with more websites in your TYPO3 installation, you can create additional configurations by repeating these steps.
+
+
+  Click _Create configuration_ to apply the setting.
 
 **Your eRecht24 legal text plugin can now communicate with the eRecht24 Project Manager.**
 
