@@ -19,7 +19,7 @@ class LogUtility
 {
     public static function writeErrorLog(string $message): void
     {
-
+        self::createLogFileIfNotExist();
         $logFilePath = ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Resources/Private/Log/Error.log';
 
         if (file_exists($logFilePath) === false) {
@@ -49,8 +49,9 @@ class LogUtility
 
     }
 
-    public static function getErrorLog()
+    public static function getErrorLog(): bool|string
     {
+        self::createLogFileIfNotExist();
         $logFilePath = ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Resources/Private/Log/Error.log';
         if (file_exists($logFilePath) === false) {
             $logWriter = fopen($logFilePath, 'a+');
@@ -58,5 +59,23 @@ class LogUtility
         }
 
         return file_get_contents($logFilePath);
+    }
+
+    /**
+     * Creates the Error.log file and the folder Resources/Private/Log if it does not exist
+     */
+    private static function createLogFileIfNotExist(): void
+    {
+        // check if the folder exists
+        $logDir = ExtensionManagementUtility::extPath('er24_rechtstexte') . 'Resources/Private/Log/';
+        if (!is_dir($logDir)) {
+            mkdir($logDir, 0775, true);
+        }
+
+        // check if the file exists
+        $logFilePath = $logDir . 'Error.log';
+        if (!file_exists($logFilePath)) {
+            file_put_contents($logFilePath, '');
+        }
     }
 }
