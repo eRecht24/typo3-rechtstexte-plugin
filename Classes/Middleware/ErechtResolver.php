@@ -3,15 +3,14 @@
 namespace ERecht24\Er24Rechtstexte\Middleware;
 
 use ERecht24\Er24Rechtstexte\Api\LegalDocument;
-use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
 use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
+use ERecht24\Er24Rechtstexte\Service\DomainConfigService;
 use ERecht24\Er24Rechtstexte\Utility\ApiUtility;
 use ERecht24\Er24Rechtstexte\Utility\LogUtility;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
@@ -55,31 +54,14 @@ class ErechtResolver implements MiddlewareInterface
             return new JsonResponse(['message' => 'Unknown Type'], 400);
         }
 
-        // Use QueryBuilder instead of Extbase Repository to avoid TypoScript initialization requirement
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getQueryBuilderForTable('tx_er24rechtstexte_domain_model_domainconfig');
-        
-        $domainConfigRow = $queryBuilder
-            ->select('*')
-            ->from('tx_er24rechtstexte_domain_model_domainconfig')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'client_secret',
-                    $queryBuilder->createNamedParameter($secret)
-                )
-            )
-            ->executeQuery()
-            ->fetchAssociative();
+        // Use DomainConfigService instead of Extbase Repository to avoid TypoScript initialization requirement
+        $domainConfigService = GeneralUtility::makeInstance(DomainConfigService::class);
+        $domainConfig = $domainConfigService->findByClientSecret($secret);
 
-        if ($domainConfigRow === false) {
+        if ($domainConfig === null) {
             LogUtility::writeErrorLog('Push for unknown Client Secret requested' . $secret);
             return new JsonResponse(['message' => 'Client Secret is unknown to the system'], 401);
         }
-
-        // Reconstruct DomainConfig object from database row
-        /** @var DomainConfig $domainConfig */
-        $domainConfig = GeneralUtility::makeInstance(DomainConfig::class);
-        $this->hydrateDomainConfig($domainConfig, $domainConfigRow);
 
         if ($type === 'imprint' && $domainConfig->getImprintSource() === 0
             || $type === 'privacyPolicy' && $domainConfig->getPrivacySource() === 0
@@ -108,50 +90,5 @@ class ErechtResolver implements MiddlewareInterface
 
         return new JsonResponse(['message' => 'Something unknown went wrong.'], 400);
 
-    }
-
-    /**
-     * Hydrate a DomainConfig object from database row
-     *
-     * @param DomainConfig $domainConfig
-     * @param array $row
-     * @return void
-     */
-    private function hydrateDomainConfig(DomainConfig $domainConfig, array $row): void
-    {
-        $domainConfig->_setProperty('uid', (int)$row['uid']);
-        $domainConfig->_setProperty('pid', (int)$row['pid']);
-        $domainConfig->setDomain($row['domain'] ?? '');
-        $domainConfig->setApiKey($row['api_key'] ?? '');
-        $domainConfig->setImprintSource((int)($row['imprint_source'] ?? 1));
-        $domainConfig->setSiteLanguage((int)($row['site_language'] ?? 0));
-        $domainConfig->setClientId($row['client_id'] ?? '');
-        $domainConfig->setClientSecret($row['client_secret'] ?? '');
-        $domainConfig->setImprintDe($row['imprint_de'] ?? '');
-        $domainConfig->setImprintDeLocal($row['imprint_de_local'] ?? '');
-        $domainConfig->setImprintDeTstamp((int)($row['imprint_de_tstamp'] ?? 0));
-        $domainConfig->setImprintEn($row['imprint_en'] ?? null);
-        $domainConfig->setImprintEnLocal($row['imprint_en_local'] ?? null);
-        $domainConfig->setImprintEnTstamp((int)($row['imprint_en_tstamp'] ?? 0));
-        $domainConfig->setPrivacySource((int)($row['privacy_source'] ?? 1));
-        $domainConfig->setPrivacyDe($row['privacy_de'] ?? '');
-        $domainConfig->setPrivacyDeLocal($row['privacy_de_local'] ?? '');
-        $domainConfig->setPrivacyDeTstamp((int)($row['privacy_de_tstamp'] ?? 0));
-        $domainConfig->setPrivacyEn($row['privacy_en'] ?? null);
-        $domainConfig->setPrivacyEnLocal($row['privacy_en_local'] ?? null);
-        $domainConfig->setPrivacyEnTstamp((int)($row['privacy_en_tstamp'] ?? 0));
-        $domainConfig->setSocialSource((int)($row['social_source'] ?? 1));
-        $domainConfig->setSocialDe($row['social_de'] ?? '');
-        $domainConfig->setSocialDeLocal($row['social_de_local'] ?? '');
-        $domainConfig->setSocialDeTstamp((int)($row['social_de_tstamp'] ?? 0));
-        $domainConfig->setSocialEn($row['social_en'] ?? null);
-        $domainConfig->setSocialEnLocal($row['social_en_local'] ?? null);
-        $domainConfig->setSocialEnTstamp((int)($row['social_en_tstamp'] ?? 0));
-        $domainConfig->setAnalyticsId($row['analytics_id'] ?? '');
-        $domainConfig->setFlagEmbedTracking((bool)($row['flag_embed_tracking'] ?? false));
-        $domainConfig->setFlagUserCentricsEmbed((bool)($row['flag_user_centrics_embed'] ?? false));
-        $domainConfig->setFlagOptOutCode((bool)($row['flag_opt_out_code'] ?? false));
-        $domainConfig->setRootPid((int)($row['root_pid'] ?? 0));
-        $domainConfig->setSiteConfigName($row['site_config_name'] ?? '');
     }
 }
