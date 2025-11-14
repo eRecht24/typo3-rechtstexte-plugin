@@ -17,7 +17,6 @@ use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\CacheTag;
 use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackageKeyException;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackageManifestException;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackagePathException;
@@ -96,7 +95,7 @@ class DomainConfigController extends ActionController
         if ($updateUtility->performSelfUpdate() === true) {
             $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . LocalizationUtility::translate('update-success', $this->request->getControllerExtensionName()), '', ContextualFeedbackSeverity::OK);
         } else {
-            $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . LocalizationUtility::translate('update-failed', $this->request->getControllerExtensionName()), '', AbstractMessage::WARNING);
+            $this->addFlashMessage(LocalizationUtility::translate('message-prefix', $this->request->getControllerExtensionName()) . LocalizationUtility::translate('update-failed', $this->request->getControllerExtensionName()), '', ContextualFeedbackSeverity::WARNING);
         }
 
         return new ForwardResponse('list');
@@ -185,7 +184,7 @@ class DomainConfigController extends ActionController
         $domainConfig = $this->domainConfigRepository->findByUid($this->settings['configId']);
         if ($domainConfig === null) {
             // TODO
-            $this->addFlashMessage(LocalizationUtility::translate('configuration-not-found', $this->request->getControllerExtensionName()), '', AbstractMessage::WARNING);
+            $this->addFlashMessage(LocalizationUtility::translate('configuration-not-found', $this->request->getControllerExtensionName()), '', ContextualFeedbackSeverity::WARNING);
             return $this->htmlResponse($this->view->render());
         }
 
