@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Http\JsonResponse;
@@ -161,6 +162,9 @@ class ErechtResolver implements MiddlewareInterface
         if ($data === []) {
             return;
         }
+
+        GeneralUtility::makeInstance(CacheManager::class)
+            ->flushCachesByTag('er24_document_' . $domainConfig->getUid());
 
         GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable(self::TABLE_NAME)
