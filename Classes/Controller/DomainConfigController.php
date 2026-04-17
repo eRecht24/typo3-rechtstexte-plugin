@@ -27,7 +27,7 @@ use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
+use TYPO3\CMS\Extbase\Attribute\IgnoreValidation;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
@@ -227,9 +227,9 @@ class DomainConfigController extends ActionController
                 }
             }
 
-            // @extensionScannerIgnoreLine
             $cacheCollector = $this->request->getAttribute('frontend.cache.collector');
             if ($cacheCollector !== null) {
+                // @extensionScannerIgnoreLine
                 $cacheCollector->addCacheTags(
                     new CacheTag('er24_document_' . $domainConfig->getUid())
                 );

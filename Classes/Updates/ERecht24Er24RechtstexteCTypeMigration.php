@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace ERecht24\Er24Rechtstexte\Updates;
 
-use TYPO3\CMS\Install\Attribute\UpgradeWizard;
-use TYPO3\CMS\Install\Updates\AbstractListTypeToCTypeUpdate;
+use TYPO3\CMS\Core\Attribute\UpgradeWizard;
+use TYPO3\CMS\Core\Upgrades\AbstractListTypeToCTypeUpdate;
 
 /**
  * Migration script for "eRecht24 Rechtstexte" plugin
