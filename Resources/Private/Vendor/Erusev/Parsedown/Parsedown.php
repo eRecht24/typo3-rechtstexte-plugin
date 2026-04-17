@@ -122,14 +122,17 @@ class Parsedown
         return $this->elements($this->linesElements($lines));
     }
 
-    protected function linesElements(array $lines)
+    /**
+     * @return mixed[]
+     */
+    protected function linesElements(array $lines): array
     {
         $Elements = [];
         $CurrentBlock = null;
 
         foreach ($lines as $line)
         {
-            if (chop((string) $line) === '')
+            if (rtrim((string) $line) === '')
             {
                 if (isset($CurrentBlock))
                 {
@@ -449,7 +452,7 @@ class Parsedown
         }
 
         if (($len = strspn((string) $Line['text'], (string) $Block['char'])) >= $Block['openerLength']
-            and chop(substr((string) $Line['text'], $len), ' ') === ''
+            and rtrim(substr((string) $Line['text'], $len), ' ') === ''
         ) {
             $Block['element']['element']['text'] = substr((string) $Block['element']['element']['text'], 1);
 
@@ -684,7 +687,7 @@ class Parsedown
     {
         $marker = $Line['text'][0];
 
-        if (substr_count((string) $Line['text'], (string) $marker) >= 3 and chop((string) $Line['text'], " $marker") === '')
+        if (substr_count((string) $Line['text'], (string) $marker) >= 3 and rtrim((string) $Line['text'], " $marker") === '')
         {
             $Block = ['element' => ['name' => 'hr']];
 
@@ -702,7 +705,7 @@ class Parsedown
             return;
         }
 
-        if ($Line['indent'] < 4 and chop(chop((string) $Line['text'], ' '), $Line['text'][0]) === '')
+        if ($Line['indent'] < 4 and rtrim(rtrim((string) $Line['text'], ' '), $Line['text'][0]) === '')
         {
             $Block['element']['name'] = $Line['text'][0] === '=' ? 'h1' : 'h2';
 
@@ -786,7 +789,7 @@ class Parsedown
             return;
         }
 
-        if (chop((string) $Line['text'], ' -:|') !== '')
+        if (rtrim((string) $Line['text'], ' -:|') !== '')
         {
             return;
         }
@@ -951,7 +954,10 @@ class Parsedown
         return $this->elements($this->lineElements($text, $nonNestables));
     }
 
-    protected function lineElements($text, $nonNestables = [])
+    /**
+     * @return mixed[]
+     */
+    protected function lineElements($text, $nonNestables = []): array
     {
         # standardize line breaks
         $text = str_replace(["\r\n", "\r"], "\n", $text);
@@ -1055,7 +1061,7 @@ class Parsedown
     # ~
     #
 
-    protected function inlineText($text)
+    protected function inlineText($text): array
     {
         $Inline = ['extent' => strlen((string) $text), 'element' => []];
 
@@ -1345,12 +1351,12 @@ class Parsedown
 
     protected function handleElementRecursive(array $Element)
     {
-        return $this->elementApplyRecursive([$this, 'handle'], $Element);
+        return $this->elementApplyRecursive($this->handle(...), $Element);
     }
 
     protected function handleElementsRecursive(array $Elements)
     {
-        return $this->elementsApplyRecursive([$this, 'handle'], $Elements);
+        return $this->elementsApplyRecursive($this->handle(...), $Elements);
     }
 
     protected function elementApplyRecursive($closure, array $Element)
@@ -1535,12 +1541,12 @@ class Parsedown
     #
     # AST Convenience
     #
-
     /**
      * Replace occurrences $regexp with $Elements in $text. Return an array of
      * elements representing the replacement.
+     * @return mixed[]
      */
-    protected static function pregReplaceElements($regexp, $Elements, $text)
+    protected static function pregReplaceElements($regexp, $Elements, $text): array
     {
         $newElements = [];
 

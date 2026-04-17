@@ -9,10 +9,9 @@ return RectorConfig::configure()
         __DIR__ . '/Classes',
         __DIR__ . '/Configuration',
         __DIR__ . '/Resources',
-        __DIR__ . '/public',
     ])
     // uncomment to reach your current PHP version
-    ->withPhpSets(php83: true, php82: true, php84: true, php85: true)
+    ->withPhpSets(php85: true)
     ->withTypeCoverageLevel(8)
     ->withDeadCodeLevel(0)
     ->withCodeQualityLevel(0)
