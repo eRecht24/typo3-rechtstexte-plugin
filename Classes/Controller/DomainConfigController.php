@@ -33,7 +33,6 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extensionmanager\Exception\ExtensionManagerException;
-use TYPO3\CMS\Frontend\Typolink\EmailLinkBuilder;
 
 /***
  *
@@ -210,6 +209,19 @@ class DomainConfigController extends ActionController
                 $outputText = substr((string)$outputText, strpos((string)$outputText, '</h1>') + 5);
             }
 
+            if (strlen(trim((string)$outputText)) > 0) {
+                $mailRegex = '/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+\.[a-zA-Z]+)/';
+                preg_match_all($mailRegex, (string)$outputText, $matches);
+
+                if (is_array($matches[0])) {
+                    $matches[0] = array_unique($matches[0]);
+                }
+
+                foreach ($matches[0] as $match) {
+                    $outputText = str_replace($match, $this->createEmailLink($match), $outputText);
+                }
+            }
+
             $cacheCollector = $this->request->getAttribute('frontend.cache.collector');
             if ($cacheCollector !== null) {
                 // @extensionScannerIgnoreLine
@@ -228,6 +240,26 @@ class DomainConfigController extends ActionController
         return $this->htmlResponse();
 
     }
+
+    private function createEmailLink(string $email): string
+    {
+        $mailToUrl = $this->encodeEmailString('mailto:' . $email);
+        $linkText = $this->encodeEmailString($email);
+
+        return sprintf('<a href="%s">%s</a>', $mailToUrl, $linkText);
+    }
+
+    private function encodeEmailString(string $value): string
+    {
+        $encodedValue = '';
+
+        foreach (preg_split('//u', $value, -1, PREG_SPLIT_NO_EMPTY) ?: [] as $character) {
+            $encodedValue .= '&#' . mb_ord($character, 'UTF-8') . ';';
+        }
+
+        return $encodedValue;
+    }
+
     public function newAction(?DomainConfig $newDomainConfig = null, string $siteconfigIdentifier = ''): ResponseInterface
     {
         /** @var SiteFinder $siteFinder */

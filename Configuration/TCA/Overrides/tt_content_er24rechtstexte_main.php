@@ -19,6 +19,15 @@ $typo3MajorVersion = (new Typo3Version())->getMajorVersion();
 
 $GLOBALS['TCA']['tt_content']['types']['er24rechtstexte_main'] = [
     'showitem' => '--palette--;;general, --palette--;;headers, pi_flexform, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, --palette--;;hidden, --palette--;;access, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended',
+    'columnsOverrides' => [
+        'pi_flexform' => [
+            'config' => [
+                'ds' => [
+                    'default' => 'FILE:EXT:er24_rechtstexte/Configuration/Flexforms/FlexformMain.xml',
+                ],
+            ],
+        ],
+    ],
 ];
 
 // <=13
@@ -31,16 +40,7 @@ if ($typo3MajorVersion <= 13) {
     );
 } else {
     // >=14
-    $GLOBALS['TCA']['tt_content']['types']['er24rechtstexte_main'] = [
-        'showitem' => '--palette--;;general, --palette--;;headers, pi_flexform, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, --palette--;;hidden, --palette--;;access, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended',
-        'columnsOverrides' => [
-            'pi_flexform' => [
-                'config' => [
-                    'ds' => 'FILE:EXT:er24_rechtstexte/Configuration/Flexforms/FlexformMain.xml',
-                ],
-            ],
-        ],
-    ];
+    $GLOBALS['TCA']['tt_content']['types']['er24rechtstexte_main']['columnsOverrides']['pi_flexform']['config']['ds']
+        = 'FILE:EXT:er24_rechtstexte/Configuration/Flexforms/FlexformMain.xml';
 }
-
 
