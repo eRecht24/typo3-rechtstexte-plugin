@@ -239,15 +239,13 @@ class DomainConfigController extends ActionController
         $attributes = [];
 
         try {
-            $typo3MajorVersion = (new Typo3Version())->getMajorVersion();
-
-            if ($typo3MajorVersion > 13) {
-                $emailLinkBuilder = GeneralUtility::makeInstance(EmailLinkBuilder::class);
-                [$mailToUrl, $linkText, $attributes] = $emailLinkBuilder->processEmailLink($email, $email, [], $this->request);
-            } else {
+            if ((new Typo3Version())->getMajorVersion() <= 13) {
                 $typoScriptFrontendController = $this->request->getAttribute('frontend.controller');
                 $emailLinkBuilder = GeneralUtility::makeInstance(EmailLinkBuilder::class, $typoScriptFrontendController->cObj, $typoScriptFrontendController);
                 [$mailToUrl, $linkText, $attributes] = $emailLinkBuilder->processEmailLink($email, $email);
+            } else {
+                $emailLinkBuilder = GeneralUtility::makeInstance(EmailLinkBuilder::class);
+                [$mailToUrl, $linkText, $attributes] = $emailLinkBuilder->processEmailLink($email, $email, [], $this->request);
             }
         } catch (\Throwable) {
         }
