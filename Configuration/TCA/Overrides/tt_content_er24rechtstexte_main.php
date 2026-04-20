@@ -32,11 +32,9 @@ $GLOBALS['TCA']['tt_content']['types']['er24rechtstexte_main'] = [
 
 // <=13
 if ($typo3MajorVersion <= 13) {
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
-        'tt_content',
-        '--div--;Configuration,pi_flexform,',
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
         'er24rechtstexte_main',
-        'after:subheader'
+        'FILE:EXT:er24_rechtstexte/Configuration/Flexforms/FlexformMain.xml'
     );
 } else {
     // >=14
