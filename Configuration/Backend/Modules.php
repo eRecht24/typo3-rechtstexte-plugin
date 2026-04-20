@@ -10,7 +10,7 @@ $iconIdentifier = $typo3MajorVersion >= 14 ? 'ext-er24-rechtstexte-module-main' 
 return [
     'tools_Er24Rechtstexte' => [
         'parent' => $parentModule,
-        'access' => 'admin',
+        'access' => 'user,group',
         'workspaces' => 'live',
         'path' => '/module/tools/erecht24',
         'iconIdentifier' => $iconIdentifier,

@@ -16,5 +16,5 @@ ExtensionUtility::registerPlugin(
 
 $pluginSignature = 'er24rechtstexte_main';
 ExtensionManagementUtility::addToAllTCAtypes('tt_content', '--div--;Configuration,pi_flexform,', $pluginSignature, 'after:subheader');
-$GLOBALS['TCA']['tt_content']['types'][$pluginSignature]['columnsOverrides']['pi_flexform']['config']['ds'] =
-    'FILE:EXT:er24_rechtstexte/Configuration/Flexforms/FlexformMain.xml';
+ExtensionManagementUtility::addPiFlexFormValue('*', 'FILE:EXT:er24_rechtstexte/Configuration/Flexforms/FlexformMain.xml', $pluginSignature);
+
