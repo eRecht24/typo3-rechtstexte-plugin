@@ -4,12 +4,14 @@ namespace ERecht24\Er24Rechtstexte\UserFunc;
 
 use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
 use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
+use TYPO3\CMS\Core\Attribute\AsAllowedCallable;
 use TYPO3\CMS\Core\Cache\CacheTag;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AnalyticsHeaderData
 {
+    #[AsAllowedCallable]
     public function process($content, $conf)
     {
         $request = $GLOBALS['TYPO3_REQUEST'] ?? null;

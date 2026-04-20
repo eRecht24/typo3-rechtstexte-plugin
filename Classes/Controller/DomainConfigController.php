@@ -210,23 +210,6 @@ class DomainConfigController extends ActionController
                 $outputText = substr((string)$outputText, strpos((string)$outputText, '</h1>') + 5);
             }
 
-            // check if outputText isn't empty
-            if (strlen(trim((string)$outputText)) > 0) {
-                // replace emails with TYPO3 spambot safe links
-                // try to get it working with not normalized domain names
-                // please use idn syntax: https://de.wikipedia.org/wiki/Internationalisierter_Domainname
-                $mailRegex = '/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+\.[a-zA-Z]+)/';
-                preg_match_all($mailRegex, (string)$outputText, $matches);
-
-                if (is_array($matches[0])) {
-                    $matches[0] = array_unique($matches[0]);
-                }
-
-                foreach ($matches[0] as $match) {
-                    $outputText = str_replace($match, $this->createEmailLink($match), $outputText);
-                }
-            }
-
             $cacheCollector = $this->request->getAttribute('frontend.cache.collector');
             if ($cacheCollector !== null) {
                 // @extensionScannerIgnoreLine
@@ -245,23 +228,6 @@ class DomainConfigController extends ActionController
         return $this->htmlResponse();
 
     }
-
-    private function createEmailLink(string $email): string
-    {
-        $typoScriptFrontendController = $this->request->getAttribute('frontend.controller');
-        $emailLinkBuilder = GeneralUtility::makeInstance(EmailLinkBuilder::class, $typoScriptFrontendController->cObj, $typoScriptFrontendController);
-        [$mailToUrl, $linkText, $attributes] = $emailLinkBuilder->processEmailLink($email, $email);
-        $linkAttributesString = '';
-        if (!empty($attributes)) {
-            foreach ($attributes as $attributeKey => $attributeValue) {
-                $linkAttributesString .= ' ' . $attributeKey . '="' . $attributeValue . '"';
-            }
-        }
-
-        return sprintf('<a href="%s"%s>%s</a>', $mailToUrl, $linkAttributesString, $linkText);
-
-    }
-
     public function newAction(?DomainConfig $newDomainConfig = null, string $siteconfigIdentifier = ''): ResponseInterface
     {
         /** @var SiteFinder $siteFinder */
