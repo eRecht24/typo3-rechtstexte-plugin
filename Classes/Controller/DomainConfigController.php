@@ -17,6 +17,7 @@ use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\CacheTag;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackageKeyException;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackageManifestException;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackagePathException;
@@ -33,6 +34,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extensionmanager\Exception\ExtensionManagerException;
+use TYPO3\CMS\Frontend\Typolink\EmailLinkBuilder;
 
 /***
  *
@@ -209,18 +211,7 @@ class DomainConfigController extends ActionController
                 $outputText = substr((string)$outputText, strpos((string)$outputText, '</h1>') + 5);
             }
 
-            if (strlen(trim((string)$outputText)) > 0) {
-                $mailRegex = '/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+\.[a-zA-Z]+)/';
-                preg_match_all($mailRegex, (string)$outputText, $matches);
-
-                if (is_array($matches[0])) {
-                    $matches[0] = array_unique($matches[0]);
-                }
-
-                foreach ($matches[0] as $match) {
-                    $outputText = str_replace($match, $this->createEmailLink($match), $outputText);
-                }
-            }
+            $outputText = $this->replaceEmailLinks((string)$outputText);
 
             $cacheCollector = $this->request->getAttribute('frontend.cache.collector');
             if ($cacheCollector !== null) {
@@ -243,21 +234,64 @@ class DomainConfigController extends ActionController
 
     private function createEmailLink(string $email): string
     {
-        $mailToUrl = $this->encodeEmailString('mailto:' . $email);
-        $linkText = $this->encodeEmailString($email);
+        $mailToUrl = 'mailto:' . $email;
+        $linkText = $email;
+        $attributes = [];
 
-        return sprintf('<a href="%s">%s</a>', $mailToUrl, $linkText);
-    }
+        try {
+            $typo3MajorVersion = (new Typo3Version())->getMajorVersion();
 
-    private function encodeEmailString(string $value): string
-    {
-        $encodedValue = '';
-
-        foreach (preg_split('//u', $value, -1, PREG_SPLIT_NO_EMPTY) ?: [] as $character) {
-            $encodedValue .= '&#' . mb_ord($character, 'UTF-8') . ';';
+            if ($typo3MajorVersion > 13) {
+                $emailLinkBuilder = GeneralUtility::makeInstance(EmailLinkBuilder::class);
+                [$mailToUrl, $linkText, $attributes] = $emailLinkBuilder->processEmailLink($email, $email, [], $this->request);
+            } else {
+                $typoScriptFrontendController = $this->request->getAttribute('frontend.controller');
+                $emailLinkBuilder = GeneralUtility::makeInstance(EmailLinkBuilder::class, $typoScriptFrontendController->cObj, $typoScriptFrontendController);
+                [$mailToUrl, $linkText, $attributes] = $emailLinkBuilder->processEmailLink($email, $email);
+            }
+        } catch (\Throwable) {
         }
 
-        return $encodedValue;
+        $linkAttributesString = '';
+        foreach ($attributes as $attributeKey => $attributeValue) {
+            $linkAttributesString .= ' ' . htmlspecialchars((string)$attributeKey) . '="' . htmlspecialchars((string)$attributeValue) . '"';
+        }
+
+        return sprintf('<a href="%s"%s>%s</a>', htmlspecialchars($mailToUrl), $linkAttributesString, $linkText);
+    }
+
+    private function replaceEmailLinks(string $content): string
+    {
+        if (trim($content) === '') {
+            return $content;
+        }
+
+        $content = preg_replace_callback(
+            '/<a\b[^>]*href=(["\'])mailto:([^"\']+)\1[^>]*>.*?<\/a>/is',
+            fn(array $matches): string => $this->createEmailLink(
+                (string)preg_replace('/\?.*$/', '', html_entity_decode($matches[2], ENT_QUOTES | ENT_HTML5))
+            ),
+            $content
+        ) ?? $content;
+
+        $parts = preg_split('/(<[^>]+>)/', $content, -1, PREG_SPLIT_DELIM_CAPTURE);
+        if (!is_array($parts)) {
+            return $content;
+        }
+
+        foreach ($parts as $index => $part) {
+            if ($part === '' || str_starts_with($part, '<')) {
+                continue;
+            }
+
+            $parts[$index] = preg_replace_callback(
+                '/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+\.[a-zA-Z]+)/',
+                fn(array $matches): string => $this->createEmailLink($matches[1]),
+                $part
+            ) ?? $part;
+        }
+
+        return implode('', $parts);
     }
 
     public function newAction(?DomainConfig $newDomainConfig = null, string $siteconfigIdentifier = ''): ResponseInterface
