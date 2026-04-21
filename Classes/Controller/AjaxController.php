@@ -117,7 +117,7 @@ class AjaxController
 
         if (is_array($request->getQueryParams()['properties'])) {
             foreach ($request->getQueryParams()['properties'] as $propertyName => $propertyValue) {
-                $setterName = 'set' . ucfirst($propertyName);
+                $setterName = 'set' . ucfirst((string) $propertyName);
                 if (method_exists($domainConfig, $setterName)) {
                     $methodReflection = $reflectionService->getClassSchema(DomainConfig::class)->getMethod($setterName);
                     $propertyType = null;

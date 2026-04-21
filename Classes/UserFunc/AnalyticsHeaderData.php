@@ -4,27 +4,40 @@ namespace ERecht24\Er24Rechtstexte\UserFunc;
 
 use ERecht24\Er24Rechtstexte\Domain\Model\DomainConfig;
 use ERecht24\Er24Rechtstexte\Domain\Repository\DomainConfigRepository;
+use TYPO3\CMS\Core\Attribute\AsAllowedCallable;
+use TYPO3\CMS\Core\Cache\CacheTag;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AnalyticsHeaderData
 {
+    #[AsAllowedCallable]
     public function process($content, $conf)
     {
+        $request = $GLOBALS['TYPO3_REQUEST'] ?? null;
 
         /** @var SiteFinder $siteFinder */
         $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
 
         try {
-            $siteConfig = $siteFinder->getSiteByPageId((int)$GLOBALS['TYPO3_REQUEST']?->getAttribute('frontend.page.information')?->getId()) ??
-                $siteFinder->getSiteByPageId($GLOBALS['TSFE']->id);
+            $pageInformation = $request?->getAttribute('frontend.page.information');
+            if ($pageInformation === null) {
+                return null;
+            }
+
+            $siteConfig = $siteFinder->getSiteByPageId($pageInformation->getId());
             /** @var DomainConfig $domainConfig */
             $domainConfig = GeneralUtility::makeInstance(DomainConfigRepository::class)->findOneBy(['domain' => (string)$siteConfig->getBase()]);
             $analytics4Tracking = false;
 
             if ($domainConfig !== null) {
-                // @extensionScannerIgnoreLine
-                $GLOBALS['TSFE']->addCacheTags(['er24_analytics_' . $domainConfig->getUid()]);
+                $cacheCollector = $request?->getAttribute('frontend.cache.collector');
+                if ($cacheCollector !== null) {
+                    // @extensionScannerIgnoreLine
+                    $cacheCollector->addCacheTags(
+                        new CacheTag('er24_analytics_' . $domainConfig->getUid())
+                    );
+                }
 
                 if ($domainConfig->getFlagEmbedTracking() === true && $domainConfig->getAnalyticsId() !== '') {
                     if (str_starts_with($domainConfig->getAnalyticsId(), 'G-')) {

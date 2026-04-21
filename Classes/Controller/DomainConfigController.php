@@ -17,6 +17,7 @@ use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\CacheTag;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackageKeyException;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackageManifestException;
 use TYPO3\CMS\Core\Package\Exception\InvalidPackagePathException;
@@ -27,7 +28,7 @@ use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
+use TYPO3\CMS\Extbase\Attribute\IgnoreValidation;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
@@ -210,26 +211,11 @@ class DomainConfigController extends ActionController
                 $outputText = substr((string)$outputText, strpos((string)$outputText, '</h1>') + 5);
             }
 
-            // check if outputText isn't empty
-            if (strlen(trim((string)$outputText)) > 0) {
-                // replace emails with TYPO3 spambot safe links
-                // try to get it working with not normalized domain names
-                // please use idn syntax: https://de.wikipedia.org/wiki/Internationalisierter_Domainname
-                $mailRegex = '/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+\.[a-zA-Z]+)/';
-                preg_match_all($mailRegex, (string)$outputText, $matches);
+            $outputText = $this->replaceEmailLinks((string)$outputText);
 
-                if (is_array($matches[0])) {
-                    $matches[0] = array_unique($matches[0]);
-                }
-
-                foreach ($matches[0] as $match) {
-                    $outputText = str_replace($match, $this->createEmailLink($match), $outputText);
-                }
-            }
-
-            // @extensionScannerIgnoreLine
             $cacheCollector = $this->request->getAttribute('frontend.cache.collector');
             if ($cacheCollector !== null) {
+                // @extensionScannerIgnoreLine
                 $cacheCollector->addCacheTags(
                     new CacheTag('er24_document_' . $domainConfig->getUid())
                 );
@@ -248,18 +234,63 @@ class DomainConfigController extends ActionController
 
     private function createEmailLink(string $email): string
     {
-        $typoScriptFrontendController = $this->request->getAttribute('frontend.controller');
-        $emailLinkBuilder = GeneralUtility::makeInstance(EmailLinkBuilder::class, $typoScriptFrontendController->cObj, $typoScriptFrontendController);
-        [$mailToUrl, $linkText, $attributes] = $emailLinkBuilder->processEmailLink($email, $email);
-        $linkAttributesString = '';
-        if (!empty($attributes)) {
-            foreach ($attributes as $attributeKey => $attributeValue) {
-                $linkAttributesString .= ' ' . $attributeKey . '="' . $attributeValue . '"';
+        $mailToUrl = 'mailto:' . $email;
+        $linkText = $email;
+        $attributes = [];
+
+        try {
+            if ((new Typo3Version())->getMajorVersion() <= 13) {
+                $typoScriptFrontendController = $this->request->getAttribute('frontend.controller');
+                $emailLinkBuilder = GeneralUtility::makeInstance(EmailLinkBuilder::class, $typoScriptFrontendController->cObj, $typoScriptFrontendController);
+                [$mailToUrl, $linkText, $attributes] = $emailLinkBuilder->processEmailLink($email, $email);
+            } else {
+                $emailLinkBuilder = GeneralUtility::makeInstance(EmailLinkBuilder::class);
+                [$mailToUrl, $linkText, $attributes] = $emailLinkBuilder->processEmailLink($email, $email, [], $this->request);
             }
+        } catch (\Throwable) {
         }
 
-        return sprintf('<a href="%s"%s>%s</a>', $mailToUrl, $linkAttributesString, $linkText);
+        $linkAttributesString = '';
+        foreach ($attributes as $attributeKey => $attributeValue) {
+            $linkAttributesString .= ' ' . htmlspecialchars((string)$attributeKey) . '="' . htmlspecialchars((string)$attributeValue) . '"';
+        }
 
+        return sprintf('<a href="%s"%s>%s</a>', htmlspecialchars($mailToUrl), $linkAttributesString, $linkText);
+    }
+
+    private function replaceEmailLinks(string $content): string
+    {
+        if (trim($content) === '') {
+            return $content;
+        }
+
+        $placeholders = [];
+        preg_match_all(
+            '/<a\b[^>]*href=(["\'])mailto:([^"\']+)\1[^>]*>.*?<\/a>/is',
+            $content,
+            $mailLinkMatches,
+            PREG_SET_ORDER
+        );
+
+        foreach ($mailLinkMatches as $index => $mailLinkMatch) {
+            $placeholder = '###ER24_MAIL_' . $index . '###';
+            $email = (string)preg_replace('/\?.*$/', '', html_entity_decode($mailLinkMatch[2], ENT_QUOTES | ENT_HTML5));
+            $placeholders[$placeholder] = $this->createEmailLink($email);
+            $content = str_replace($mailLinkMatch[0], $placeholder, $content);
+        }
+
+        $mailRegex = '/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+\.[a-zA-Z]+)/';
+        preg_match_all($mailRegex, $content, $matches);
+
+        if (is_array($matches[0])) {
+            $matches[0] = array_unique($matches[0]);
+        }
+
+        foreach ($matches[0] as $match) {
+            $content = str_replace($match, $this->createEmailLink($match), $content);
+        }
+
+        return strtr($content, $placeholders);
     }
 
     public function newAction(?DomainConfig $newDomainConfig = null, string $siteconfigIdentifier = ''): ResponseInterface

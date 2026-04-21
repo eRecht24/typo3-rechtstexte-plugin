@@ -13,7 +13,6 @@ return [
         'enablecolumns' => [
             'disabled' => 'hidden',
         ],
-        'searchFields' => 'domain,api_key,imprint_de,imprint_en,privacy_de,privacy_en,social_de,social_en,analytics_id,site_config_name',
         'iconfile' => 'EXT:er24_rechtstexte/Resources/Public/Icons/Extension.svg',
     ],
     'types' => [
@@ -22,6 +21,7 @@ return [
     'columns' => [
         't3ver_label' => [
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.versionLabel',
+            'searchable' => false,
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -88,6 +88,7 @@ return [
         'imprint_de_local' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.imprint_de (local)',
+            'searchable' => false,
             'config' => [
                 'type' => 'text',
                 'cols' => 40,
@@ -98,6 +99,7 @@ return [
         'imprint_de_tstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.imprint_de_tstamp',
+            'searchable' => false,
             'config' => [
                 'type' => 'datetime',
                 'size' => 10,
@@ -117,6 +119,7 @@ return [
         'imprint_en_local' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.imprint_en (local)',
+            'searchable' => false,
             'config' => [
                 'type' => 'text',
                 'cols' => 40,
@@ -127,6 +130,7 @@ return [
         'imprint_en_tstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.imprint_en_tstamp',
+            'searchable' => false,
             'config' => [
                 'type' => 'datetime',
                 'size' => 10,
@@ -160,6 +164,7 @@ return [
         'privacy_de_local' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.privacy_de (lokal)',
+            'searchable' => false,
             'config' => [
                 'type' => 'text',
                 'cols' => 40,
@@ -170,6 +175,7 @@ return [
         'privacy_de_tstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.privacy_de_tstamp',
+            'searchable' => false,
             'config' => [
                 'type' => 'datetime',
                 'size' => 10,
@@ -189,6 +195,7 @@ return [
         'privacy_en_local' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.privacy_en (lokal)',
+            'searchable' => false,
             'config' => [
                 'type' => 'text',
                 'cols' => 40,
@@ -199,6 +206,7 @@ return [
         'privacy_en_tstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.privacy_en_tstamp',
+            'searchable' => false,
             'config' => [
                 'type' => 'datetime',
                 'size' => 10,
@@ -232,6 +240,7 @@ return [
         'social_de_local' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.social_de_local (lokal)',
+            'searchable' => false,
             'config' => [
                 'type' => 'text',
                 'cols' => 40,
@@ -242,6 +251,7 @@ return [
         'social_de_tstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.social_de_tstamp',
+            'searchable' => false,
             'config' => [
                 'type' => 'datetime',
                 'size' => 10,
@@ -261,6 +271,7 @@ return [
         'social_en_local' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.social_en (lokal)',
+            'searchable' => false,
             'config' => [
                 'type' => 'text',
                 'cols' => 40,
@@ -271,6 +282,7 @@ return [
         'social_en_tstamp' => [
             'exclude' => true,
             'label' => 'LLL:EXT:er24_rechtstexte/Resources/Private/Language/locallang_db.xlf:tx_er24rechtstexte_domain_model_domainconfig.social_en_tstamp',
+            'searchable' => false,
             'config' => [
                 'type' => 'datetime',
                 'size' => 10,
@@ -344,6 +356,7 @@ return [
         ],
         'site_language' => [
             'label' => 'Site Config Language',
+            'searchable' => false,
             'config' => [
                 'type' => 'input',
                 'size' => 3,
