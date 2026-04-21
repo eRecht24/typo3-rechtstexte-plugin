@@ -264,32 +264,33 @@ class DomainConfigController extends ActionController
             return $content;
         }
 
-        $content = preg_replace_callback(
+        $placeholders = [];
+        preg_match_all(
             '/<a\b[^>]*href=(["\'])mailto:([^"\']+)\1[^>]*>.*?<\/a>/is',
-            fn(array $matches): string => $this->createEmailLink(
-                (string)preg_replace('/\?.*$/', '', html_entity_decode($matches[2], ENT_QUOTES | ENT_HTML5))
-            ),
-            $content
-        ) ?? $content;
+            $content,
+            $mailLinkMatches,
+            PREG_SET_ORDER
+        );
 
-        $parts = preg_split('/(<[^>]+>)/', $content, -1, PREG_SPLIT_DELIM_CAPTURE);
-        if (!is_array($parts)) {
-            return $content;
+        foreach ($mailLinkMatches as $index => $mailLinkMatch) {
+            $placeholder = '###ER24_MAIL_' . $index . '###';
+            $email = (string)preg_replace('/\?.*$/', '', html_entity_decode($mailLinkMatch[2], ENT_QUOTES | ENT_HTML5));
+            $placeholders[$placeholder] = $this->createEmailLink($email);
+            $content = str_replace($mailLinkMatch[0], $placeholder, $content);
         }
 
-        foreach ($parts as $index => $part) {
-            if ($part === '' || str_starts_with($part, '<')) {
-                continue;
-            }
+        $mailRegex = '/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+\.[a-zA-Z]+)/';
+        preg_match_all($mailRegex, $content, $matches);
 
-            $parts[$index] = preg_replace_callback(
-                '/([-0-9a-zA-Z.+_äöüßÄÖÜéèê]+@[-0-9a-zA-Z.+_äöüßÄÖÜéèê]+\.[a-zA-Z]+)/',
-                fn(array $matches): string => $this->createEmailLink($matches[1]),
-                $part
-            ) ?? $part;
+        if (is_array($matches[0])) {
+            $matches[0] = array_unique($matches[0]);
         }
 
-        return implode('', $parts);
+        foreach ($matches[0] as $match) {
+            $content = str_replace($match, $this->createEmailLink($match), $content);
+        }
+
+        return strtr($content, $placeholders);
     }
 
     public function newAction(?DomainConfig $newDomainConfig = null, string $siteconfigIdentifier = ''): ResponseInterface
