@@ -23,8 +23,7 @@ https://www.e-recht24.de/mitglieder/tools/erecht24-rechtstexte-plugin/typo3/
 
 If you want to use the mail bot spam protection, you have to put the following code in your config:
 ```typoscript
-config.spamProtectEmailAddresses = ascii
-config.spamProtectEmailAddresses = 2
+config.spamProtectEmailAddresses = -2
 ```
 [For further details check the TYPO3 documentation.](https://docs.typo3.org/m/typo3/reference-typoscript/main/en-us/Setup/Config/Index.html#spamprotectemailaddresses)
 
